@@ -1,0 +1,29 @@
+{
+    "authors": [{
+        "email": "phunsanit@hotmail.com",
+        "homepage": "http://plusmagi.com",
+        "name": "pitt phunsanit",
+        "role": "Developer"
+    }],
+    "description": "snippet",
+    "homepage": "http://plusmagi.com",
+    "license": "mit",
+    "config": {
+        "preferred-install": "dist",
+        "bin-dir": "vendor/bin/",
+        "secure-http": false
+    },
+    "minimum-stability": "stable",
+    "name": "pitt/snippet",
+    "require": {
+        "ckeditor/ckeditor": "*",
+        "components/jquery": "*",
+        "components/jquery-migrate": "*",
+        "components/jqueryui": "*",
+        "datatables/datatables": "*",
+        "phpoffice/phpexcel": "^1.8",
+        "stefangabos/Zebra_cURL": "*",
+        "twbs/bootstrap": "*"
+    },
+    "type": "project"
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Flushed ajax test</title>
+        <meta charset="UTF-8" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <script>
+        var last_response_len = false;
+        $.ajax('stream.php', {
+            xhrFields: {
+                onprogress: function(e)
+                {
+                    var this_response, response = e.currentTarget.response;
+                    if(last_response_len === false)
+                    {
+                        this_response = response;
+                        last_response_len = response.length;
+                    }
+                    else
+                    {
+                        this_response = response.substring(last_response_len);
+                        last_response_len = response.length;
+                    }
+console.log(this_response);
+                    data = $.parseJSON(this_response);
+console.log(data);
+                    $('#results').append('<br>' + data.message);
+                }
+            }
+        })
+        .done(function(data)
+        {
+            console.log('Complete response = ' + data);
+        })
+        .fail(function(data)
+        {
+            console.log('Error: ', data);
+        });
+        console.log('Request Sent');
+        </script>
+        <div id="results" style="border:1px solid #000; padding:10px; width:300px; height:250px; overflow:auto; background:#eee;"></div>
+    </body>
+</html>
