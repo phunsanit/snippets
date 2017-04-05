@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>zopim: Mobile Vertical Offet</title>
+<link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<style>
+#footerMobile {
+	background: #c00000;
+	bottom: 0;
+	height: 200px;
+	position: fixed;
+	width: 100%;
+}
+</style>
+</head>
+<body>
+<p>เพื่อให้ผู้ใช้เข้าหน้าเพจด้วยความรวดเร็วจึงต้องทำ caching เก็บส่วนที่ไม่ได้เปลี่ยนแปลงบ่อย และสามารถใช้ซ่้ำๆ ได้</p>
+<p>เริ่มจากสร้างไฟล์เก็บ config ขึ้นมาก่อน[code language="php" title="&#092;application&#092;config&#092;cache.php"]
+  <?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+$config['caching']['adapter'] = 'memcached';
+$config['caching']['backup'] = 'file';[/code]โดย<dl><dt>adapter</dt><dd>คือ จะเลือกใช้ driver ตัวไหนในการทำ cache ระหว่าง<table class="table table-striped"><thead><tr><th>Drivers</th><th>Value</th></tr></thead><tbody><tr><td><a href="https://www.codeigniter.com/userguide3/libraries/caching.html#alternative-php-cache-apc-caching" target="_blank">Alternative PHP Cache (APC) Caching</a></td><td>apc</td></tr><tr><td><a href="https://www.codeigniter.com/userguide3/libraries/caching.html#dummy-cache" target="_blank">Dummy Cache</a></td><td>dummy</td></tr><tr><a href="https://www.codeigniter.com/userguide3/libraries/caching.html#file-based-caching" target="_blank">File-based Caching</a><td>file</td><td>file</td></tr><tr><td><a href="https://www.codeigniter.com/userguide3/libraries/caching.html#memcached-caching" target="_blank">Memcached Caching</a></td><td>memcached</td></tr><tr><td><a href="https://www.codeigniter.com/userguide3/libraries/caching.html#redis-caching" target="_blank">Redis Caching</a></td><td>redis</td></tr><tr><td><a href="https://www.codeigniter.com/userguide3/libraries/caching.html#wincache-caching" target="_blank">WinCache Caching</a></td><td>wincache</td></tr></tbody></table></dd><dt>backup</dt><dd>เป็นตัวเลือกสำรองถ้าตัวแรกไม่สามารถทำงานได้ เช่น เครื่องที่เราใช้ไม่ได้ลง Memcached ไว้ ก็จะใช้ file แทน ( cache file ถูกเก็บไว้ที่ \application\cache หรือ ตาม config $config['cache_path'])</dd></dl></p><p>โหลด Driver ได้ 2 วิธีคือ<dl><dt>Auto-loading</dt><dd>เหมาะกับงานที่ต้องใช้ cache บ่อยๆ ทำได้โดยเพิ่ม 'cache' เข้าไป[code language="php" title="&#092;application&#092;config&#092;autoload.php"]$autoload['drivers'] = [..., 'cache', ...];[/code]</dd><dt>load driver</dt><dd>โหลด driver เฉพาะ controller ที่ต้องใช้ cache เท่านั้น[code language="php" title="&#092;application&#092;controllers&#092;Welcome.php"]    public function __construct()
+    {
+        parent::__construct();
+
+        $this->load->driver('cache');
+    }[/code]</dd></dl></p><p>การใช้งาน[code language="php" title="&#092;application&#092;controllers&#092;Welcome.php"]<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Welcome extends CI_Controller
+{
+    /**
+     * Index Page for this controller.
+     *
+     * Maps to the following URL
+     *         http://example.com/index.php/welcome
+     *    - or -
+     *         http://example.com/index.php/welcome/index
+     *    - or -
+     * Since this controller is set as the default controller in
+     * config/routes.php, it's displayed at http://example.com/
+     *
+     * So any other public methods not prefixed with an underscore will
+     * map to /index.php/welcome/<method_name>
+     * @see https://codeigniter.com/user_guide/general/urls.html
+     */
+    public function index()
+    {
+        $cacheKey = 'home' . date('Y-m-d'); /* unque id */
+        $cacheKey = mb_ereg_replace('([^\w\s\d\-_~,;\[\]\(\).])', '', $cacheKey);
+
+        if (!$datas = $this->cache->get($cacheKey)) {
+
+            $datas = $this->load->view('welcome_message', '', true);
+
+            $this->cache->save($cacheKey, $datas, 300);
+        }
+
+        echo $datas;
+    }
+
+}[/code] เพราะว่า file driver เป็นการเขียนไฟล์ลงบน hard disk จริงๆ จึงควรแน่ใจว่าไฟล์ถูกรูปแบบที่ os สามารถเขียนไฟล์ได้ โดนอาจจะใช้ md5 เข้ารหัส $cacheKey ก่อน[code language="php"]$cacheKey = md5($cacheKey);[/code] หรือใช้ [code language="php"]$cacheKey = mb_ereg_replace('([^\w\s\d\-_~,;\[\]\(\).])', '', $cacheKey);[/code]</p><p>อ่านเพิ่มเติม<ul><li><a href="http://plusmagi.com/codeigniter-%E0%B9%81%E0%B8%A2%E0%B8%81-config">CodeIgniter: แยก config</a></li><li><a href="https://www.codeigniter.com/userguide3/libraries/caching.html" target="_blank">Caching Driver</a></li></ul></p>
+</body>
+</html>

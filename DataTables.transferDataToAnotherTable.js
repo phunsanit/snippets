@@ -67,8 +67,6 @@ $(function() {
 
     iCheckBulk(filtersTableA, filtersTable);
 
-    iCheckChange(filtersTableA, filtersTable);
-
     dataTable = tableA
         .DataTable({
             "columns": [{
@@ -116,9 +114,6 @@ $(function() {
                     "title": "Province Name",
                 }
             ],
-            "fnInitComplete": function(settings, json) {
-                iCheckInit($('input:checkbox, input:radio', settings.nTable));
-            }
         })
         .on('draw', function(event, settings, json, xhr) {
             /* add style to checkbox, radio */
@@ -127,7 +122,7 @@ $(function() {
 
     iCheckBulk(tableA, dataTable);
 
-    iCheckChange(tableA, dataTable);
+    iCheckChange(filtersTableA, filtersTable, dataTable);
 
     iCheckCopy(dataTable, filtersTable, 'DISTRICT_CODE');
 

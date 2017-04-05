@@ -24,8 +24,8 @@ function iCheckBulk(dataTableArea, dataTableObject) {
 }
 
 /* change filtersTable data value on input name enables is change */
-function iCheckChange(dataTableArea, dataTableObject) {
-    dataTableArea.on('ifChanged', 'input[name="enables[]"]', function(event) {
+function iCheckChange(filtersTableArea, filtersTableObject, dataTableObject) {
+    $('tbody', filtersTableArea).on('ifChanged', 'input[name="enables[]"]', function(event) {
 
         event.stopPropagation();
 
@@ -40,13 +40,9 @@ function iCheckChange(dataTableArea, dataTableObject) {
             $(this).attr('checked', 0);
             data.enable = false;
         }
-
         dataTableObject.row(row).data(data);
 
         iCheckInit(row);
-
-        data = dataTableObject.row(row).data();
-
     });
 }
 

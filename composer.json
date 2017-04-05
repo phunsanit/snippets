@@ -21,8 +21,8 @@
         "components/jquery-migrate": "*",
         "components/jqueryui": "*",
         "datatables/datatables": "*",
-        "phpoffice/phpexcel": "^1.8",
-        "stefangabos/Zebra_cURL": "*",
+        "php-amqplib/php-amqplib": "*",
+        "phpoffice/phpexcel": "*",
         "twbs/bootstrap": "*"
     },
     "type": "project"
