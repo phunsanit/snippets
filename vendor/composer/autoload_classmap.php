@@ -6,5 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Zebra_cURL' => $vendorDir . '/stefangabos/zebra_curl/Zebra_cURL.php',
 );
