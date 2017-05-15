@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Google Maps APIs > Maps JavaScript API > Set Ajax</title>
+<title>Google Maps APIs > Maps JavaScript API > Set By Ajax</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <style>
 .map {
@@ -56,12 +56,6 @@ function initMap() {
                 "lng": successCallback.coords.longitude
             };
 
-            document.getElementById('latitudeI').value = successCallback.coords.latitude;
-            document.getElementById('longitudeI').value = successCallback.coords.longitude;
-
-            infoWindow.setPosition(position);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
             map.setCenter(position);
 
             var marker = new google.maps.Marker({
@@ -69,10 +63,10 @@ function initMap() {
                 "position": position,
             });
 
-            var marker = new google.maps.Marker({
-                "map": map,
-                "position": position,
-            });
+            infoWindow.open(map, marker);
+            infoWindow.setContent('Location found.');
+            infoWindow.setPosition(position);
+
             /*Add listener*/
             google.maps.event.addListener(map, 'click', function(event) {
                 marker.setPosition(event.latLng);
@@ -80,6 +74,9 @@ function initMap() {
                 document.getElementById('latitudeI').value = event.latLng.lat();
                 document.getElementById('longitudeI').value = event.latLng.lng();
             });
+
+            document.getElementById('latitudeI').value = successCallback.coords.latitude;
+            document.getElementById('longitudeI').value = successCallback.coords.longitude;
 
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());

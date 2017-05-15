@@ -52,13 +52,19 @@ function initMap() {
                 "lng": successCallback.coords.longitude
             };
 
+            map.setCenter(position);
+
+            var marker = new google.maps.Marker({
+                "map": map,
+                "position": position,
+            });
+
+            infoWindow.open(map, marker);
+            infoWindow.setContent('Location found.');
+            infoWindow.setPosition(position);
+
             document.getElementById('latitudeA').innerHTML = successCallback.coords.latitude;
             document.getElementById('longitudeA').innerHTML = successCallback.coords.longitude;
-
-            infoWindow.setPosition(position);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(position);
 
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());

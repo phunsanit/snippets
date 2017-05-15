@@ -81,12 +81,6 @@ function initMap() {
                 "lng": successCallback.coords.longitude
             };
 
-            document.getElementById('latitudeI').value = successCallback.coords.latitude;
-            document.getElementById('longitudeI').value = successCallback.coords.longitude;
-
-            infoWindow.setPosition(position);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
             map.setCenter(position);
 
             var marker = new google.maps.Marker({
@@ -94,10 +88,17 @@ function initMap() {
                 "position": position,
             });
 
+            infoWindow.open(map, marker);
+            infoWindow.setContent('Location found.');
+            infoWindow.setPosition(position);
+
             /*Add listener*/
             google.maps.event.addListener(map, 'click', function(event) {
                 addMarker(event.latLng, map);
             });
+
+            document.getElementById('latitudeI').value = successCallback.coords.latitude;
+            document.getElementById('longitudeI').value = successCallback.coords.longitude;
 
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Google Maps APIs > Maps JavaScript API > infowindow</title>
+<title>Google Maps APIs > Maps JavaScript API > infoWindow Open</title>
 <style>
 .map {
     border: #c00000 solid thin;
@@ -58,9 +58,8 @@ function initMap() {
         "position": position,
         "title": 'Uluru (Ayers Rock)'
     });
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
-    });
+
+    infowindow.open(map, marker);
 }
 </script> 
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
