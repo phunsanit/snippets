@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Google Maps APIs > Maps JavaScript API > HTML5 Geolocation</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style>
+.map {
+	border: #c00000 solid thin;
+	height: 100%;
+	min-height: 500px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <h3>HTML5 Geolocation</h3>
+      <dl>
+        <dt>latitude</dt>
+        <dd id="latitudeA"></dd>
+        <dt>longitude</dt>
+        <dd id="longitudeA"></dd>
+      </dl>
+    </div>
+    <div class="col-md-10 map" id="map"></div>
+  </div>
+</div>
+<script>
+var infoWindow, map;
+
+function initMap() {
+    infoWindow = new google.maps.InfoWindow;
+    map = new google.maps.Map(document.getElementById('map'), {
+        "zoom": 8
+    });
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(successCallback, errorCallback) {
+            var position = {
+                "lat": successCallback.coords.latitude,
+                "lng": successCallback.coords.longitude
+            };
+
+document.getElementById('latitudeA').innerHTML = successCallback.coords.latitude;
+document.getElementById('longitudeA').innerHTML = successCallback.coords.longitude;
+
+            infoWindow.setPosition(position);
+            infoWindow.setContent('Location found.');
+            infoWindow.open(map);
+            map.setCenter(position);
+
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, position) {
+    infoWindow.setPosition(position);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
+</script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
+</body>
+</html>
