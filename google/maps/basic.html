@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Google Maps APIs > Maps JavaScript API > Simple Map</title>
+<style>
+.map {
+	border: #c00000 solid thin;
+	height: 100%;
+	min-height: 500px;
+}
+</style>
+</head>
+<body>
+<div class="map" id="map"></div>
+<script>
+var map;
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        "center": {
+            "lat": -34.397,
+            "lng": 150.644
+        },
+        "zoom": 8
+    });
+}
+</script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
+</body>
+</html>
