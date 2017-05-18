@@ -24,44 +24,42 @@
         <dd id="longitudeA"></dd>
       </dl>
     </div>
-    <div class="col-md-10 map" id="map"></div>
+    <div class="col-md-10 map" id="mapA"></div>
   </div>
 </div>
 <script>
-function handleLocationError(browserHasGeolocation, infoWindow, position) {
-    infoWindow.setPosition(position);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-}
+var infoWindow;
+var map;
+var position = false;
 
-var infoWindow, map;
+/* function createMaps */
+function createMap(position) {
+    var latlng = new google.maps.LatLng(position.latitude, position.longitude);
 
-function initMap() {
-    infoWindow = new google.maps.InfoWindow;
-    map = new google.maps.Map(document.getElementById('map'), {
+    var infoWindow = new google.maps.InfoWindow;
+    var map = new google.maps.Map(document.getElementById('mapA'), {
         "zoom": 8
     });
 
-    /*Try HTML5 geolocation.*/
+    map.setCenter(latlng);
+
+    var marker = new google.maps.Marker({
+        "map": map,
+        "position": latlng,
+    });
+
+    infoWindow.open(map, marker);
+    infoWindow.setContent('Latitude = ' + position.latitude + ', ' + ' longitude = ' + position.longitude);
+    infoWindow.setPosition(latlng);
+}
+
+/* get position from HTML5 Geolocation */
+function getGeolocation() {
+    var position = false;
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(successCallback, errorCallback) {
-            var position = {
-                "lat": successCallback.coords.latitude,
-                "lng": successCallback.coords.longitude
-            };
 
-            map.setCenter(position);
-
-            var marker = new google.maps.Marker({
-                "map": map,
-                "position": position,
-            });
-
-            infoWindow.open(map, marker);
-            infoWindow.setContent('Location found.');
-            infoWindow.setPosition(position);
+            position = successCallback.coords;
 
             document.getElementById('latitudeA').innerHTML = successCallback.coords.latitude;
             document.getElementById('longitudeA').innerHTML = successCallback.coords.longitude;
@@ -72,7 +70,33 @@ function initMap() {
     } else {
         /*Browser doesn't support Geolocation*/
         handleLocationError(false, infoWindow, map.getCenter());
+
+        return false;
     }
+
+    return position;
+}
+
+/* show error of HTML5 Geolocation */
+function handleLocationError(browserHasGeolocation, infoWindow, position) {
+    infoWindow.setPosition(position);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
+
+function initMap(defaultLatitude = 13.7651991, defaultLongitude = 100.5368694) {
+    position = getGeolocation();
+
+    if (position == null || position === undefined || position.length <= 0 || typeof position == 'undefined') {
+        position = {
+            "latitude": defaultLatitude,
+            "longitude": defaultLongitude,
+        };
+    }
+
+    createMap(position);
 }
 </script> 
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>

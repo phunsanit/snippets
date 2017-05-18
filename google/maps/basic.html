@@ -5,25 +5,43 @@
 <title>Google Maps APIs > Maps JavaScript API > Simple Map</title>
 <style>
 .map {
-    border: #c00000 solid thin;
-    height: 100%;
-    min-height: 500px;
+	border: #c00000 solid thin;
+	height: 100%;
+	min-height: 500px;
 }
 </style>
 </head>
 <body>
-<div class="map" id="map"></div>
+<div class="map" id="mapA"></div>
 <script>
-var map;
+/* function createMaps */
+function createMap(position) {
+    var latlng = new google.maps.LatLng(position.latitude, position.longitude);
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        "center": {
-            "lat": -34.397,
-            "lng": 150.644
-        },
+    var infoWindow = new google.maps.InfoWindow;
+    var map = new google.maps.Map(document.getElementById('mapA'), {
         "zoom": 8
     });
+
+    map.setCenter(latlng);
+
+    var marker = new google.maps.Marker({
+        "map": map,
+        "position": latlng,
+    });
+
+    infoWindow.open(map, marker);
+    infoWindow.setContent('Latitude = ' + position.latitude + ', ' + ' longitude = ' + position.longitude);
+    infoWindow.setPosition(latlng);
+}
+
+function initMap(defaultLatitude = 13.7651991, defaultLongitude = 100.5368694) {
+    position = {
+        "latitude": defaultLatitude,
+        "longitude": defaultLongitude,
+    };
+
+    createMap(position);
 }
 </script> 
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
