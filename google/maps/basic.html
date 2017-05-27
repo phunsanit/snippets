@@ -8,11 +8,11 @@
 <body>
 <div class="map" id="mapA"></div>
 <script>
+var map;
 /* function createMaps */
 function createMap(mapArea, position) {
     var latlng = new google.maps.LatLng(parseFloat(position.latitude), parseFloat(position.longitude));
-    var infoWindow = new google.maps.InfoWindow;
-    var map = new google.maps.Map(document.getElementById(mapArea), {
+    map = new google.maps.Map(document.getElementById(mapArea), {
         "zoom": 18
     });
 
@@ -23,9 +23,11 @@ function createMap(mapArea, position) {
         "position": latlng,
     });
 
-    infoWindow.open(map, marker);
-    infoWindow.setContent('Latitude = ' + position.latitude + ', ' + ' longitude = ' + position.longitude);
-    infoWindow.setPosition(latlng);
+    var infowindow = new google.maps.InfoWindow({
+        "content": 'Latitude = ' + position.latitude + ', ' + ' longitude = ' + position.longitude,
+        "position": latlng,
+    }).open(map, marker);
+
 }
 
 function initMap(defaultLatitude = 13.7651991, defaultLongitude = 100.5368694) {
