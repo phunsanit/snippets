@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>jQuery: Form Send</title>
+    <title>jQuery: Advance Form Send</title>
     <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -56,6 +56,10 @@
     <div class="col-sm-12" id="resultA"></div>
     <script src="../vendor/components/jquery/jquery.min.js"></script>
     <script>
+        function RemoveParameterFromUrl(url, parameter) {
+            return url.replace(new RegExp('^([^#]*\?)(([^#]*)&)?' + parameter + '(\=[^&#]*)?(&|#|$)'), '$1$3$5').replace(/^([^#]*)((\?)&|\?(#|$))/, '$1$3$4');
+        }
+
         $(function() {
             var formA = $('#formA');
 
@@ -63,6 +67,47 @@
                 event.preventDefault();
 
                 $.ajax({
+                    "beforeSend": function(jqXHR, settings) {
+
+                        /* ใส่ตัวแปรเข้าไปเพิ่ม */
+                        settings.data += '&ajax=true';
+
+                        /* แยกตัวแปรไว้ตรวจสอบข้อมูล */
+                        var params = new URLSearchParams(settings.data);
+
+                        /* บังคับกรอกข้อมูล */
+                        if (params.get('way') == 'socialid' && params.get('socialid') == '') {
+
+                            jqXHR.abort();
+                            alert('กรุณากรอกหมายเลขบัตรประชาชน');
+
+                            return false;
+                        } else if (params.get('way') == 'phone' && params.get('phone') == '') {
+
+                            jqXHR.abort();
+                            alert('กรุณากรอกหมายเลขโทรศัพท์');
+
+                            return false;
+                        }
+
+                        if (params.get('amount') == '') {
+
+                            jqXHR.abort();
+                            alert('กรุณากรอกจำนวนเงิน');
+
+                            return false;
+                        }
+
+                        /* เอาข้อมูลที่ไม่ต้องการส่งออก */
+                        settings.data = RemoveParameterFromUrl(settings.data, 'way');
+                        settings.data = RemoveParameterFromUrl(settings.data, 'way');
+                        if (params.get('way') == 'socialid') {
+                            settings.data = RemoveParameterFromUrl(settings.data, 'phone');
+                        } else {
+                            settings.data = RemoveParameterFromUrl(settings.data, 'socialid');
+                        }
+
+                    },
                     "data": formA.serialize(),
                     "method": "POST",
                     "success": function(data, textStatus, jqXHR) {
