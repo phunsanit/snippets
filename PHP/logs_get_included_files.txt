@@ -1,0 +1,5 @@
+Array
+(
+    [0] => D:\xampp\htdocs\snippets\PHP\get_included_files.php
+    [1] => D:\xampp\htdocs\snippets\PHP\header.php
+)
