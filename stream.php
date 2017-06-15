@@ -4,6 +4,12 @@ set_time_limit(0);
 
 header('Cache-Control: no-cache');
 header('Content-Type: text/event-stream');
+header('X-Accel-Buffering: no');
+
+set_time_limit(0);
+
+ob_implicit_flush(true);
+ob_end_flush();
 
 function task($ad, $message, $progress = '')
 {
@@ -14,9 +20,6 @@ function task($ad, $message, $progress = '')
     ];
 
     echo json_encode($data);
-
-    ob_flush();
-    flush();
 }
 
 /* loop processing  */
