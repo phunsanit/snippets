@@ -17,10 +17,12 @@
     "name": "pitt/snippet",
     "require": {
         "ckeditor/ckeditor": "*",
+        "components/font-awesome": "*",
         "components/jquery": "*",
         "components/jquery-migrate": "*",
         "components/jqueryui": "*",
         "datatables/datatables": "*",
+        "kenwheeler/slick": "*",
         "php-amqplib/php-amqplib": "*",
         "phpoffice/phpexcel": "*",
         "twbs/bootstrap": "*"

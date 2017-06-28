@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>kenwheeler.slick: ajax update</title>
+    <link href="../vendor/components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/kenwheeler/slick/slick/slick.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/kenwheeler/slick/slick/slick-theme.css" rel="stylesheet" type="text/css" />
+    <link href="theme.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="slideshowA"></div><br>
+    <select id="order_by">
+    <option value="asc">น้อยไปมาก</option>
+    <option value="desc">มากไปน้อย</option>
+    <option value="random">สุ่ม</option>
+    </select>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script src="../vendor/kenwheeler/slick/slick/slick.min.js"></script>
+    <script>
+        $(function() {
+
+            var order_by = $('#order_by');
+            var slideshowA = $('#slideshowA');
+
+            function getSliderSettings() {
+                return {
+                    "autoplay": false,
+                    "autoplaySpeed": 3000,
+                    "centerMode": true,
+                    "infinite": false,
+                    "slidesToScroll": 4,
+                    "slidesToShow": 4,
+                    "speed": 300,
+                    "variableWidth": true,
+                    "zIndex": 2
+                }
+            }
+
+            function getSlideShow() {
+
+                $.ajax({
+                    "data": {
+                        "order_by": order_by.val(),
+                    },
+                    "success": function(data, textStatus, jqXHR) {
+
+                        /* add items */
+                        $.each(data.datas, function(index, value) {
+                            slideshowA.append('<div><b>' + index + '</b><img alt="' + index + '" src="' + value + '"><p>แสดง ' + index + ' จาก http://www.avatarsdb.com</p></div>');
+                        });
+
+                        slideshowA.slick('unslick'); /* ONLY remove the classes and handlers added on initialize */
+                        $('.my-slide').remove(); /* Remove current slides elements, in case that you want to show new slides. */
+                        slideshowA.slick(getSliderSettings()); /* Initialize the slick again */
+
+                        alert('ทดลองดูครับ');
+
+                    },
+                    "url": "ajax.php",
+                });
+
+            }
+
+            order_by.change(function() {
+                getSlideShow();
+            });
+
+            getSlideShow();
+            slideshowA.slick(getSliderSettings());
+        });
+    </script>
+</body>
+
+</html>
