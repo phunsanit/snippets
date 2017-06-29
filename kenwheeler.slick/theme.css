@@ -16,39 +16,51 @@ body {
   content: "\f105";
 }
 
+.slick-dots li button {
+  color: #d91a86;
+}
+
 .slick-slide {
   background: #fff;
   border-radius: 5px;
   border: #000 solid 1px;
   height: 100px;
   margin: 10px 10px 4px 10px;
-  width: 250px;
   overflow: hidden;
+  width: 250px;
 }
 
 .slick-slide b {
   background: #c00000;
   height: 20px;
+  left: 10px;
   padding: 0 10px;
   position: relative;
-  left: 10px;
   z-index: 1;
 }
 
 .slick-slide img {
-  position: relative;
   height: 100%;
+  position: relative;
   top: -15px;
 }
 
 .slick-slide p {
   color: #000;
+  display: block;
+  left: 100px;
   padding: 5px;
   position: relative;
   top: -120px;
-  display: block;
   width: 150px;
-  left: 100px;
+}
+
+.slickContainer {
+  background: #1f6d38;
+  color: #333;
+  margin: 0 auto;
+  padding: 40px;
+  width: 80%;
 }
 
 #slideshowA {
