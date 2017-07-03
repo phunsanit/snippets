@@ -46,7 +46,6 @@ function iCheckChange(filtersTableArea, filtersTableObject, dataTableObject) {
     });
 }
 
-
 function iCheckCopy(dataTableObject, filtersTableObject, pkField) {
     $('#copyBtn').click(function() {
 

@@ -6,7 +6,7 @@ $(function() {
         "ajax": {
             "data": function(parameters) {},
             "method": "POST",
-            "url": "DataTables.json.php",
+            "url": "data.json.php",
         },
         "columns": [{
                 "orderable": false,
@@ -46,6 +46,11 @@ $(function() {
                 "data": "PROVINCE_NAME",
                 "title": "Province Name",
             }
+        ],
+        /* default sort */
+        "order": [
+            [3, "asc"],
+            [4, "asc"],
         ],
         "processing": true,
         "serverSide": true,

@@ -76,13 +76,30 @@ if (isset($_REQUEST['filters']) || isset($_REQUEST['search']['value'])) {
         }
     }
 
-    if (count($parameters)) {
-        $where = ' WHERE ' . implode("\n\t AND ", $condition);
-    }
+}
 
+if (isset($_REQUEST['geo_id']) && $_REQUEST['geo_id'] != '') {
+    $parameter = ':d_geo_id';
+
+    $parameters[$parameter] = $_REQUEST['geo_id'];
+    array_push($condition, 'd.GEO_ID = ' . $parameter);
+}
+
+if (count($parameters)) {
+    $where = ' WHERE ' . implode("\n\t AND ", $condition);
+}
+
+if (isset($_REQUEST['order']) && isset($_REQUEST['order'][0])) {
+    $columns = [
+        0 => 'DISTRICT_NAME',
+        3 => 'DISTRICT_CODE',
+        4 => 'DISTRICT_NAME',
+        5 => 'PROVINCE_NAME',
+    ];
+
+    $order = ' ORDER BY ' . $columns[$_REQUEST['order'][0]['column']] . ' ' . strtoupper($_REQUEST['order'][0]['dir']);
 } else {
-    $parameters = [];
-    $where = '';
+    $order = ' ORDER BY DISTRICT_NAME ASC';
 }
 
 $output['debug']['parameters'] = $parameters;
@@ -97,21 +114,21 @@ try {
     exit($e->getMessage());
 }
 
-if ($output['recordsTotal'] > 0 || 1 == 1) {
-    $sql = 'SELECT d.DISTRICT_ID, d.DISTRICT_CODE, d.DISTRICT_NAME, p.PROVINCE_NAME' . $from . $where . " ORDER BY DISTRICT_NAME ASC LIMIT $start, $pageLength;";
+if ($output['recordsTotal'] > 0) {
+    $sql = 'SELECT d.enable, d.DISTRICT_ID, d.DISTRICT_CODE, d.DISTRICT_NAME, p.PROVINCE_NAME' . $from . $where . $order . " LIMIT $start, $pageLength;";
 
     try {
         $output['debug']['sqlResult'] = $sql;
         $stmt = $dns->prepare($sql);
         $stmt->execute($parameters);
         $output['data'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $output['recordsFiltered'] = (int) $stmt->rowCount();
+        $output['recordsFiltered'] = $output['recordsTotal'];
     } catch (PDOException $e) {
         exit($e->getMessage());
     }
 }
 
-/* for security */
+/* unset debug for security */
 unset($output['debug']);
 
 header('Content-type: application/json; charset=utf-8');
