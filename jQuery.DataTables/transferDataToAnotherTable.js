@@ -9,7 +9,7 @@ $(function() {
             "ajax": {
                 "data": function(parameters) {},
                 "method": "POST",
-                "url": "DataTables.json.php",
+                "url": "data.json.php",
             },
             "columns": [{
                     "orderable": false,
