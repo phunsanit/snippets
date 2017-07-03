@@ -23,21 +23,18 @@
         $(function() {
 
             var order_by = $('#order_by');
-            var slideshowA = $('#slideshowA');
-
-            function getSliderSettings() {
-                return {
-                    "autoplay": false,
-                    "autoplaySpeed": 3000,
-                    "centerMode": true,
-                    "infinite": false,
-                    "slidesToScroll": 4,
-                    "slidesToShow": 4,
-                    "speed": 300,
-                    "variableWidth": true,
-                    "zIndex": 2
-                }
+            var slickSettings = {
+                "autoplay": false,
+                "autoplaySpeed": 3000,
+                "centerMode": true,
+                "infinite": false,
+                "slidesToScroll": 4,
+                "slidesToShow": 4,
+                "speed": 300,
+                "variableWidth": true,
+                "zIndex": 2
             }
+            var slideshowA = $('#slideshowA');
 
             function getSlideShow() {
 
@@ -54,7 +51,7 @@
 
                         slideshowA.slick('unslick'); /* ONLY remove the classes and handlers added on initialize */
                         $('.my-slide').remove(); /* Remove current slides elements, in case that you want to show new slides. */
-                        slideshowA.slick(getSliderSettings()); /* Initialize the slick again */
+                        slideshowA.slick(slickSettings); /* Initialize the slick again */
 
                         alert('ทดลองดูครับ');
 
@@ -69,7 +66,7 @@
             });
 
             getSlideShow();
-            slideshowA.slick(getSliderSettings());
+            slideshowA.slick(slickSettings);
         });
     </script>
 </body>
