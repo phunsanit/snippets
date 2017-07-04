@@ -6,10 +6,10 @@ $(function() {
     datatable = tableA.DataTable({
         "ajax": {
             "beforeSend": function(jqXHR, settings) {
-
                 /* add value form from to DataTable params */
-                settings.data += '&' + formA.serialize();
+                settings.data = formA.serialize() + '&' + settings.data;
 
+                /* validation */
                 var params = new URLSearchParams(settings.data);
 
                 /* user must selected region if enable advance search */
@@ -21,7 +21,11 @@ $(function() {
 
                 return true;
             },
-            "data": function(parameters) {},
+            "dataSrc": function(json) {
+                alert('data back ' + json.data.length + ' items');
+
+                return json.data;
+            },
             "method": "POST",
             "url": "data.json.php",
         },

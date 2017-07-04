@@ -6,6 +6,7 @@
     <meta name="author" content="Pitt Phunsanit">
     <title>DataTables: datas from ajax</title>
     <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
     <link href="../vendor/datatables/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -14,19 +15,59 @@
     <table class="table table-bordered table-hover table-striped" id="tableA" width="100%"></table>
     <script src="../vendor/components/jquery/jquery.min.js"></script>
     <script src="../vendor/datatables/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/datatables/media/js/dataTables.bootstrap.min.js"></script>
     <script>
 $(function() {
 
     tableA = $('#tableA');
 
     datatable = tableA.DataTable({
-	"aoColumns": [{
+/*	"aoColumns": [{
 		"sWidth": "10%"
-	}],
+	}],*/
 
-	"data":[],
+        "columns": [{
+                "orderable": false,
+                "render": function(data, type, row, meta) {
+                    return parseInt(meta.row) + parseInt(meta.settings._iDisplayStart) + 1;
+                },
+                "title": 'No.',
+                "width": "10px",
+            },
+            {
+                "orderable": false,
+                "render": function(data, type, row, meta) {
+                    return '<input type="checkbox" value="' + row.DISTRICT_CODE + '">';
+                },
+                "title": '<input class="checkAll" type="checkbox">',
+                "width": "10px",
+            },
+            {
+                "orderable": false,
+                "render": function(data, type, row, meta) {
+                    if (row.enable == '1') {
+                        return '<span class="glyphicon glyphicon-ok"></span>';
+                    } else {
+                        return '<span class="glyphicon glyphicon-remove"></span>';
+                    }
+                },
+                "title": "Enable",
+                "width": "10px",
+            }, {
+                "data": "DISTRICT_CODE",
+                "title": "District Code",
+                "width": "90px",
+            }, {
+                "data": "DISTRICT_NAME",
+                "title": "District Name",
+            }, {
+                "data": "PROVINCE_NAME",
+                "title": "Province Name",
+            }
+        ],
 
-
+   /*     "processing": false,
+        "serverSide": true,*/
 });
 
     $('.checkAll', tableA).click(function() {
@@ -41,9 +82,20 @@ $(function() {
 
 
 	            datatable
-	            .clear()
-	            .rows.add(data.data)
-	            .draw();
+	            .clear();
+
+console.log(datatable.settings())
+
+
+datatable.settings().length =999;
+
+
+	            datatable.rows.add(data);
+
+	  datatable.settings().length =999;
+
+	            datatable.draw();
+
 	        },
             "url": "data.json.php",
         });

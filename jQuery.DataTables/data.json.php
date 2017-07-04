@@ -1,44 +1,18 @@
 <?php
-
 /* https://datatables.net/manual/server-side */
-
-if (isset($_REQUEST['draw'])) {
-    $draw = (int) $_REQUEST['draw'];
-} else {
-    $draw = (int) 0;
-}
-
-if (isset($_REQUEST['length'])) {
-    $pageLength = (int) $_REQUEST['length'];
-} else {
-    $pageLength = (int) 10;
-}
-
-if (isset($_REQUEST['page'])) {
-    $page = (int) $_REQUEST['page'];
-} else {
-    $page = (int) 1;
-}
-
-if (isset($_REQUEST['start'])) {
-    $start = (int) $_REQUEST['start'];
-} else {
-    $start = ($page - 1) * $pageLength;
-}
 
 $output = [
     'data' => [],
     'debug' => [
-        'length' => $pageLength,
+        'length' => $_REQUEST['length'],
         'post' => $_REQUEST,
         'sqlCount' => '',
         'sqlResult' => '',
-        'start' => $start,
+        'start' => $_REQUEST['start'],
     ],
-    'draw' => $draw,
-    'recordsFiltered' => $pageLength,
+    'draw' => $_REQUEST['draw'],
+    'recordsFiltered' => $_REQUEST['length'],
     'recordsTotal' => 0,
-
 ];
 
 $dns = new PDO('mysql:host=localhost;dbname=snippets', 'root', '', [
@@ -104,7 +78,8 @@ if (isset($_REQUEST['order']) && isset($_REQUEST['order'][0])) {
 
 $output['debug']['parameters'] = $parameters;
 
-$sql = 'SELECT COUNT(d.DISTRICT_ID)' . $from . $where;
+/* Total records, before filtering */
+$sql = 'SELECT COUNT(d.DISTRICT_ID)' . $from;
 try {
     $output['debug']['sqlCount'] = $sql;
     $stmt = $dns->prepare($sql);
@@ -114,15 +89,26 @@ try {
     exit($e->getMessage());
 }
 
+/* Total records, after filtering */
+$sql = 'SELECT COUNT(d.DISTRICT_ID)' . $from . $where;
+try {
+    $output['debug']['sqlCount'] = $sql;
+    $stmt = $dns->prepare($sql);
+    $stmt->execute($parameters);
+    $output['recordsFiltered'] = (int) $stmt->fetchColumn(0);
+} catch (PDOException $e) {
+    exit($e->getMessage());
+}
+
+/* data */
 if ($output['recordsTotal'] > 0) {
-    $sql = 'SELECT d.enable, d.DISTRICT_ID, d.DISTRICT_CODE, d.DISTRICT_NAME, p.PROVINCE_NAME' . $from . $where . $order . " LIMIT $start, $pageLength;";
+    $sql = 'SELECT d.enable, d.DISTRICT_ID, d.DISTRICT_CODE, d.DISTRICT_NAME, p.PROVINCE_NAME' . $from . $where . $order . " LIMIT " . $_REQUEST['start'] . ", " . $_REQUEST['length'] . ";";
 
     try {
         $output['debug']['sqlResult'] = $sql;
         $stmt = $dns->prepare($sql);
         $stmt->execute($parameters);
         $output['data'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $output['recordsFiltered'] = $output['recordsTotal'];
     } catch (PDOException $e) {
         exit($e->getMessage());
     }
