@@ -115,18 +115,20 @@ foreach ($datas as $item) {
                     $value = $item[$fieldId];
 
                     $gdImage = imagecreatefromjpeg($value);
-                    $objDrawing = new PHPExcel_Worksheet_MemoryDrawing(); //create object for Worksheet drawing
+                    $objDrawing = new PHPExcel_Worksheet_MemoryDrawing(); /*create object for Worksheet drawing*/
 
-                    $objDrawing->setCoordinates($coordinate); //set image to cell
-                    $objDrawing->setDescription('Customer Signature'); //set description to image
+                    $objDrawing->setCoordinates($coordinate); /*set image to cell*/
+                    $objDrawing->setDescription('Customer Signature'); /*set description to image*/
                     $objDrawing->setHeight(50);
                     $objDrawing->setImageResource($gdImage);
-                    $objDrawing->setName('Customer Signature'); //set name to image
-                    $objDrawing->setOffsetX(25); //setOffsetX works properly
-                    $objDrawing->setOffsetY(10); //setOffsetY works properly
-                    $objDrawing->setWidth(100); //set width, height
+                    $objDrawing->setName('Customer Signature'); /*set name to image*/
+                    $objDrawing->setOffsetX(25); /*setOffsetX works properly*/
+                    $objDrawing->setOffsetY(10); /*setOffsetY works properly*/
+                    $objDrawing->setWidth(100); /*set width, height*/
 
-                    $objDrawing->setWorksheet($objWorkSheet); //save
+                    $objDrawing->setWorksheet($objWorkSheet); /*save*/
+
+                    $objWorkSheet->getRowDimension($rowNo)->setRowHeight(60); /* set row height*/
                 }break;
 
             case 'row_number':{
