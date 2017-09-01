@@ -1,8 +1,10 @@
 <?php
+ini_set('max_execution_time', 0);
+ini_set('memory_limit', '-1');
 
-include '../vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
+include '../vendor/autoload.php';
 
-set_time_limit(0);
+use PHPExcel;
 
 $objPHPExcel = new PHPExcel();
 

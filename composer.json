@@ -24,7 +24,8 @@
         "datatables/datatables": "*",
         "kenwheeler/slick": "*",
         "php-amqplib/php-amqplib": "*",
-        "phpoffice/phpexcel": "*",
+        "phpoffice/phpexcel": "^1.8",
+        "PHPOffice/PHPWord": "^0.13.0",
         "twbs/bootstrap": "*"
     },
     "type": "project"

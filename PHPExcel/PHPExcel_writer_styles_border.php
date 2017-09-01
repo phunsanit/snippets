@@ -269,10 +269,10 @@ foreach ($bordersLine as $name => $style) {
 
 /* write */
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="' . $title . '.xlsx"');
 header('Cache-Control: max-age=0');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Cache-Control: post-check=0, pre-check=0', false);
+header('Content-Disposition: attachment;filename="' . $title . '.xlsx"');
+header('Content-Type: application/vnd.ms-excel');
 header('Pragma: no-cache');
 $objWriter->save('php://output');
