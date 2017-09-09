@@ -1,6 +1,6 @@
 <?php
 
-include 'vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
+include '../vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
 
 $objPHPExcel = new PHPExcel();
 

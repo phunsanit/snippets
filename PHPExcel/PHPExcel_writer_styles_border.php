@@ -2,7 +2,7 @@
 
 /* http://stackoverflow.com/questions/27764204/how-to-do-the-phpexcel-outside-border */
 /* PHPExcel_IOFactory - Reader */
-include 'vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
+include '../vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
 
 $objPHPExcel = new PHPExcel();
 

@@ -23,6 +23,7 @@
         "components/jqueryui": "*",
         "datatables/datatables": "*",
         "kenwheeler/slick": "*",
+        "krustnic/docx-merge": "^1.0",
         "php-amqplib/php-amqplib": "*",
         "phpoffice/phpexcel": "^1.8",
         "PHPOffice/PHPWord": "^0.13.0",
