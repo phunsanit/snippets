@@ -1,10 +1,6 @@
 version: "2"
 services:
 
-  composer:
-      container_name: composer
-      image: composer
-
   mariadb:
       command: mysqld --innodb-buffer-pool-size=20M
       container_name: lemp_mariadb
@@ -18,6 +14,7 @@ services:
       ports:
         - 3306:3306
       volumes:
+        - ./logs/mysql/:/var/log/mysql:rw
         - ./mysql/conf/:/docker-entrypoint-initdb.d
         - ./mysql/data/:/var/lib/mysql:rw
 
@@ -54,6 +51,8 @@ services:
       environment:
         - PMA_HOST=mariadb
       image: phpmyadmin/phpmyadmin
+      links:
+       - mariadb
       ports:
         - "8000:80"
       restart: always
