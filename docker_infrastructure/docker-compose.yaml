@@ -1,5 +1,9 @@
-version: '3'
+version: "2"
 services:
+
+  composer:
+      container_name: composer
+      image: composer
 
   mariadb:
       command: mysqld --innodb-buffer-pool-size=20M
