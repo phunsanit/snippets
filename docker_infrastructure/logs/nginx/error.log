@@ -1,0 +1,2 @@
+2017/09/26 10:17:23 [emerg] 1#1: host not found in upstream "php" in /etc/nginx/conf.d/backend.conf:23
+2017/09/26 10:34:37 [emerg] 1#1: host not found in upstream "php" in /etc/nginx/conf.d/backend.conf:23
