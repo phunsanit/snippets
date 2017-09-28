@@ -1,0 +1,6 @@
+mysqld, Version: 10.2.8-MariaDB-10.2.8+maria~jessie (mariadb.org binary distribution). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+		   50 Query	SHOW GLOBAL VARIABLES WHERE Variable_name="general_log_file"
+		   50 Quit	
+		   51 Quit	

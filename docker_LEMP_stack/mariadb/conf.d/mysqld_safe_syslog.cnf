@@ -1,0 +1,6 @@
+[mysqld_safe]
+#skip_log_error
+#syslog
+
+general-log-file=/var/log/mysql/general.log
+general-log=1
