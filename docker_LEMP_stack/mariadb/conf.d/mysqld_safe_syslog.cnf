@@ -2,5 +2,5 @@
 #skip_log_error
 #syslog
 
-general-log-file=/var/log/mysql/general.log
-general-log=1
+#general_log=1
+#general_log_file=/var/log/mysql/general_log_file.log
