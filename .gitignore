@@ -1,5 +1,9 @@
 !.gitignore
+!docker_infrastructure/logs/
+!docker_infrastructure/mysql/data/
+!temp/
 !vendor/
 docker_infrastructure/logs/
 docker_infrastructure/mysql/data/
-temp
+temp/
+vendor/
