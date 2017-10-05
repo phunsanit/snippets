@@ -1,5 +1,12 @@
-version: "3.3"
+version: "3.2"
 services:
+
+  composer:
+    command: ['install --ignore-platform-reqs', 'dump-autoload --optimize']
+    container_name: ${APPLICATION_ALIAS}-composer
+    image: composer
+    volumes:
+      - ./www:/application:rw
 
   mariadb:
     build:
@@ -10,13 +17,15 @@ services:
           - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
           - MYSQL_USER=${MYSQL_USER}
       context: ./mariadb
+    command: mysqld --innodb-buffer-pool-size=20M
     container_name: ${APPLICATION_ALIAS}-mariadb
     ports:
       - "${MYSQL_PORT}:3306"
-    #volumes:
-      #- ./logs/mariadb/:/var/log
-      #- ./mariadb/conf.d/:/etc/mysql/conf.d
-      #- ./mariadb/conf.d/:/etc/mysql/mariadb.conf.d:rw
+    volumes:
+      - ./logs/mariadb/:/var/log:rw
+      - ./mariadb/conf.d/:/etc/mysql/conf.d
+      - ./mariadb/dataInit:/docker-entrypoint-initdb.d
+      #- ./mariadb/conf.d/:/etc/mysql/mariadb.conf.d
       #- ./mariadb/data/:/var/lib/mysql
 
   memcached:
@@ -52,3 +61,7 @@ services:
      - mariadb
     ports:
       - "8000:80"
+
+#  phpunit:
+#    container_name: ${APPLICATION_ALIAS}-phpunit
+#    image: phpunit/phpunit

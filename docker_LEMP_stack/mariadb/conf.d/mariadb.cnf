@@ -33,3 +33,8 @@ max_binlog_size         = 100M
 
 # Import all .cnf files from configuration directory
 !includedir /etc/mysql/mariadb.conf.d/
+
+innodb_buffer_pool_size = 16M
+
+default-storage-engine=myisam
+skip_innodb

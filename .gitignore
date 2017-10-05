@@ -1,9 +1,9 @@
 !.gitignore
-!docker_infrastructure/logs/
-!docker_infrastructure/mysql/data/
+!docker_LEMP_stack/logs/
+!docker_LEMP_stack/mariadb/data/
 !temp/
 !vendor/
-docker_infrastructure/logs/
-docker_infrastructure/mysql/data/
+docker_LEMP_stack/logs/
+docker_LEMP_stack/mariadb/data/
 temp/
 vendor/
