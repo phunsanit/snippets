@@ -58,7 +58,7 @@ $(function() {
             ],
             "processing": true,
             "serverSide": true,
-            "stateSave": true,
+            "stateSave": true
         })
         .on('draw', function(event, settings, json, xhr) {
             /* add style to checkbox, radio */
@@ -113,7 +113,7 @@ $(function() {
                     "data": "PROVINCE_NAME",
                     "title": "Province Name",
                 }
-            ],
+            ]
         })
         .on('draw', function(event, settings, json, xhr) {
             /* add style to checkbox, radio */

@@ -31,7 +31,7 @@ function iCheckChange(filtersTableArea, filtersTableObject, dataTableObject) {
 
         var row = $(this).closest('tr');
 
-        var data = dataTableObject.row(row).data();
+        var data = filtersTableObject.row(row).data();
 
         if ($(this).is(':checked')) {
             $(this).attr('checked', 1);
@@ -40,7 +40,7 @@ function iCheckChange(filtersTableArea, filtersTableObject, dataTableObject) {
             $(this).attr('checked', 0);
             data.enable = false;
         }
-        dataTableObject.row(row).data(data);
+        filtersTableObject.row(row).data(data);
 
         iCheckInit(row);
     });
