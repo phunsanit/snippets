@@ -29,5 +29,8 @@
         "PHPOffice/PHPWord": "^0.13.0",
         "twbs/bootstrap": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
     "type": "project"
 }
