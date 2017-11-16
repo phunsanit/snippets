@@ -1,14 +1,13 @@
 <?php
 header('Cache-Control: no-cache, no-store, must-revalidate');
-header('Pragma: no-cache');
 header('Expires: 0');
+header('Pragma: no-cache');
 
 $token = 'HH89VOiirgXlCdEqDrFs';
 $url = 'http://192.168.12.170/snippets/PHP/curl_api_response.php';
 
 $post = [
-    //'file' => 'test.docx',
-    'getmama' => 'C:\OnlineService Documents\201705\ONLINE-MAY2017-000047\7d769dc323376f761cf3621de9fa8059.pdf',
+    'file' => 'test.docx',
     'token' => $token,
 ];
 
