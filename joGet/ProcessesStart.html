@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>joGet: JSON API Authentication</title>
+</head>
+<body>
+    <div id="successA"></div>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script>
+        $(function(){
+
+            $.ajax({
+                "data": {
+                    "j_hash": "0BFE8A96A38E8CD3A20F40947631F568",
+                    "j_username": "admin",
+
+                    "processDefId": "send_email",
+
+                    "var_mailBcc": "bcc",
+                    "var_mailCc": "cc",
+                    "var_mailMessage": "msg",
+                    "var_mailTo": "to",
+                },
+                "dataType": "json",
+                "success": function(data, textStatus, jqXHR) {
+                    $('#successA').html(JSON.stringify(data));
+                },
+                "type": "POST",
+                "url": 'http://localhost:8080/jw/web/json/workflow/process/start'
+                //http://localhost:8080/jw/web/client/app/develop/1/process/send_email?start=true
+            });
+
+        });
+    </script>
+</body>
+</html>
