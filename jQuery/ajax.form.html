@@ -15,15 +15,13 @@
             <div class="col-sm-10">
                 <div class="radio">
                     <label>
-    <input checked name="way" type="radio" value="socialid">
-    หมายเลขบัตรประชาชน
-  </label>
+                        <input checked name="way" type="radio" value="socialid"> หมายเลขบัตรประชาชน
+                    </label>
                 </div>
                 <div class="radio">
                     <label>
-    <input name="way" type="radio" value="phone">
-    หมายเลขโทรศัพท์
-  </label>
+                        <input name="way" type="radio" value="phone"> หมายเลขโทรศัพท์
+                    </label>
                 </div>
             </div>
         </div>
@@ -52,20 +50,21 @@
             <div class="col-sm-10 text-right">
                 <button type="submit" class="btn btn-success">โอนเงิน</button>
             </div>
+        </div>
     </form>
     <div class="col-sm-12" id="resultA"></div>
     <script src="../vendor/components/jquery/jquery.min.js"></script>
     <script>
-        $(function() {
+        $(function () {
             var formA = $('#formA');
 
-            formA.submit(function(event) {
+            formA.submit(function (event) {
                 event.preventDefault();
 
                 $.ajax({
                     "data": formA.serialize(),
                     "method": "POST",
-                    "success": function(data, textStatus, jqXHR) {
+                    "success": function (data, textStatus, jqXHR) {
                         $('#resultA').html(data);
                     },
                     "url": "values.php",

@@ -1,37 +1,39 @@
 {
-    "authors": [{
-        "email": "phunsanit@hotmail.com",
-        "homepage": "http://plusmagi.com",
-        "name": "pitt phunsanit",
-        "role": "Developer"
-    }],
-    "description": "snippet",
-    "homepage": "http://plusmagi.com",
-    "license": "mit",
-    "config": {
-        "preferred-install": "dist",
-        "bin-dir": "vendor/bin/",
-        "secure-http": false
-    },
-    "minimum-stability": "stable",
-    "name": "pitt/snippet",
-    "require": {
-        "ckeditor/ckeditor": "*",
-        "components/font-awesome": "*",
-        "components/jquery": "*",
-        "components/jquery-migrate": "*",
-        "components/jqueryui": "*",
-        "datatables/datatables": "*",
-        "kenwheeler/slick": "*",
-        "krustnic/docx-merge": "^1.0",
-        "php-amqplib/php-amqplib": "*",
-        "phpmailer/phpmailer": "*",
-        "phpoffice/phpexcel": "^1.8",
-        "PHPOffice/PHPWord": "^0.13.0",
-        "twbs/bootstrap": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "*"
-    },
-    "type": "project"
+  "authors": [
+    {
+      "email": "phunsanit@hotmail.com",
+      "homepage": "http://plusmagi.com",
+      "name": "pitt phunsanit",
+      "role": "Developer"
+    }
+  ],
+  "description": "snippet",
+  "homepage": "http://plusmagi.com",
+  "license": "mit",
+  "config": {
+    "preferred-install": "dist",
+    "bin-dir": "vendor/bin/",
+    "secure-http": false
+  },
+  "minimum-stability": "stable",
+  "name": "pitt/snippet",
+  "require": {
+    "ckeditor/ckeditor": "*",
+    "components/font-awesome": "*",
+    "components/jquery": "*",
+    "components/jquery-migrate": "*",
+    "components/jqueryui": "*",
+    "datatables/datatables": "*",
+    "kenwheeler/slick": "*",
+    "krustnic/docx-merge": "^1.0",
+    "php-amqplib/php-amqplib": "*",
+    "phpmailer/phpmailer": "*",
+    "phpoffice/PhpSpreadsheet": "*",
+    "PHPOffice/PHPWord": "^0.13.0",
+    "twbs/bootstrap": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "type": "project"
 }
