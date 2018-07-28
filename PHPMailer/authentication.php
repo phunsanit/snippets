@@ -13,35 +13,35 @@ $subject = 'Authentication';
 $to = 'getcrud@gmail.com';
 
 try {
-	$mail = new PHPMailer;
-	//$mail->isSendmail();
+    $mail = new PHPMailer;
+    //$mail->isSendmail();
 
-	/* Server settings connect กับ smtp server */
-	$mail->Host = $smtp_host;
-	$mail->isSMTP();
-	$mail->Password = $smtp_password;
-	$mail->Port = $smtp_port;
-	$mail->SMTPAuth = true;
-	//$mail->SMTPSecure = 'tls';
-	$mail->Username = $smtp_username;
+    /* Server settings connect กับ smtp server */
+    $mail->Host = $smtp_host;
+    $mail->isSMTP();
+    $mail->Password = $smtp_password;
+    $mail->Port = $smtp_port;
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'tls';
+    $mail->Username = $smtp_username;
 
-	$mail->SMTPDebug = 2;
-	$mail->Debugoutput = 'html';
+    $mail->SMTPDebug = 2;
+    $mail->Debugoutput = 'html';
 
-	$mail->addAddress($to);
+    $mail->addAddress($to);
 
-	$mail->From = $smtp_username;
+    $mail->From = $smtp_username;
 
-	$mail->IsHTML(true);
-	$mail->msgHTML($message);
-	$mail->Subject = $subject;
+    $mail->IsHTML(true);
+    $mail->msgHTML($message);
+    $mail->Subject = $subject;
 
-	if ($mail->send()) {
-		echo 'ส่งอีเมล์สำเร็จ';
-	} else {
-		echo 'ส่งอีเมล์ไม่สำเร็จ';
-	}
+    if ($mail->send()) {
+        echo 'ส่งอีเมล์สำเร็จ';
+    } else {
+        echo 'ส่งอีเมล์ไม่สำเร็จ';
+    }
 } catch (Exception $e) {
-	echo 'Message could not be sent.';
-	echo 'Mailer Error: ' . $mail->ErrorInfo;
+    echo 'Message could not be sent.';
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
 }

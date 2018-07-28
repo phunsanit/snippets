@@ -60,6 +60,7 @@
             </tr>
         </tfoot>
     </table>
+    <button class="btn" id="updateBtn" type="button">Update</button>
     <script src="../vendor/components/jquery/jquery.min.js"></script>
     <script src="jquery-calx-2.2.7.min.js"></script>
     <script>
@@ -95,6 +96,13 @@
             });
 
             sheetA.calx();
+
+            $('#updateBtn').on('click', function() {
+                var acf = prompt("New ACF value", 1234);
+                $('input[name="ACF"]', sheetA).val(acf);
+                sheetA.calx('update').calx('calculate');
+            });
+
         });
     </script>
 </body>
