@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery: textarea newline</title>
+    <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <h1>Textarea newline</h1>
+    <form action="values.php" class="form-horizontal" id="formA" method="post">
+        <div class="form-group">
+            <label for="detail">Example textarea</label>
+            <textarea class="form-control" id="detail" rows="10"></textarea>
+        </div>
+    </form>
+    <div class="col-sm-12" id="resultA"></div>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let textarea = $('#detail');
+
+            function format() {
+                let temp = textarea.val().split('\n').join('').split('@').join('\n@').replace(/^\s/, '');
+                textarea.val(temp);
+            }
+
+            format();
+            textarea.on('change', function () {
+                format();
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery: Form Send</title>
+    <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <h1>พร้อมเพย์ (PromptPay)</h1>
+    <form action="values.php" class="form-horizontal" id="formA" method="post">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">โอนเงินด้วย</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label>
+                        <input checked name="way" type="radio" value="socialid"> หมายเลขบัตรประชาชน
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="way" type="radio" value="phone"> หมายเลขโทรศัพท์
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="socialidI">หมายเลขบัตรประชาชน</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="socialidI" maxlength="13" name="socialid" placeholder="หมายเลขบัตรประชาชน" type="number">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="phoneI">หมายเลขโทรศัพท์</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="phoneI" maxlength="11" name="phone" placeholder="หมายเลขโทรศัพท์" type="tel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="amount" class="col-sm-2 control-label">จำนวนเงิน</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input class="form-control" id="amount" max="5000" min="0" name="amount" placeholder="จำนวนเงิน" type="number">
+                    <div class="input-group-addon">&#3647;</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10 text-right">
+                <button type="submit" class="btn btn-success">โอนเงิน</button>
+            </div>
+        </div>
+    </form>
+    <div class="col-sm-12" id="resultA"></div>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var formA = $('#formA');
+
+            formA.submit(function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    "data": formA.serialize(),
+                    "method": "POST",
+                    "success": function (data, textStatus, jqXHR) {
+                        $('#resultA').html(data);
+                    },
+                    "url": "values.php",
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

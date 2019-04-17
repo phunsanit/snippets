@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Google Maps APIs > Maps JavaScript API > HTML5 Geolocation</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <h3>HTML5 Geolocation</h3>
+      <dl>
+        <dt>latitude</dt>
+        <dd id="latitudeA"></dd>
+        <dt>longitude</dt>
+        <dd id="longitudeA"></dd>
+      </dl>
+    </div>
+    <div class="col-md-10 map" id="mapA"></div>
+  </div>
+</div>
+<script>
+var infoWindow;
+var map;
+var position = false;
+
+/* function createMaps */
+function createMap(mapArea, position) {
+    var latlng = new google.maps.LatLng(parseFloat(position.latitude), parseFloat(position.longitude));
+    var infoWindow = new google.maps.InfoWindow;
+    var map = new google.maps.Map(document.getElementById(mapArea), {
+        "zoom": 18
+    });
+
+    map.setCenter(latlng);
+
+    var marker = new google.maps.Marker({
+        "map": map,
+        "position": latlng,
+    });
+
+    infoWindow.open(map, marker);
+    infoWindow.setContent('Latitude = ' + position.latitude + ', ' + ' longitude = ' + position.longitude);
+    infoWindow.setPosition(latlng);
+}
+
+/* get position from HTML5 Geolocation */
+function getGeolocation() {
+    var position = false;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(successCallback, errorCallback) {
+
+            position = successCallback.coords;
+
+            document.getElementById('latitudeA').innerHTML = successCallback.coords.latitude;
+            document.getElementById('longitudeA').innerHTML = successCallback.coords.longitude;
+
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        /*Browser doesn't support Geolocation*/
+        handleLocationError(false, infoWindow, map.getCenter());
+
+        return false;
+    }
+
+    return position;
+}
+
+/* show error of HTML5 Geolocation */
+function handleLocationError(browserHasGeolocation, infoWindow, position) {
+    infoWindow.setPosition(position);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
+
+function initMap(defaultLatitude = 13.7651991, defaultLongitude = 100.5368694) {
+    position = getGeolocation();
+
+    if (position == false || position == null || position === undefined || position.length <= 0 || typeof position == 'undefined') {
+        position = {
+            "latitude": defaultLatitude,
+            "longitude": defaultLongitude,
+        };
+    }
+
+    createMap('mapA', position);
+}
+</script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
+</body>
+</html>

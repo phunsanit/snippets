@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery Calx: basic</title>
+    <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <table class="table table-bordered table-hover table-striped" id="sheetA" width="100%">
+        <thead>
+            <tr>
+                <td width="58">No.</td>
+                <td width="145">First Name</td>
+                <td width="126">Last Name</td>
+                <td width="135">Relationship to policyholder / main insured</td>
+                <td width="191">Employee name<br /> (main insured)</td>
+                <td width="100">Period<br /> Start Date<br /> (dd/mm/yy)
+                </td>
+                <td width="105">Effetive Date<br /> (dd/mm/yy)
+                </td>
+                <td width="101">Period<br /> End Date<br /> (dd/mm/yy)
+                </td>
+                <td width="109">DOB</td>
+                <td width="51">Age</td>
+                <td width="113">ACF - Vital<br /> Annual Premium</td>
+                <td width="113">Annually Premium included AGA</td>
+                <td width="113">Annual Premium<br /> after 10%<br /> Gr. Discntd</td>
+                <td width="107">Prorated Premium<br /> (USD)
+                </td>
+                <td width="74">Duration Days</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Tianyi</td>
+                <td>Deng</td>
+                <td>Employee</td>
+                <td>-</td>
+                <td>15-May-17</td>
+                <td>20-Oct-17</td>
+                <td>14-May-18</td>
+                <td>24-May-1989</td>
+                <td>27</td>
+                <td data-cell="K24">1,022.00</td>
+                <td data-cell="L24" data-formula="K24+197"></td>
+                <td data-cell="M24" data-formula="L24-(L24*0.1)"></td>
+                <td data-cell="N24" data-formula="-(M24*O24)/365"></td>
+                <td data-cell="O24" data-formula="H24-G24+1"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8"></td>
+                <td colspan="5">Total Premium to be Refund(USD)</td>
+                <td>(622.19)</td>
+                <td data-cell="O25" data-formula="N27"></td>
+            </tr>
+        </tfoot>
+    </table>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script src="jquery-calx-2.2.7.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#sheetA').calx();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<style>
+#cycle2A {
+    background: #c00000;
+    height: 108px;
+}
+
+#cycle2A .nextControl {
+    background: #c0c0c0;
+    display: block;
+    float: right;
+    height: 100%;
+    width: 40px;
+}
+
+#cycle2A .prevControl {
+    background: #c0c0c0;
+    display: block;
+    float: left;
+    height: 100%;
+    width: 40px;
+}
+
+#cycle2A .items {
+    float: left;
+    height: 100%;
+    margin-left: -40px;
+    overflow: hidden;
+    width: calc(100% - (40px * 2));
+}
+#cycle2A .items ul {
+    list-style-type: none;
+    margin: 0px;
+}
+#cycle2A .items ul li {
+    background: #fff;
+    border: solid #000 thin;
+    float: left;
+    height: 100px;
+    margin: 4px 10px 4px 10px;
+    width: 180px;
+}
+</style>
+</head>
+<body>
+<div id="cycle2A">
+<div class="prevControl">Prev</div>
+<div class="items">
+<ul>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+</ul>
+</div><div class="nextControl">Next</div>
+</div>
+<script src="../vendor/components/jquery/jquery.min.js"></script>
+<script src="http://malsup.github.io/min/jquery.cycle2.min.js"></script>
+<script>
+$(function() {
+    var formA = $('#formA');
+
+    formA.submit(function(event) {
+        event.prevControlentDefault();
+
+        $.ajax({
+            "data": formA.serialize(),
+            "method": "POST",
+            "success": function(data, textStatus, jqXHR) {
+                $('#resultA').html(data);
+            },
+            "url": "values.php",
+        });
+    });
+});
+</script>
+</body>
+</html>

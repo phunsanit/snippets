@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Google Maps APIs > Maps JavaScript API > Set Markers</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style>
+.map {
+	border: #c00000 solid thin;
+	height: 100%;
+	min-height: 500px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <h3>Geolocation</h3>
+      <form>
+        <div class="form-group">
+          <label for="latitudeI">Latitude</label>
+          <input class="form-control" id="latitudeI" max="90.000000" min="-90.000000" step="any" type="number">
+        </div>
+        <div class="form-group">
+          <label for="longitudeI">longitude</label>
+          <input class="form-control" id="longitudeI" max="180.000000" min="-180.000000" step="any" type="number">
+        </div>
+        <div class="form-group">
+          <label for="positionsI">positions (Array)</label>
+          <textarea class="form-control" rows="10" id="positionsArrayI"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="positionsI">positions (JSON)</label>
+          <textarea class="form-control" rows="10" id="positionsJSONI"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-10 map" id="map"></div>
+  </div>
+</div>
+<script>
+var infoWindow, map;
+var positions = [];
+
+function addMarker(position, map) {
+    // Add the marker at the clicked location, and add the next-available label
+    // from the array of alphabetical characters.
+    var marker = new google.maps.Marker({
+        "map": map,
+        "position": position,
+    });
+
+    positions.push(position);
+
+    document.getElementById('latitudeI').value = position.lat();
+    document.getElementById('longitudeI').value = position.lng();
+    document.getElementById('positionsArrayI').value = positions;
+    document.getElementById('positionsJSONI').value = JSON.stringify(positions);
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, position) {
+    infoWindow.setPosition(position);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
+
+function initMap() {
+    infoWindow = new google.maps.InfoWindow;
+    map = new google.maps.Map(document.getElementById('map'), {
+        "zoom": 8
+    });
+
+    /*Try HTML5 geolocation.*/
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(successCallback, errorCallback) {
+            var position = {
+                "lat": successCallback.coords.latitude,
+                "lng": successCallback.coords.longitude
+            };
+
+            map.setCenter(position);
+
+            var marker = new google.maps.Marker({
+                "map": map,
+                "position": position,
+            });
+
+            infoWindow.open(map, marker);
+            infoWindow.setContent('Location found.');
+            infoWindow.setPosition(position);
+
+            /*Add listener*/
+            google.maps.event.addListener(map, 'click', function(event) {
+                addMarker(event.latLng, map);
+            });
+
+            document.getElementById('latitudeI').value = successCallback.coords.latitude;
+            document.getElementById('longitudeI').value = successCallback.coords.longitude;
+
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        /*Browser doesn't support Geolocation*/
+        handleLocationError(false, infoWindow, map.getCenter());
+
+    }
+}
+</script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
+</body>
+</html>

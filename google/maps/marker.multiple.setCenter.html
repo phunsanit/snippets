@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Google Maps APIs > Maps JavaScript API > Markers > setCenter</title>
+<link href="../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" rel="stylesheet" type="text/css">
+<link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="map" id="mapA"></div>
+<br>
+<button class="btn" id="deleteBtn" type="button">Delete Marker</button>
+<script src="../../vendor/components/jquery/jquery.min.js"></script>
+<script>
+var map;
+var overlays = [];
+var places = [{
+        "latitude": 13.7485809,
+        "longitude": 100.5832588,
+        "name_en": "Bangkok Hospital",
+        "name_th": "โรงพยาบาล กรุงเทพ ซอยศูนย์วิจัย"
+    }, {
+        "latitude": 13.746166,
+        "longitude": 100.552348,
+        "name_en": "Bumrungrad International Hospital",
+        "name_th": "โรงพยาบาล บำรุงราษฎร์"
+    }, {
+        "latitude": 13.7679658,
+        "longitude": 100.5345264,
+        "name_en": "Phramongkutklao Hospital",
+        "name_th": "โรงพยาบาลพระมงกุฎเกล้า"
+    },
+    {
+        "latitude": 13.7561676,
+        "longitude": 100.5391023,
+        "name_en": "Phyathai 1 Hospital",
+        "name_th": "โรงพยาบาล พญาไท 1"
+    }, {
+        "latitude": 13.7698357,
+        "longitude": 100.5404377,
+        "name_en": "Phyathai 2 Hospital",
+        "name_th": "โรงพยาบาล พญาไท 2 อินเตอร์เนชันแนล"
+    },
+    {
+        "latitude": 13.769295,
+        "longitude": 100.527455,
+        "name_en": "Prasat Neurological Hospital and Institute",
+        "name_th": "สถาบันประสาทวิทยา"
+    }, {
+        "latitude": 13.76188,
+        "longitude": 100.526455,
+        "name_en": "Priest Hospital",
+        "name_th": "โรงพยาบาลสงฆ์"
+    }, {
+        "latitude": 13.7659465,
+        "longitude": 100.5353223,
+        "name_en": "Queen Sirikit National Institute of Child Health",
+        "name_th": "สถาบันสุขภาพเด็กแห่งชาติมหาราชินี"
+    }, {
+        "latitude": 13.7642952,
+        "longitude": 100.5367674,
+        "name_en": "Rajavithi Hospital",
+        "name_th": "โรงพยาบาล ราชวิถี"
+    },
+    {
+        "latitude": 13.766015,
+        "longitude": 100.5267864,
+        "name_en": "Ramathibodi Hospital",
+        "name_th": "โรงพยาบาลรามาธิบดี"
+    },
+    {
+        "latitude": 13.7657804,
+        "longitude": 100.5333703,
+        "name_en": "TropMed Hospital for Tropical Diseases - Faculty of Tropical Medicine, Mahidol University",
+        "name_th": "โรงพยาบาล เวชศาสตร์เขตร้อน ม.มหิดล"
+    }, {
+        "latitude": 13.7719828,
+        "longitude": 100.5515745,
+        "name_en": "Veterans General Hospital",
+        "name_th": "โรงพยาบาล ทหารผ่านศึก"
+    }, {
+        "latitude": 13.7831277,
+        "longitude": 100.5336353,
+        "name_en": "Vichaiyut Hospital (North Building)",
+        "name_th": "โรงพยาบาล วิชัยยุทธ"
+    }, {
+        "latitude": 13.7804061,
+        "longitude": 100.5330211,
+        "name_en": "Vichaiyut Medical Center",
+        "name_th": "ศูนย์การแพทย์วิชัยยุทธ"
+    }, {
+        "latitude": 13.7600024,
+        "longitude": 100.534462,
+        "name_en": "Bhumirajanakarindra Kidney Institute Hospital",
+        "name_th": "โรงพยาบาล สถาบันโรคไตภูมิราชนครินทร์"
+    }
+];
+
+/* function createMaps */
+function createMap(mapArea, position) {
+    var latlng = new google.maps.LatLng(parseFloat(position.latitude), parseFloat(position.longitude));
+    map = new google.maps.Map(document.getElementById(mapArea), {
+        "zoom": 18
+    });
+
+    map.setCenter(latlng);
+
+    var marker = new google.maps.Marker({
+        "map": map,
+        "position": latlng,
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        "content": 'Latitude = ' + position.latitude + ', ' + ' longitude = ' + position.longitude,
+        "position": latlng,
+    }).open(map, marker);
+
+}
+
+function deleteOverlays() {
+    var overlaysLength = overlays.length;
+    if (overlaysLength > 1) {
+        for (var a = 0; a <= overlays.length; a++) {
+            if (typeof overlays[a] !== 'undefined') {
+                overlays[a].setMap(null);
+            }
+        }
+    }
+    overlays = [];
+}
+
+function getCenter(map, places) {
+    $X = 0.0;
+    $Y = 0.0;
+    $Z = 0.0;
+    var placesLength = places.length;
+    for (var a = 0; a < placesLength; a++) {
+        place = places[a];
+
+        $lat = place.latitude * Math.PI / 180;
+        $lon = place.longitude * Math.PI / 180;
+        $a = Math.cos($lat) * Math.cos($lon);
+        $b = Math.cos($lat) * Math.sin($lon);
+        $c = Math.sin($lat);
+        $X += $a;
+        $Y += $b;
+        $Z += $c;
+    }
+    $X /= placesLength;
+    $Y /= placesLength;
+    $Z /= placesLength;
+    $lon = Math.atan2($Y, $X);
+    $hyp = Math.sqrt($X * $X + $Y * $Y);
+    $lat = Math.atan2($Z, $hyp);
+
+    var latitude = $lat * 180 / Math.PI;
+    var longitude = $lon * 180 / Math.PI;
+
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    map.setCenter(latlng);
+
+    var marker = new google.maps.Marker({
+        "map": map,
+        "position": latlng,
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        "content": "setCenter Latitude = " + latitude + ", " + " longitude = " + longitude,
+        "position": latlng,
+    }).open(map, marker);
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
+
+function initMap(defaultLatitude = 13.7651991, defaultLongitude = 100.5368694) {
+    position = {
+        "latitude": defaultLatitude,
+        "longitude": defaultLongitude,
+    };
+
+    createMap('mapA', position);
+
+    setMarkers(map)
+}
+
+function setMarkers(map) {
+    var placesLength = places.length;
+    for (var a = 0; a < placesLength; a++) {
+        var place = places[a];
+        var marker = new google.maps.Marker({
+            "map": map,
+            "position": {
+                "lat": parseFloat(place.latitude),
+                "lng": parseFloat(place.longitude)
+            },
+            "title": place.name_en + "\n" + place.name_th,
+            "zIndex": a
+        });
+
+        overlays.push(marker);
+    }
+
+    getCenter(map, places);
+}
+
+$(function() {
+    $('#deleteBtn').click(function() {
+        deleteOverlays();
+    });
+});
+</script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
+</body>
+</html>

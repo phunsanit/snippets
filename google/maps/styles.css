@@ -1,0 +1,7 @@
+@charset "utf-8";
+/* CSS Document */
+.map {
+	border: #c00000 solid thin;
+	height: 100%;
+	min-height: 500px;
+}

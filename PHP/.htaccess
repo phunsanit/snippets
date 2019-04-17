@@ -1,0 +1,16 @@
+RewriteEngine On
+ 
+# if not root directory
+RewriteBase /snippets/PHP
+
+# cache
+# One month for most static assets
+<filesMatch ".(css|gif|ico|jpeg|jpg|js|json|png)$">
+Header set Cache-Control "max-age=2628000, public"
+</filesMatch>
+
+# upload larage file
+php_value max_execution_time 300
+php_value max_input_time 300
+php_value post_max_size 64M
+php_value upload_max_filesize 64M

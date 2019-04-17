@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery: Events On / Off</title>
+    <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <form action="values.php" class="form-horizontal" id="formA" method="post">
+        <button class="btn btn-primary" id="demoBtn" type="button">Click Me</button>
+        <div class="form-check">
+            <input class="form-check-input" id="enable1" name="enable" type="radio" value="off">
+            <label class="form-check-label" for="enable1">
+                Disable Event
+            </label>
+        </div>
+        <div class="form-check">
+            <input checked class="form-check-input" id="enable2" name="enable" type="radio" value="on">
+            <label class="form-check-label" for="enable2">
+                Enable Event
+            </label>
+        </div>
+    </form>
+    <div class="alert alert-info" id="messageA" role="alert"></div>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script>
+        $(function () {
+
+            let demoBtn = $('#demoBtn');
+            let formA = $('#formA');
+            let messageA = $('#messageA');
+
+            function worker() {
+                messageA.text('Click');
+            }
+
+            demoBtn.on('click', function () {
+                worker();
+            });
+
+            $('input[name="enable"]').on('change', function () {
+                if ($(this).val() == 'off') {
+                    demoBtn.off('click');
+                    messageA.text('Disable on click');
+                } else {
+                    formA.on('click', demoBtn, worker);
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>checkbox to array</title>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <input name="items[]" type="checkbox" value="c1">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c2">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c3">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c4">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c5">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c6">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c7">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c8">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c9">
+        </li>
+        <li>
+            <input name="items[]" type="checkbox" value="c10">
+        </li>
+    </ul>
+    <div id="result"></div>
+    <button id="sendBtn" type="submit">Send</button>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+    $(function() {
+
+        $('#sendBtn').click(function() {
+            var checkboxs = $('input[name="items\\[\\]"]:checked');
+
+            alert('checked ' + checkboxs.length + ' items');
+
+            var values = checkboxs.map(function() {
+                    return $(this).val();
+                })
+                .get();
+
+            var params = {
+                "id": 24,
+                "items": values,
+            };
+            $.ajax({
+                "data": params,
+                "success": function(data) {
+                    $('#result').html(data);
+                },
+                "type": "GET",
+                "url": "processing.php",
+            });
+
+        });
+
+    });
+    </script>
+</body>
+
+</html>

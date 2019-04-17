@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Check Installed</title>
+</head>
+<body>
+<img src="chrome-extension://{extension-id}/extension-enabled.png">
+<script>   
+function detectExtension(extensionId, callback) {
+        var img;
+        img = new Image();
+        img.src = "chrome-extension://" + extensionId + "/resources/
+icon_16.png";
+        img.onload = function() {
+                callback(true);
+        };
+        img.onerror = function() {
+                callback(false);
+        };
+        detectExtension();
+</script>
+</body>
+</html>

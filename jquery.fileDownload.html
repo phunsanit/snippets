@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>jquery.fileDownload</title>
+      <link href="vendor/components/jqueryui/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+   </head>
+   <body>
+      <button id="downloadBtn" type="button">Download with dialog</button>
+      <hr>
+      <button id="downloadBtn1" type="button">Download without dialog</button>
+      <hr>
+      <form action="PHPExcel_writer_styles_border.php" id="formA" method="post">
+         <label>Search : 
+         <input name="search" type="text"></label>
+         <button type="submit">Download with form</button>
+      </form>
+      <script src="vendor/components/jquery/jquery.min.js"></script>
+      <script src="vendor/components/jqueryui/jquery-ui.min.js"></script>
+      <script src="vendor/johnculviner/jquery.fileDownload/src/Scripts/jquery.fileDownload.js"></script>
+      <script>
+         $(function() {
+         
+             $('#downloadBtn').click(function(event) {
+                 event.preventDefault();
+         
+                  $.fileDownload('PHPExcel_writer_styles_border.php', {
+                     failMessageHtml: "There was a problem generating your report, please try again.",
+                     preparingMessageHtml: "We are preparing your report, please wait...",
+                 });
+         
+             });
+         
+             $('#downloadBtn1').click(function(event) {
+                 event.preventDefault();
+         
+                  $.fileDownload('PHPExcel_writer_styles_border.php');
+         
+             });
+         
+             $('#formA').submit(function(event) {
+                 event.preventDefault();
+         
+                 $.fileDownload($(this).prop('action'), {
+                     data: $(this).serialize(),
+                     failMessageHtml: "There was a problem generating your report, please try again.",
+                     httpMethod: "POST",
+                     preparingMessageHtml: "We are preparing your report, please wait...",
+                 });
+         
+             });
+         
+         });
+      </script>
+   </body>
+</html>

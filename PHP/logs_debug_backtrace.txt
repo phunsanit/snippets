@@ -1,0 +1,275 @@
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 4
+                )
+
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+)
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+)
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php : 11Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+)
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :11
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+)
+
+
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :11
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+)
+
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :11
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+)
+
+
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :11
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 14
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+)
+
+
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :11
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 16
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+    [1] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 19
+            [function] => index
+            [args] => Array
+                (
+                )
+
+        )
+
+)
+
+
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :8
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 13
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+    [1] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 16
+            [function] => index
+            [args] => Array
+                (
+                )
+
+        )
+
+)
+
+
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :7
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 13
+            [function] => getBacktrace
+            [args] => Array
+                (
+                )
+
+        )
+
+    [1] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 18
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+    [2] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 21
+            [function] => index
+            [args] => Array
+                (
+                )
+
+        )
+
+)
+
+
+D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php :7
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 15
+            [function] => getBacktrace
+            [args] => Array
+                (
+                )
+
+        )
+
+    [1] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 20
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+    [2] => Array
+        (
+            [file] => D:\xampp\htdocs\snippets\PHP\debug.debug_backtrace.php
+            [line] => 23
+            [function] => index
+            [args] => Array
+                (
+                )
+
+        )
+
+)
