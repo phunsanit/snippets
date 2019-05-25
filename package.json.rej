@@ -1,0 +1,9 @@
+diff a/package.json b/package.json	(rejected hunks)
+@@ -20,6 +20,7 @@
+   },
+   "homepage": "https://github.com/plusmagic/snippets#readme",
+   "dependencies": {
++    "downloadjs": "github:rndme/download",
+     "moment": "^2.22.1",
+     "numeral": "^2.0.6"
+   }
