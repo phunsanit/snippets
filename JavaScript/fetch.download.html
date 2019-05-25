@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="author" content="Pitt Phunsanit">
+      <title>fetch: download</title>
+   </head>
+   <body>
+      <script src="../node_modules/downloadjs/download.min.js"></script>
+      <script src="../scripts.js"></script>
+      <script>
+fetchOptions.body = 'file=ISO 3166-1 two aplha COUNTRY codes (01102009).xls&token=HH89VOiirgXlCdEqDrFs';
+
+fetch('http://localhost/snippets/PHP/download.php', fetchOptions)
+    .then(fetchStatus)
+    .then(
+        function(response) {
+            if (response.ok) {
+                let fileName = fetchGetFilename(response);
+                let mimeType = response.headers.get('Content-Type');
+
+                response.blob().then(function(blob) {
+                    download(blob, fileName, mimeType);
+                });
+            }
+        }
+    )
+    .catch(function(error) {
+        alert(error);
+    });
+      </script>
+    </body>
+</html>

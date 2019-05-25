@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="author" content="Pitt Phunsanit">
+      <title>fetch: post</title>
+   </head>
+   <body>
+      <script src="../scripts.js"></script>
+      <script>
+fetchOptions.body = 'email=phunsanit@gmail.com&name=pitt&surname=phunsanit';
+
+fetch('http://localhost/snippets/PHP/json.json_encode.php', fetchOptions)
+    .then(fetchStatus)
+    .then(
+        function(response) {
+
+            response.json()
+                .then(function(data) {
+                    alert(JSON.stringify(data));
+                });
+
+        }
+    )
+    .catch(function(error) {
+        alert(error);
+    });
+      </script>
+    </body>
+</html>
