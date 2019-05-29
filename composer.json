@@ -7,35 +7,34 @@
       "role": "Developer"
     }
   ],
-  "config": {
-    "bin-dir": "vendor/bin/",
-    "preferred-install": "dist",
-    "secure-http": false,
-    "sort-packages": true
-  },
   "description": "snippet",
   "homepage": "http://plusmagi.com",
-  "license": "MIT",
+  "license": "mit",
+  "config": {
+    "preferred-install": "dist",
+    "bin-dir": "vendor/bin/",
+    "secure-http": false
+  },
   "minimum-stability": "stable",
   "name": "pitt/snippet",
-  "require-dev": {
-    "phpunit/phpunit": "*"
-  },
   "require": {
     "ckeditor/ckeditor": "*",
+    "laravel/installer": "*",
     "components/font-awesome": "*",
-    "components/jquery-migrate": "*",
     "components/jquery": "*",
+    "components/jquery-migrate": "*",
     "components/jqueryui": "*",
     "datatables/datatables": "*",
     "kenwheeler/slick": "*",
-    "krustnic/docx-merge": "^1.0",
+    "krustnic/docx-merge": "*",
     "php-amqplib/php-amqplib": "*",
     "phpmailer/phpmailer": "*",
     "phpoffice/phpspreadsheet": "*",
-    "phpoffice/phpword": "^0.13.0",
-    "plusmagic/plus.repeater": "^1.5",
+    "phpoffice/phpword": "*",
     "twbs/bootstrap": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
   },
   "type": "project"
 }
