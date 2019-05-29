@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html>
    <head>
@@ -42,4 +43,50 @@ xhr.onload = function (oEvent) {
 });
       </script>
    </body>
+=======
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>jQuery Ajax Progress</title>
+   </head>
+   <body>
+      <div id="progressA"></div>
+      <script src="vendor/components/jquery/jquery.min.js"></script>
+      <script>
+         $(function() {
+         
+$.ajax({
+
+ async: true,
+url:"jQueryAjaxProgress.php",
+
+ processData: false,
+
+  xhr: function()
+
+            {
+
+                var xhr = new window.XMLHttpRequest();
+
+xhr.onload = function (oEvent) {
+  var arrayBuffer = oReq.response; // Note: not oReq.responseText
+  if (arrayBuffer) {
+    var byteArray = new Uint8Array(arrayBuffer);
+    console.log(byteArray)
+    for (var i = 0; i < byteArray.byteLength; i++) {
+      // do something with each byte in the array
+    }
+  }
+};
+
+
+            }
+
+});
+
+});
+      </script>
+   </body>
+>>>>>>> no message
 </html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html>
 <head>
@@ -72,4 +73,80 @@ $(function() {
 });
 </script>
 </body>
+=======
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+<div>
+<div class="prevControl">Prev</div>
+<div class="nextControl">Next</div>
+<ul class="cycle-slideshow cycle-autoinit"
+data-cycle-fx="scrollHorz" 
+data-cycle-timeout="0"
+data-cycle-fx="scrollHorz"
+data-cycle-speed="3000"
+data-cycle-timeout="1"
+data-cycle-easing="linear"
+ >
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+<li>xxx</li>
+</ul>
+</div>
+<script src="../vendor/components/jquery/jquery.min.js"></script>
+<script src="http://malsup.github.io/min/jquery.cycle2.min.js"></script>
+<script>
+$(function() {
+    var formA = $('#formA');
+
+    formA.submit(function(event) {
+        event.prevControlentDefault();
+
+        $.ajax({
+            "data": formA.serialize(),
+            "method": "POST",
+            "success": function(data, textStatus, jqXHR) {
+                $('#resultA').html(data);
+            },
+            "url": "values.php",
+        });
+    });
+});
+</script>
+</body>
+>>>>>>> no message
 </html>

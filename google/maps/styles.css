@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @charset "utf-8";
 /* CSS Document */
 .map {
@@ -5,3 +6,12 @@
 	height: 100%;
 	min-height: 500px;
 }
+=======
+@charset "utf-8";
+/* CSS Document */
+.map {
+	border: #c00000 solid thin;
+	height: 100%;
+	min-height: 500px;
+}
+>>>>>>> no message

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html>
 <head>
@@ -41,4 +42,49 @@ function initMap(defaultLatitude = 13.7651991, defaultLongitude = 100.5368694) {
 </script> 
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
 </body>
+=======
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Google Maps APIs > Maps JavaScript API > Simple Map</title>
+<link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="map" id="mapA"></div>
+<script>
+var map;
+/* function createMaps */
+function createMap(mapArea, position) {
+    var latlng = new google.maps.LatLng(parseFloat(position.latitude), parseFloat(position.longitude));
+    map = new google.maps.Map(document.getElementById(mapArea), {
+        "zoom": 18
+    });
+
+    map.setCenter(latlng);
+
+    var marker = new google.maps.Marker({
+        "map": map,
+        "position": latlng,
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        "content": 'Latitude = ' + position.latitude + ', ' + ' longitude = ' + position.longitude,
+        "position": latlng,
+    }).open(map, marker);
+
+}
+
+function initMap(defaultLatitude = 13.7651991, defaultLongitude = 100.5368694) {
+    position = {
+        "latitude": defaultLatitude,
+        "longitude": defaultLongitude,
+    };
+
+    createMap('mapA', position);
+}
+</script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDE5zb4r9sbN5S_GcD3NZRED1Ma3FzFqso"></script>
+</body>
+>>>>>>> no message
 </html>

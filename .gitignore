@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 !.gitignore
 !docker_LEMP_stack/logs/
 !docker_LEMP_stack/mariadb/data/
@@ -9,3 +10,16 @@ docker_LEMP_stack/mariadb/data/
 node_modules/
 temp/
 vendor/
+=======
+!.gitignore
+!docker_LEMP_stack/logs/
+!docker_LEMP_stack/mariadb/data/
+!node_modules/
+!temp/
+!vendor/
+docker_LEMP_stack/logs/
+docker_LEMP_stack/mariadb/data/
+node_modules/
+temp/
+vendor/
+>>>>>>> no message

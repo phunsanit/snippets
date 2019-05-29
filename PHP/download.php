@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 $fileDir = '../assets/';
 $token = 'HH89VOiirgXlCdEqDrFs';
 
@@ -18,6 +19,18 @@ if (file_exists($file)) {
 
     //readfile($file);
     echo file_get_contents($file);
+=======
+$fileDir = 'D:\xampp\htdocs\snippets\\';
+$token = 'HH89VOiirgXlCdEqDrFs';
+
+if ($_POST['token'] != $token) {
+    exit('bad token');
+}
+
+$requestFile = $fileDir . $_POST['file'];
+if (file_exists($requestFile)) {
+    readfile($requestFile);
+>>>>>>> no message
 } else {
     exit('file not found');
 }
