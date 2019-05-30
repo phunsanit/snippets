@@ -1,27 +1,27 @@
 {
-  "name": "snippets",
-  "version": "1.0.0",
-  "description": "",
-  "main": "Vue.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": "Pitt Phunsanit",
+  "bugs": {
+    "url": "https://github.com/plusmagic/snippets/issues"
   },
+  "dependencies": {
+    "downloadjs": "^1.4.7",
+    "moment": "^2.22.1",
+    "numeral": "^2.0.6"
+  },
+  "description": "",
+  "homepage": "https://github.com/phunsanit/snippets#readme",
+  "keywords": [
+    "snippets"
+  ],
+  "license": "ISC",
+  "main": "Vue.js",
+  "name": "snippets",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/plusmagic/snippets.git"
   },
-  "keywords": [
-    "snippets"
-  ],
-  "author": "Pitt Phunsanit",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/plusmagic/snippets/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/plusmagic/snippets#readme",
-  "dependencies": {
-    "downloadjs": "github:rndme/download",
-    "moment": "^2.22.1",
-    "numeral": "^2.0.6"
-  }
+  "version": "1.0.0"
 }
