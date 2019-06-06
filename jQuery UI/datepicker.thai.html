@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI: พุทธศักราช</title>
+    <link type="text/css" href="../vendor/components/jqueryui/themes/base/all.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>jQuery UI: พุทธศักราช</h1>
+    <form action="values.php" method="post">
+     <input class="date" name="blank" type="text">
+     <br>
+     <input class="date" name="default" type="text" value="05/08/2525">
+    </form>
+    <div class="col-sm-12" id="resultA"></div>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script src="../vendor/components/jqueryui/jquery-ui.js"></script>
+    <script src="../assets/jQuery.UI.datepicker-th-patch.js"></script>
+    <script>
+        $(function () {
+
+            $('.date').datepicker();
+
+        });
+    </script>
+</body>
+
+</html>
