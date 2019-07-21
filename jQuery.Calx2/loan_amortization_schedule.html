@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>jQuery Calx: loan amortization schedule</title>
+      <link type="text/css" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+   </head>
+   <body>
+      <table class="table table-bordered table-hover table-striped" id="sheetA" width="100%">
+         <thead>
+            <tr>
+               <td>rate</td>
+               <td><input name="rate" data-cell="A1" type="text" value="3.15"></td>
+            </tr>
+            <tr>
+               <td>terms</td>
+               <td>
+                  <select name="nper" data-cell="A2">
+                     <option value="12">12 (1 year)</option>
+                     <option value="24">24 (2 year)</option>
+                     <option value="36">36 (3 year)</option>
+                     <option value="48">48 (4 year)</option>
+                     <option value="60">60 (5 year)</option>
+                     <option value="72">72 (6 year)</option>
+                     <option value="84">84 (7 year)</option>
+                     <option value="144">144 (8 year)</option>
+                     <option value="108">108 (9 year)</option>
+                     <option value="120">120 (10 year)</option>
+                  </select>
+               </td>
+            </tr>
+            <tr>
+               <td>rate</td>
+               <td><input name="Pv" data-cell="A3" type="text" value="1000000"></td>
+            </tr>
+            <tr>
+               <td>total</td>
+               <td><input name="total" data-formula="PMT(A1/12, A2, -A3)" type="text"></td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+            </tr>
+         </tbody>
+         <tfoot>
+            <tr>
+            </tr>
+         </tfoot>
+      </table>
+      <script src="../vendor/components/jquery/jquery.min.js"></script>
+      <script src="jquery-calx-2.2.7.min.js"></script>
+      <script>
+         $(document).ready(function() {
+            $('#sheetA').calx();
+         });
+      </script>
+   </body>
+</html>
