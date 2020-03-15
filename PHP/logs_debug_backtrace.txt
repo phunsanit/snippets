@@ -273,3 +273,44 @@ Array
         )
 
 )
+
+
+D:\xampp\htdocs\phunsanit\snippets\PHP\debug.debug_backtrace.php :7
+
+Array
+(
+    [0] => Array
+        (
+            [file] => D:\xampp\htdocs\phunsanit\snippets\PHP\debug.debug_backtrace.php
+            [line] => 15
+            [function] => getBacktrace
+            [args] => Array
+                (
+                )
+
+        )
+
+    [1] => Array
+        (
+            [file] => D:\xampp\htdocs\phunsanit\snippets\PHP\debug.debug_backtrace.php
+            [line] => 20
+            [function] => getPhpInfo
+            [args] => Array
+                (
+                    [0] => 16
+                )
+
+        )
+
+    [2] => Array
+        (
+            [file] => D:\xampp\htdocs\phunsanit\snippets\PHP\debug.debug_backtrace.php
+            [line] => 23
+            [function] => index
+            [args] => Array
+                (
+                )
+
+        )
+
+)

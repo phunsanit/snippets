@@ -70,3 +70,12 @@ Array
     [0] => D:\xampp\htdocs\snippets\PHP\debug.get_included_files.php
     [1] => D:\xampp\htdocs\snippets\PHP\header.php
 )
+
+
+D:\xampp\htdocs\phunsanit\snippets\PHP\debug.get_included_files.php :9
+
+Array
+(
+    [0] => D:\xampp\htdocs\phunsanit\snippets\PHP\debug.get_included_files.php
+    [1] => D:\xampp\htdocs\phunsanit\snippets\PHP\header.php
+)

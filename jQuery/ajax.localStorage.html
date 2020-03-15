@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Ajax: localStorage</title>
+</head>
+
+<body>
+    <h1>localStorage</h1>
+    <div class="col-sm-12" id="datasA"></div>
+    <div class="col-sm-12" id="resultA"></div>
+    <script src="../vendor/components/jquery/jquery.min.js"></script>
+    <script>
+        $(function() {
+
+            function getDatas() {
+                let cacheKey = 'memories';
+
+                if (cacheKey in localStorage) {
+                    let datas = JSON.parse(localStorage.getItem(cacheKey));
+
+                    // if expired
+                    if (datas['expires'] < Date.now()) {
+                        localStorage.removeItem(cacheKey);
+
+                        getDatas()
+                    } else {
+                        setDatas(datas);
+                    }
+                } else {
+                    $.ajax({
+                        "dataType": "json",
+                        "success": function(datas, textStatus, jqXHR) {
+                            let today = new Date();
+
+                            datas['expires'] = today.setDate(today.getDate() + 7) // expires in next 7 days
+
+                            setDatas(datas);
+
+                            localStorage.setItem(cacheKey, JSON.stringify(datas));
+                        },
+                        "url": "http://localhost/phunsanit/snippets/PHP/json.json_encode.php",
+                    });
+                }
+            }
+
+            function setDatas(datas) {
+                // display json as text
+                $('#datasA').text(JSON.stringify(datas));
+
+                // your code here
+                let html = '';
+                $.each(datas.datas, function(index, value) {
+                    html += '<br>' + index + ' = ' + value;
+                });
+                $('#resultA').html(html);
+
+            }
+
+            // call
+            getDatas();
+
+        });
+    </script>
+</body>
+
+</html>
