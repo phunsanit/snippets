@@ -1,0 +1,125 @@
+''
+'' Original Author: pitt phunsanit
+'' phunsanit@phunsanit.com
+
+<style>
+
+'common style
+
+root {
+	BackgroundColor #e8f3d9
+	BorderColor #BDE3FF
+	FontColor #000000
+	FontName Inter
+	FontSize 16
+	LineColor #757575
+	LineThickness 1
+	Margin 10
+	Padding 6
+	Shadowing 0.0
+}
+
+document {
+
+}
+
+'object
+
+activity {
+	BackgroundColor #ffffff
+	FontSize 24
+	HyperLinkColor #73c23a
+}
+
+arrow {
+	FontColor #757575
+	LineColor #757575
+}
+
+caption {
+	LineThickness 0
+}
+
+diamond {
+	BackgroundColor #c5e0b4
+	FontSize 15
+}
+
+footer {
+	LineThickness 0
+}
+
+group {
+	BackGroundColor #ffffff
+	LineColor #757575
+	LineThickness 2.0
+	Margin 5
+	Padding 5
+}
+
+header {
+	LineThickness 0
+}
+
+node {
+
+ }
+
+note {
+	BackgroundColor #EEF8E8
+	FontColor #000000
+	HyperLinkColor #73c23a
+}
+
+participant {
+	ParticipantBorderThickness 2
+}
+
+partition {
+	BackgroundColor PeachPuff
+	RoundCorner 10
+}
+
+referenceHeader {
+    BackgroundColor #ffffff
+    FontColor #000000
+    FontStyle bold
+  }
+
+separator {
+    BackgroundColor #ffffff
+    FontColor #000000
+    FontStyle bold
+}
+
+server {
+
+}
+
+
+start {
+    BackgroundColor #7ac143
+	BorderColor #7ac143
+}
+
+swimlane {
+	BorderColor #7ac143
+	BorderThickness 2
+	TitleBackgroundColor  #7ac143
+	TitleFontColor #7ac143
+}
+
+title {
+    BackgroundColor #29685d
+	FontColor #ffffff
+}
+
+'diagram
+
+activityDiagram {
+
+}
+
+'custom
+
+</style>
