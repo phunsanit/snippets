@@ -1,3 +1,10 @@
+<#
+PowerShell: set dns server ip4 and ip6 to google dns all Adapter
+#by pitt phunsanit
+https://pitt.plusmagi.com
+phunsanit@gmail.com
+#>
+
 # Disable automatic DNS retrieval (important for static configuration)
 Get-NetAdapter | ForEach-Object {
     Set-NetAdapterProperty -Name $_.Name -IPv4Address -DNSAddressMode Static
