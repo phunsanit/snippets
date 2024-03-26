@@ -30,7 +30,8 @@ function CommandOrExitBatch {
 
 	try{
 		# Use strict mode within iex for better error handling
-		#Invoke-Expression -Command { $commandString } -UseStrict
+		#Invoke-Expression -Command { $commandString } -UseStrict  -ErrorAction Stop
+		#Invoke-Expression -Command $commandString
 		Invoke-Expression -Command $commandString
 	} catch {
 		Write-Error "Script failed with error: $_.Exception.Message"
@@ -55,9 +56,6 @@ CommandOrExitBatch -commandString $commandString
 
 #confirm
 Write-Host 'WSL Linux DistributionNames is"' + $DistributionName + '"' -f Blue
-Write-Host 'stop DistributionName' -f Blue
-
-CommandOrExitBatch -commandString $commandString
 
 #archive type
 $archiveType = Read-Host "Select archive type (tar is default, q to quit): tar, vhd, q"
