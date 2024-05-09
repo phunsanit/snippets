@@ -5,13 +5,13 @@ https://pitt.plusmagi.com
 phunsanit@gmail.com
 
 replace $DistributionName with WSL Linux DistributionNames
-example docker-desktop-data, docker-desktop, Ubuntu
+example Alpine, docker-desktop-data, docker-desktop, Ubuntu
 
 replace $folderPath with new path
 #>
 
 $DistributionName = 'Ubuntu'
-$folderPath = 'C:\UsersDatas\WSL\2\'
+$folderPath = 'C:\UsersWSL'
 
 # common
 
