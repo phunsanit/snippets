@@ -11,7 +11,7 @@ replace $folderPath with new path
 #>
 
 $DistributionName = 'Ubuntu'
-$folderPath = 'C:\UsersWSL'
+$folderPath = 'C:\UsersWSL\'
 
 # common
 

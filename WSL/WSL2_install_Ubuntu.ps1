@@ -3,6 +3,8 @@ PowerShell install Windows Subsystem for Linux 2 (WSL2)
 #by pitt phunsanit
 https://pitt.plusmagi.com
 phunsanit@gmail.com
+
+https://learn.microsoft.com/en-us/windows/wsl/basic-commands?source=recommendations
 #>
 
 #Enabling Windows Services for the WSL.
