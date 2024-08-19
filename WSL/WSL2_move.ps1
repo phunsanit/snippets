@@ -26,7 +26,7 @@ function CommandOrExitBatch {
 		[string] $commandString
 	  )
 
-	Write-Host $commandString -f Blue
+	Write-Host $commandString -f Yellow
 
 	try{
 		# Use strict mode within iex for better error handling
@@ -34,9 +34,9 @@ function CommandOrExitBatch {
 		#Invoke-Expression -Command $commandString
 		Invoke-Expression -Command $commandString
 	} catch {
-		Write-Error "Script failed with error: $_.Exception.Message"
-
-		Write-Warning "Exit code: $($_.Exception.InnerException.ExitCode)"# Assuming script sets exit code
+		Write-Error 'Script failed with error: ' + $($_.Exception.Message)
+		# Assuming script sets exit code
+		Write-Warning 'Exit code: ' + $($_.Exception.InnerException.ExitCode)
 
 		Write-Output "This won't be executed"
 
@@ -55,7 +55,7 @@ $commandString = 'wsl --list --verbose'
 CommandOrExitBatch -commandString $commandString
 
 #confirm
-Write-Host 'WSL Linux DistributionNames is"' + $DistributionName + '"' -f Blue
+Write-Host('WSL Linux DistributionNames is "' + $($DistributionName) + '"') -f Blue
 
 #archive type
 $archiveType = Read-Host "Select archive type (tar is default, q to quit): tar, vhd, q"
@@ -66,7 +66,7 @@ switch ($archiveType) {
 	default { Write-Host "Invalid selection. Defaulting to tar archive format." ; $archiveType = "tar" }
 }
 
-Write-Host "You have chosen: $archiveType"
+Write-Host('You have chosen: ' + $archiveType)
 
 if($archiveType -eq 'q')
 {
@@ -85,20 +85,20 @@ $importPath = [string]::Concat($folderPath, $DistributionName)
 
 #make folder
 #Check if Folder exists
-If(!(Test-Path -Path $folderPath))
+If(!(Test-Path -Path $exportPath))
 {
 	#PowerShell create directory
-	Write-Host 'create directory "' + $importPath + '".' -f Blue
+	Write-Host('create directory "' + $($importPath) + '"') -f Blue
 
 	$commandString = 'New-Item -ItemType Directory -Path ' + $importPath
 
 	CommandOrExitBatch -commandString $commandString
 
-	Write-Host 'New folder "'$importPath'" created successfully.' -f Green
+	Write-Host('New folder "' + $($importPath) + '" created successfully.') -b White -f DarkGreen
 }
 Else
 {
-	Write-Host 'Folder "'$importPath'" already exists.' -f Yellow
+	Write-Host('Folder "' + $($importPath) + '" already exists.') -f Yellow
 }
 
 #stop distribution name
@@ -157,7 +157,7 @@ $commandString = 'wsl --list --verbose'
 CommandOrExitBatch -commandString $commandString
 
 #summary
-Write-Host 'Move WSL"' + $DistributionName + '" to "' + $importPath + '" successfully?' -f Green
+Write-Host('Move WSL "' + $($DistributionName) + '" to "' + $($importPath) + '" successfully?') -b White -f DarkGreen
 
 #show file
 Write-Host 'show file' -f Blue
