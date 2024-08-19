@@ -1,5 +1,5 @@
 <#
-PowerShell move Windows Subsystem for Linux 2 (WSL2) version 1.1
+PowerShell move Windows Subsystem for Linux 2 (WSL2) version 1.2
 #by pitt phunsanit
 https://pitt.plusmagi.com
 phunsanit@gmail.com
