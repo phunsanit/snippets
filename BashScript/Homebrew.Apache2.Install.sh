@@ -58,7 +58,7 @@ else
 fi
 
 # Set DocumentRoot in httpd.conf
-sudo sed -i '' "s|^DocumentRoot.*$|DocumentRoot \"$document_root\"|" "$httpd_conf_path"
+sudo sed -i "s|^DocumentRoot .*|DocumentRoot \"$document_root\"|" "$httpd_conf_path"
 
 # restart Apache
 brew services restart httpd
