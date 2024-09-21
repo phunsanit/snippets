@@ -55,8 +55,8 @@ if ! grep -q '# add by Homebrew.Apache2.Install.sh' "$httpd_conf_path"; then
     echo "$config_content" >> "$httpd_conf_path"
 else
     # Marker comment found, update the existing block using a capture group
-    sed -i '' '/# add by Homebrew.Apache2.Install.sh/,/# end add by Homebrew.Apache2.Install.sh/c\
-    '"$config_content"' "$httpd_conf_path"'
+    sed -i '' '/# add by Homebrew.Apache2.Install.sh/,/# end add by Homebrew.Apache2.Install.sh/'
+    "$config_content" "$httpd_conf_path"
 fi
 
 # Set DocumentRoot in httpd.conf
