@@ -6,6 +6,3 @@ sudo chmod +x Homebrew.Apache2.Install.sh
 
 sudo chmod +x Homebrew.Apache2.DocumentRoot.sh
 ./Homebrew.Apache2.DocumentRoot.sh
-
-
-
