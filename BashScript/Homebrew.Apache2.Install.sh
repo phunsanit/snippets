@@ -36,7 +36,6 @@ sudo chmod 775 "$document_root"
 # Define configuration content as a variable
 config_content=$(cat << EOF
 
-# add by Homebrew.Apache2.Install.sh
 # Include generic snippets of statements
 IncludeOptional conf-enabled/*.conf
 
@@ -44,19 +43,18 @@ IncludeOptional conf-enabled/*.conf
 IncludeOptional sites-enabled/*.conf
 
 ServerName 127.0.0.1
-# end add by Homebrew.Apache2.Install.sh
+
 EOF
 )
 
 # Check if marker comment already exists
-if ! grep -q '# add by Homebrew.Apache2.Install.sh' "$httpd_conf_path"; then
+if ! grep -in "# add by Homebrew.Apache2.Install.sh" "$httpd_conf_path"; then
     # Marker comment not found, append the entire configuration block
-    echo >> "$httpd_conf_path"  # Add a blank line before appending
-    echo "$config_content" >> "$httpd_conf_path"
+    echo -e "\n# add by Homebrew.Apache2.Install.sh\n$config_content\n# end by Homebrew.Apache2.Install.sh" >> "$httpd_conf_path"
 else
     # Marker comment found, update the existing block using a capture group
-    sed -i '' '/# add by Homebrew.Apache2.Install.sh/,/# end add by Homebrew.Apache2.Install.sh/'
-    "$config_content" "$httpd_conf_path"
+    sudo sed -i.bak "/# add by Homebrew.Apache2.Install.sh/,/# end by Homebrew.Apache2.Install.sh/{//!d;}" "$httpd_conf_path"
+    sudo sed -i "/# add by Homebrew.Apache2.Install.sh/r /dev/stdin" "$httpd_conf_path" <<< "$config_content"
 fi
 
 # Set DocumentRoot in httpd.conf
