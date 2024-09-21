@@ -1,11 +1,10 @@
 $(function() {
- 
-    dataTableA = $('#dataTableA');
-    filtersTableA = $('#available table');
-    tableA = $('#tableA');
- 
-    filtersTable = filtersTableA
-        .DataTable({
+
+    DataTablesA = $('#DataTablesA');
+    DataTablesFiltersA = $('#available table');
+
+    filtersTable = DataTablesFiltersA
+        .DataTablesA({
             "columns": [
                 {
                     "title": "Intermediary Code"
@@ -23,11 +22,11 @@ $(function() {
             /* add style to checkbox, radio */
             //iCheckInit($('input:checkbox, input:radio', settings.nTable));
         });
- 
-    iCheckBulk(filtersTableA, filtersTable);
- 
-    dataTable = tableA
-        .DataTable({
+
+    iCheckBulk(DataTablesFiltersA, filtersTable);
+
+    DataTablesA = DataTablesA
+        .DataTablesA({
             "columns": [
                 {
                     "title": "Intermediary Code"
@@ -42,11 +41,11 @@ $(function() {
             /* add style to checkbox, radio */
             //iCheckInit($('input:checkbox, input:radio', settings.nTable));
         });
- 
-    iCheckBulk(tableA, dataTable);
- 
-    iCheckChange(filtersTableA, filtersTable, dataTable);
- 
-    iCheckCopy(dataTable, filtersTable, 'DISTRICT_CODE');
- 
+
+    iCheckBulk(DataTablesA, DataTablesA);
+
+    iCheckChange(DataTablesFiltersA, filtersTable, DataTables);
+
+    iCheckCopy(DataTables, filtersTable, 'DISTRICT_CODE');
+
 });

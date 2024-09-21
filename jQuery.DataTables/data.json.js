@@ -1,8 +1,8 @@
 $(function() {
 
-    tableA = $('#tableA');
+    DataTablesA = $('#DataTablesA');
 
-    datatable = tableA.DataTable({
+    datatable = DataTablesA.DataTable({
         "ajax": {
             "data": function(parameters) {},
             "method": "POST",
@@ -57,8 +57,8 @@ $(function() {
         "stateSave": true,
     });
 
-    $('.checkAll', tableA).click(function() {
-        $('input:checkbox', tableA).not(this).prop('checked', this.checked);
+    $('.checkAll', DataTablesA).click(function() {
+        $('input:checkbox', DataTablesA).not(this).prop('checked', this.checked);
     });
 
 });

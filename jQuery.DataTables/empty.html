@@ -2,107 +2,104 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="author" content="Pitt Phunsanit">
-    <title>DataTables: datas from ajax</title>
-    <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-    <link href="../vendor/datatables/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<meta name="author" content="Pitt Phunsanit">
+	<title>DataTables: datas from ajax</title>
+	<link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="../vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+	<link href="../vendor/datatables/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 	<button class="btn btn-info" id="searchBtn" type="button">Search</button>
-    <table class="table table-bordered table-hover table-striped" id="tableA" width="100%"></table>
-    <script src="../vendor/components/jquery/jquery.min.js"></script>
-    <script src="../vendor/datatables/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="../vendor/datatables/datatables/media/js/dataTables.bootstrap.min.js"></script>
-    <script>
+	<table class="table table-bordered table-hover table-striped" id="DataTablesA" width="100%"></table>
+	<script src="../vendor/components/jquery/jquery.min.js"></script>
+	<script src="../vendor/datatables/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="../vendor/datatables/datatables/media/js/dataTables.bootstrap.min.js"></script>
+	<script>
 $(function() {
 
-    tableA = $('#tableA');
+	DataTablesA = $('#DataTablesA');
 
-    datatable = tableA.DataTable({
+	DataTables = DataTablesA.DataTable({
 /*	"aoColumns": [{
 		"sWidth": "10%"
 	}],*/
 
-        "columns": [{
-                "orderable": false,
-                "render": function(data, type, row, meta) {
-                    return parseInt(meta.row) + parseInt(meta.settings._iDisplayStart) + 1;
-                },
-                "title": 'No.',
-                "width": "10px",
-            },
-            {
-                "orderable": false,
-                "render": function(data, type, row, meta) {
-                    return '<input type="checkbox" value="' + row.DISTRICT_CODE + '">';
-                },
-                "title": '<input class="checkAll" type="checkbox">',
-                "width": "10px",
-            },
-            {
-                "orderable": false,
-                "render": function(data, type, row, meta) {
-                    if (row.enable == '1') {
-                        return '<span class="glyphicon glyphicon-ok"></span>';
-                    } else {
-                        return '<span class="glyphicon glyphicon-remove"></span>';
-                    }
-                },
-                "title": "Enable",
-                "width": "10px",
-            }, {
-                "data": "DISTRICT_CODE",
-                "title": "District Code",
-                "width": "90px",
-            }, {
-                "data": "DISTRICT_NAME",
-                "title": "District Name",
-            }, {
-                "data": "PROVINCE_NAME",
-                "title": "Province Name",
-            }
-        ],
+		"columns": [{
+				"orderable": false,
+				"render": function(data, type, row, meta) {
+					return parseInt(meta.row) + parseInt(meta.settings._iDisplayStart) + 1;
+				},
+				"title": 'No.',
+				"width": "10px",
+			},
+			{
+				"orderable": false,
+				"render": function(data, type, row, meta) {
+					return '<input type="checkbox" value="' + row.DISTRICT_CODE + '">';
+				},
+				"title": '<input class="checkAll" type="checkbox">',
+				"width": "10px",
+			},
+			{
+				"orderable": false,
+				"render": function(data, type, row, meta) {
+					if (row.enable == '1') {
+						return '<span class="glyphicon glyphicon-ok"></span>';
+					} else {
+						return '<span class="glyphicon glyphicon-remove"></span>';
+					}
+				},
+				"title": "Enable",
+				"width": "10px",
+			}, {
+				"data": "DISTRICT_CODE",
+				"title": "District Code",
+				"width": "90px",
+			}, {
+				"data": "DISTRICT_NAME",
+				"title": "District Name",
+			}, {
+				"data": "PROVINCE_NAME",
+				"title": "Province Name",
+			}
+		],
 
-   /*     "processing": false,
-        "serverSide": true,*/
+   /*	 "processing": false,
+		"serverSide": true,*/
 });
 
-    $('.checkAll', tableA).click(function() {
-        $('input:checkbox', tableA).not(this).prop('checked', this.checked);
-    });
+	$('.checkAll', DataTablesA).click(function() {
+		$('input:checkbox', DataTablesA).not(this).prop('checked', this.checked);
+	});
 
-    $('#searchBtn').click(function(){
-    	$.ajax({
-            "data": function(parameters) {},
-            "method": "POST",
-	        "success": function(data) {
+	$('#searchBtn').click(function(){
+		$.ajax({
+			"data": function(parameters) {},
+			"method": "POST",
+			"success": function(data) {
 
+				DataTables
+				.clear();
 
-	            datatable
-	            .clear();
+console.log(DataTables.settings())
 
-console.log(datatable.settings())
+DataTables.settings().length =999;
 
+				DataTables.rows.add(data);
 
-datatable.settings().length =999;
+	  DataTables.settings().length =999;
 
+				DataTables.draw();
 
-	            datatable.rows.add(data);
-
-	  datatable.settings().length =999;
-
-	            datatable.draw();
-
-	        },
-            "url": "data.json.php",
-        });
-    });
+			},
+			"url": "data.json.php",
+		});
+	});
 
 });
-    </script>
+	</script>
 </body>
 
 </html>
