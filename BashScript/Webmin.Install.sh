@@ -56,6 +56,9 @@ fi
 #change default port
 sudo sed -i "s/^port=.*/port=$port/" /etc/webmin/miniserv.conf
 
+#new port to UFW (Uncomplicated Firewall)
+sudo ufw allow $port/tcp
+
 #restart webmin
 sudo systemctl restart webmin
 
