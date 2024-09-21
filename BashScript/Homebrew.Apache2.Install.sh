@@ -6,6 +6,10 @@ brew_prefix=$(brew --prefix)
 # Set the httpd.conf path
 httpd_conf_path="${brew_prefix}/etc/httpd/httpd.conf"
 
+mkdir -p "${brew_prefix}/etc/httpd/conf-enabled"
+
+mkdir -p "${brew_prefix}/etc/httpd/sites-enabled"
+
 # Check if httpd.conf exists
 if [[ ! -f "$httpd_conf_path" ]]; then
     echo "httpd.conf not found at $httpd_conf_path"
@@ -27,11 +31,17 @@ if ! id -u _www &> /dev/null; then
     sudo useradd -r -g _www _www
 fi
 
+sudo usermod -a -G _www $(whoami)
+
 # Ensure the user has ownership of the document root
 sudo chown -R _www:_www "$document_root"
 
 # Set permissions for the document root
 sudo chmod 775 "$document_root"
+
+# Firewall
+sudo ufw allow http
+sudo ufw allow https
 
 # Define configuration content as a variable
 config_content=$(cat << EOF
@@ -42,6 +52,7 @@ IncludeOptional conf-enabled/*.conf
 # Include the virtual host configurations
 IncludeOptional sites-enabled/*.conf
 
+#AH00558: Could not reliably determine the server's fully qualified domain name
 ServerName 127.0.0.1
 
 EOF
@@ -58,7 +69,7 @@ else
 fi
 
 # Set DocumentRoot in httpd.conf
-sudo sed -i "s|^DocumentRoot .*|DocumentRoot \"$document_root\"|" "$httpd_conf_path"
+sudo sed -i 's|/home/linuxbrew/.linuxbrew/var/www|/Users/Shared/www|g' httpd_conf_path
 
 # restart Apache
 brew services restart httpd
