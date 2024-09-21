@@ -8,6 +8,7 @@
 cd ~
 
 #https://webmin.com/download/
+#https://www.arubanetworks.com/techdocs/AOS-S/16.11/MRG/YC/content/common%20files/tcp-por-num-ran.htm
 
 # Function to validate port number
 validate_port() {
@@ -35,7 +36,7 @@ sh setup-repos.sh
 apt-get install webmin --install-recommends
 
 # Define default values
-default_port=$(shuf -i 44300-44399 -n 1)
+default_port=$(shuf -i 49152-65535 -n 1)
 
 read -p "Enter new Webmin 5-digit port number (e.g., $default_port): " port
 
