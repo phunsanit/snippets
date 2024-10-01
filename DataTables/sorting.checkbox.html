@@ -16,14 +16,12 @@
    <link rel="stylesheet" href="styles.css">
    <meta charset="utf-8">
    <meta name="author" content="Pitt Phunsanit">
-   <title>DataTables: Add row form JavaScript</title>
+   <title>DataTables: sorting by checkbox</title>
    <style id="figma-style"></style>
 </head>
 
 <body>
    <table class="table table-hover table-striped" id="tableA"></table>
-   <label for="jsonTA">JSON Data</label>
-   <textarea class="form-control" id="jsonTA" rows="10"></textarea>
 
    <script crossorigin="anonymous"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -44,113 +42,11 @@
       referrerpolicy="no-referrer"
       src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
 
+   <script src="https://cdn.datatables.net/plug-ins/2.1.7/sorting/custom-data-source/dom-checkbox.js"></script>
+
    <script>
       $(document).ready(function () {
 
-         let polyglots = {
-            "languages": {
-               "en": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "English"
-               },
-               "zh": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Chinese (mandarin): 你好，世界"
-               },
-               "hi": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Hindi: वेबसाइट"
-               },
-               "es": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Spanish"
-               },
-               "fr": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "French"
-               },
-               "ar": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Arabic: वेबसाइट"
-               },
-               "bn": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Bengali (Bangla): এই টি একটি বাংলা বাক্য।"
-               },
-               "ru": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Russian"
-               },
-               "id": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Indonesian"
-               },
-               "de": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "German"
-               },
-               "th": {
-                  "checked": true,
-                  "items": 0,
-                  "name": "Thai: ภาษาไทย"
-               },
-               "ab": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Abkhazian"
-               },
-               "aa": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Afar"
-               },
-               "af": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Afrikaans"
-               },
-               "ak": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Akan"
-               },
-               "sq": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Albanian"
-               },
-               "am": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Amharic"
-               },
-               "an": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Aragonese"
-               },
-               "hy": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Armenian"
-               },
-               "as": {
-                  "checked": false,
-                  "items": 0,
-                  "name": "Assamese"
-               }
-            }
-         };
          let tableA = $('#tableA');
          let tables = [];
 
@@ -167,12 +63,13 @@
                   "width": "10px"
                },
                {
-                  "orderable": false,
+                  "orderable": true,
                   "render": function (data, type, row, meta) {
                      return '<input' + (row.checked ? ' checked' : '') + ' type="checkbox" value="' + row.lang + '">';
                   },
                   "searchable": false,
                   "title": "Enable",
+                  "type": "dom-checkbox",
                   "width": "10px"
                }, {
                   "data": "name",
@@ -210,26 +107,31 @@
                if (data.checked) {
                   $(row).addClass('table-info');
                }
-            }
+            },
+            "data": [
+               { "checked": false, "items": 0, "lang": "aa", "name": "Afar" },
+               { "checked": false, "items": 0, "lang": "ab", "name": "Abkhazian" },
+               { "checked": false, "items": 0, "lang": "af", "name": "Afrikaans" },
+               { "checked": false, "items": 0, "lang": "ak", "name": "Akan" },
+               { "checked": false, "items": 0, "lang": "am", "name": "Amharic" },
+               { "checked": false, "items": 0, "lang": "an", "name": "Aragonese" },
+               { "checked": false, "items": 0, "lang": "as", "name": "Assamese" },
+               { "checked": false, "items": 0, "lang": "hy", "name": "Armenian" },
+               { "checked": false, "items": 0, "lang": "sq", "name": "Albanian" },
+               { "checked": true, "items": 0, "lang": "ar", "name": "Arabic: वेबसाइट" },
+               { "checked": true, "items": 0, "lang": "bn", "name": "Bengali (Bangla): এই টি একটি বাংলা বাক্য।" },
+               { "checked": true, "items": 0, "lang": "de", "name": "German" },
+               { "checked": true, "items": 0, "lang": "en", "name": "English" },
+               { "checked": true, "items": 0, "lang": "es", "name": "Spanish" },
+               { "checked": true, "items": 0, "lang": "fr", "name": "French" },
+               { "checked": true, "items": 0, "lang": "hi", "name": "Hindi: वेबसाइट" },
+               { "checked": true, "items": 0, "lang": "id", "name": "Indonesian" },
+               { "checked": true, "items": 0, "lang": "ru", "name": "Russian" },
+               { "checked": true, "items": 0, "lang": "th", "name": "Thai: ภาษาไทย" },
+               { "checked": true, "items": 0, "lang": "zh", "name": "Chinese (mandarin): 你好，世界" }
+            ]
          };
          tables['languages'] = tableA.DataTable(options);
-
-         //add data to DataTable
-         let data = [];
-
-         for (let lang in polyglots.languages) {
-            data.push({
-               "checked": polyglots.languages[lang].checked,
-               "items": polyglots.languages[lang].items,
-               "lang": lang,
-               "name": polyglots.languages[lang].name
-            });
-         }
-         tables['languages'].clear().rows.add(data).draw();
-
-         //preview data
-         $('#jsonTA').val(JSON.stringify(data));
-
       });
    </script>
 </body>
