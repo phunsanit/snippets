@@ -52,102 +52,93 @@
          let polyglots = {
             "languages": {
                "en": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "English"
                },
                "zh": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Chinese (mandarin): 你好，世界"
                },
                "hi": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Hindi: वेबसाइट"
                },
                "es": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Spanish"
                },
                "fr": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "French"
                },
                "ar": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Arabic: वेबसाइट"
                },
                "bn": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Bengali (Bangla): এই টি একটি বাংলা বাক্য।"
                },
                "ru": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Russian"
                },
                "id": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Indonesian"
                },
                "de": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "German"
                },
                "th": {
-                  "checked": true,
+                  "enabled": true,
                   "items": 0,
                   "name": "Thai: ภาษาไทย"
                },
                "ab": {
-                  "checked": false,
                   "items": 0,
                   "name": "Abkhazian"
                },
                "aa": {
-                  "checked": false,
                   "items": 0,
                   "name": "Afar"
                },
                "af": {
-                  "checked": false,
                   "items": 0,
                   "name": "Afrikaans"
                },
                "ak": {
-                  "checked": false,
                   "items": 0,
                   "name": "Akan"
                },
                "sq": {
-                  "checked": false,
                   "items": 0,
                   "name": "Albanian"
                },
                "am": {
-                  "checked": false,
                   "items": 0,
                   "name": "Amharic"
                },
                "an": {
-                  "checked": false,
                   "items": 0,
                   "name": "Aragonese"
                },
                "hy": {
-                  "checked": false,
                   "items": 0,
                   "name": "Armenian"
                },
                "as": {
-                  "checked": false,
                   "items": 0,
                   "name": "Assamese"
                }
@@ -171,7 +162,7 @@
                {
                   "orderable": true,
                   "render": function (data, type, row, meta) {
-                     return '<input' + (row.checked ? ' checked' : '') + ' type="checkbox" value="' + row.lang + '">';
+                     return '<input' + (row.enabled ? ' checked' : '') + ' type="checkbox" value="' + row.lang + '">';
                   },
                   "searchable": false,
                   "title": "Enable",
@@ -210,7 +201,7 @@
                }
             ],
             "createdRow": function (row, data, dataIndex) {
-               if (data.checked) {
+               if (data.enabled) {
                   $(row).addClass('table-info');
                }
             }
@@ -222,7 +213,7 @@
 
          for (let lang in polyglots.languages) {
             data.push({
-               "checked": polyglots.languages[lang].checked,
+               "enabled": polyglots.languages[lang].enabled,
                "items": polyglots.languages[lang].items,
                "lang": lang,
                "name": polyglots.languages[lang].name
