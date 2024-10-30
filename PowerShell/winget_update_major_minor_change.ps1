@@ -68,3 +68,6 @@ foreach ($line in $wingetList) {
 
 # Display the parsed list in a table format
 $parsedList | Format-Table -Property Name, Id, @{Name = 'Version Installed'; Expression = { $_.VersionInstalled } }, @{Name = 'Version New'; Expression = { $_.VersionNew } }, Update, Source -AutoSize
+
+# Close the current window
+exit
