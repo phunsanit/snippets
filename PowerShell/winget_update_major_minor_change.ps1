@@ -1,3 +1,5 @@
+Out-Null
+
 # https://en.wikipedia.org/wiki/Software_versioning
 function GetVersion {
     param (
@@ -69,5 +71,11 @@ foreach ($line in $wingetList) {
 # Display the parsed list in a table format
 $parsedList | Format-Table -Property Name, Id, @{Name = 'Version Installed'; Expression = { $_.VersionInstalled } }, @{Name = 'Version New'; Expression = { $_.VersionNew } }, Update, Source -AutoSize
 
+# Set the delay in seconds (5 minutes = 300 seconds)
+$delay = 300
+
+# Wait for the specified delay
+#Start-Sleep -Seconds $delay
+
 # Close the current window
-exit
+exit 0

@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
     DataTablesA = $('#DataTablesA');
     DataTablesFiltersA = $('#available table');
@@ -18,7 +18,7 @@ $(function() {
             "serverSide": true,
             "stateSave": true,
         })
-        .on('draw', function(event, settings, json, xhr) {
+        .on('draw', function (event, settings, json, xhr) {
             /* add style to checkbox, radio */
             //iCheckInit($('input:checkbox, input:radio', settings.nTable));
         });
@@ -37,7 +37,7 @@ $(function() {
                 }
             ],
         })
-        .on('draw', function(event, settings, json, xhr) {
+        .on('draw', function (event, settings, json, xhr) {
             /* add style to checkbox, radio */
             //iCheckInit($('input:checkbox, input:radio', settings.nTable));
         });
