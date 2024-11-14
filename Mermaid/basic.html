@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mermaid: Basic</title>
+</head>
+
+<body>
+
+    <div class="mermaid">
+        graph TD
+        A[Enter Chart Definition] --> B(Preview)
+        B --> C{decide}
+        C --> D[Keep]
+        C --> E[Edit Definition]
+        E --> B
+        D --> F[Save Image and Code]
+        F --> B
+    </div>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    </script>
+</body>
+
+</html>

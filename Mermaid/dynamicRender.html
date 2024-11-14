@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mermaid: Dynamic Render</title>
+</head>
+
+<body>
+
+    <a href="https://mermaid.js.org/intro/#diagram-types" target="_blank">Mermaid Diagram Types</a><br>
+    <label for="exampleFormControlTextarea1">Here is a mermaid diagram:</label>
+    <br>
+    <textarea cols="100" id="sourceTa" rows="10">
+pie title What Voldemort doesn't have?
+"FRIENDS" : 2
+"FAMILY" : 3
+"NOSE" : 45</textarea>
+    <br>
+    <button id="submitBtn" type="button">Submit</button>
+    <button id="resetBtn" type="button">Reset</button>
+    <br>
+    <svg id="previewSVG"></svg>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+        mermaid.initialize({ startOnLoad: false })
+    
+        const sourceTa = document.getElementById('sourceTa');
+        const previewSVG = document.getElementById('previewSVG');
+
+        document.getElementById('resetBtn').onclick = function () {
+            previewSVG.innerHTML = '';
+        };
+
+        document.getElementById('submitBtn').onclick = function () {
+            mermaid.render('preview', sourceTa.value).then(({ svg }) => {
+                previewSVG.innerHTML = svg;
+            }).catch(error => {
+                alert('Mermaid diagram error: ' + error.message);
+            });
+        };
+    </script>
+</body>
+
+</html>
