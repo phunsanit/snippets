@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "SyJ/Ob9ltDA=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Public\\Gits\\phunsanit\\snippets\\c#\\ASP.NET Core Empty\\ASP.NET Core Empty.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Omaka\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\Omaka\\.nuget\\packages\\system.text.json\\8.0.4\\system.text.json.8.0.4.nupkg.sha512"
+  ],
+  "logs": []
+}

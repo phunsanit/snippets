@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      referrerpolicy="no-referrer" rel="stylesheet" />
+   <link crossorigin="anonymous"
+      href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"
+      integrity="sha512-BMbq2It2D3J17/C7aRklzOODG1IQ3+MHw3ifzBHMBwGO/0yUqYmsStgBjI0z5EYlaDEFnvYV7gNYdD3vFLRKsA=="
+      referrerpolicy="no-referrer" rel="stylesheet" />
+   <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      referrerpolicy="no-referrer" rel="stylesheet" />
+
+   <link rel="stylesheet" href="styles.css">
+   <meta charset="utf-8">
+   <meta name="author" content="Pitt Phunsanit">
+   <title>DataTables: sorting by checkbox</title>
+   <style id="figma-style"></style>
+</head>
+
+<body>
+   <table class="table table-hover table-striped" id="tableA"></table>
+
+   <script crossorigin="anonymous"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+   <script crossorigin="anonymous"
+      integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
+      referrerpolicy="no-referrer"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+
+   <script crossorigin="anonymous"
+      integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+      referrerpolicy="no-referrer"
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+
+   <script crossorigin="anonymous"
+      integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
+      referrerpolicy="no-referrer"
+      src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+
+   <script src="https://cdn.datatables.net/plug-ins/2.1.7/sorting/custom-data-source/dom-checkbox.js"></script>
+
+   <script>
+      $(document).ready(function () {
+
+         let tableA = $('#tableA');
+         let tables = [];
+
+         // languages table
+         let options = {
+            "autoWidth": false,
+            "columns": [
+               {
+                  "orderable": false,
+                  "render": function (data, type, row, meta) {
+                     return meta.row + 1;
+                  },
+                  "title": "No.",
+                  "width": "10px"
+               },
+               {
+                  "orderable": true,
+                  "render": function (data, type, row, meta) {
+                     return '<input' + (row.enabled ? ' checked' : '') + ' type="checkbox" value="' + row.lang + '">';
+                  },
+                  "searchable": false,
+                  "title": "Enable",
+                  "type": "dom-checkbox",
+                  "width": "10px"
+               }, {
+                  "data": "name",
+                  "orderable": true,
+                  "title": "Language"
+               }
+               , {
+                  "data": "lang",
+                  "orderable": true,
+                  "title": "ISO Code",
+                  "width": "90px"
+               },
+               {
+                  "orderable": true,
+                  "render": function (data, type, row, meta) {
+                     return '<div title="Count ' + row.lang + '">' + row.items + '</div>';
+                  },
+                  "title": "Items",
+                  "width": "10px"
+               },
+               {
+                  "orderable": false,
+                  "render": function (data, type, row, meta) {
+                     if (row.lang == 'en') {
+                        return '';
+                     } else {
+                        return '<div class="btn fas fa-edit" id="lang' + row.lang + 'Edit" title="Edit ' + row.lang + '">&nbsp;</div>';
+                     }
+                  },
+                  "title": "",
+                  "width": "10px"
+               }
+            ],
+            "createdRow": function (row, data, dataIndex) {
+               if (data.enabled) {
+                  $(row).addClass('table-info');
+               }
+            },
+            "data": [
+               { "items": 0, "lang": "aa", "name": "Afar" },
+               { "items": 0, "lang": "ab", "name": "Abkhazian" },
+               { "items": 0, "lang": "af", "name": "Afrikaans" },
+               { "items": 0, "lang": "ak", "name": "Akan" },
+               { "items": 0, "lang": "am", "name": "Amharic" },
+               { "items": 0, "lang": "an", "name": "Aragonese" },
+               { "items": 0, "lang": "as", "name": "Assamese" },
+               { "items": 0, "lang": "hy", "name": "Armenian" },
+               { "items": 0, "lang": "sq", "name": "Albanian" },
+               { "enabled": true, "items": 0, "lang": "ar", "name": "Arabic: वेबसाइट" },
+               { "enabled": true, "items": 0, "lang": "bn", "name": "Bengali (Bangla): এই টি একটি বাংলা বাক্য।" },
+               { "enabled": true, "items": 0, "lang": "de", "name": "German" },
+               { "enabled": true, "items": 0, "lang": "en", "name": "English" },
+               { "enabled": true, "items": 0, "lang": "es", "name": "Spanish" },
+               { "enabled": true, "items": 0, "lang": "fr", "name": "French" },
+               { "enabled": true, "items": 0, "lang": "hi", "name": "Hindi: वेबसाइट" },
+               { "enabled": true, "items": 0, "lang": "id", "name": "Indonesian" },
+               { "enabled": true, "items": 0, "lang": "ru", "name": "Russian" },
+               { "enabled": true, "items": 0, "lang": "th", "name": "Thai: ภาษาไทย" },
+               { "enabled": true, "items": 0, "lang": "zh", "name": "Chinese (mandarin): 你好，世界" }
+            ]
+         };
+         tables['languages'] = tableA.DataTable(options);
+      });
+   </script>
+</body>
+
+</html>

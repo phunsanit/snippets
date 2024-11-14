@@ -1,0 +1,5 @@
+Start-Service -Name "MSSQLSERVER"
+Start-Service -Name "SQLBrowser"
+Start-Service -Name "SQLSERVERAGENT"
+Start-Service -Name "SQLTELEMETRY"
+Start-Service -Name "SQLWriter"

@@ -1,0 +1,26 @@
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\bin\Debug\net8.0\appsettings.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\bin\Debug\net8.0\ASP.NET Core Empty.exe
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\bin\Debug\net8.0\ASP.NET Core Empty.deps.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\bin\Debug\net8.0\ASP.NET Core Empty.runtimeconfig.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\bin\Debug\net8.0\ASP.NET Core Empty.dll
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\bin\Debug\net8.0\ASP.NET Core Empty.pdb
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.AssemblyInfoInputs.cache
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.AssemblyInfo.cs
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.csproj.CoreCompileInputs.cache
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.sourcelink.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\staticwebassets\msbuild.ASP.NET Core Empty.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\staticwebassets\msbuild.build.ASP.NET Core Empty.props
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.ASP.NET Core Empty.props
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.ASP.NET Core Empty.props
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\scopedcss\bundle\ASP.NET Core Empty.styles.css
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.dll
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\refint\ASP.NET Core Empty.dll
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.pdb
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ASP.NET Core Empty.genruntimeconfig.cache
+C:\Users\Public\Gits\phunsanit\snippets\c#\ASP.NET Core Empty\obj\Debug\net8.0\ref\ASP.NET Core Empty.dll

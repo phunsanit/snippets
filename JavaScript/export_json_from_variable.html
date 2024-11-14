@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>export JSON from variable</title>
+</head>
+
+<body>
+    <button id="exportBtn">Export JSON</button>
+
+    <script>
+        document.getElementById('exportBtn').addEventListener('click', function () {
+            const jsonObject = {
+                name: "John Doe",
+                age: 30,
+                city: "New York"
+            };
+
+            const jsonString = JSON.stringify(jsonObject);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const a = document.createElement('a');
+
+            const url = URL.createObjectURL(blob);
+
+            a.download = 'data.json';
+            a.href = url;
+
+            document.body.appendChild(a);
+
+            a.click();
+
+            document.body.removeChild(a);
+
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+
+</html>
