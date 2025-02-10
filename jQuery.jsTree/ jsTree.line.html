@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>jQuery.jsTree: HTML data</title>
+
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        referrerpolicy="no-referrer" rel="stylesheet" />
+
+    <link crossorigin="anonymous"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.17/themes/default/style.min.css"
+        integrity="sha512-A5OJVuNqxRragmJeYTW19bnw9M2WyxoshScX/rGTgZYj5hRXuqwZ+1AVn2d6wYTZPzPXxDeAGlae0XwTQdXjQA=="
+        referrerpolicy="no-referrer" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <div id="treeA">
+        <ul>
+            <li>fork 1</li>
+            <li>fork 2</li>
+            <li>fork 3</li>
+            <li>fork 4</li>
+            <li data-jstree='{"opened":true, "selected":true}'>fork 5<ul>
+                    <li>fork 5.1</li>
+                    <li data-jstree='{"icon":"fa fa-regular fa-file"}'>fork 5.2</li>
+                    <li>fork 5.3</li>
+                    <li>fork 5.4</li>
+                    <li>fork 5.5</li>
+                    <li>fork 5.6</li>
+                    <li>fork 5.7</li>
+                    <li>fork 5.8</li>
+                </ul>
+            </li>
+            <li>fork 6</li>
+            <li>fork 7</li>
+            <li>fork 8</li>
+            <li>fork 9</li>
+            <li>fork 10</li>
+        </ul>
+    </div>
+
+    <script crossorigin="anonymous"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script crossorigin="anonymous"
+        integrity="sha512-Rzhxh2sskKwa+96nRopp/hvGexBzEPG6mnFI6uRy059FZfksJJFYmqDFn050KUDhivXLsT6SvoaEf5iSp2SHjg=="
+        referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.17/jstree.min.js"></script>
+
+    <script type="module">
+        $(document).ready(function () {
+            $('#treeA').jstree();
+        });
+    </script>
+</body>
+
+</html>
