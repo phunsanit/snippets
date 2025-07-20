@@ -5,7 +5,7 @@
    <meta charset="utf-8">
    <meta name="author" content="Pitt Phunsanit">
 
-   <title>DataTables: Add row form JavaScript</title>
+   <title>DataTables: Non-jQuery initialisation</title>
 
    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
       integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
@@ -17,14 +17,10 @@
    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
       integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
       referrerpolicy="no-referrer" rel="stylesheet" />
-
-   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
    <table class="table table-hover table-striped" id="tableA"></table>
-   <label for="jsonTA">JSON Data</label>
-   <textarea class="form-control" id="jsonTA" rows="10"></textarea>
 
    <script crossorigin="anonymous"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -48,104 +44,9 @@
    <script src="https://cdn.datatables.net/plug-ins/2.1.7/sorting/custom-data-source/dom-checkbox.js"></script>
 
    <script>
-      $(document).ready(function () {
+      document.addEventListener('DOMContentLoaded', () => {
 
-         let polyglots = {
-            "languages": {
-               "en": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "English"
-               },
-               "zh": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Chinese (mandarin): 你好，世界"
-               },
-               "hi": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Hindi: वेबसाइट"
-               },
-               "es": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Spanish"
-               },
-               "fr": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "French"
-               },
-               "ar": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Arabic: वेबसाइट"
-               },
-               "bn": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Bengali (Bangla): এই টি একটি বাংলা বাক্য।"
-               },
-               "ru": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Russian"
-               },
-               "id": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Indonesian"
-               },
-               "de": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "German"
-               },
-               "th": {
-                  "enabled": true,
-                  "items": 0,
-                  "name": "Thai: ภาษาไทย"
-               },
-               "ab": {
-                  "items": 0,
-                  "name": "Abkhazian"
-               },
-               "aa": {
-                  "items": 0,
-                  "name": "Afar"
-               },
-               "af": {
-                  "items": 0,
-                  "name": "Afrikaans"
-               },
-               "ak": {
-                  "items": 0,
-                  "name": "Akan"
-               },
-               "sq": {
-                  "items": 0,
-                  "name": "Albanian"
-               },
-               "am": {
-                  "items": 0,
-                  "name": "Amharic"
-               },
-               "an": {
-                  "items": 0,
-                  "name": "Aragonese"
-               },
-               "hy": {
-                  "items": 0,
-                  "name": "Armenian"
-               },
-               "as": {
-                  "items": 0,
-                  "name": "Assamese"
-               }
-            }
-         };
-         let tableA = $('#tableA');
+         const tableElement = document.getElementById('tableA');
          let tables = [];
 
          // languages table
@@ -205,25 +106,37 @@
                if (data.enabled) {
                   $(row).addClass('table-info');
                }
-            }
+            },
+            "data": [
+               { "items": 0, "lang": "aa", "name": "Afar" },
+               { "items": 0, "lang": "ab", "name": "Abkhazian" },
+               { "items": 0, "lang": "af", "name": "Afrikaans" },
+               { "items": 0, "lang": "ak", "name": "Akan" },
+               { "items": 0, "lang": "am", "name": "Amharic" },
+               { "items": 0, "lang": "an", "name": "Aragonese" },
+               { "items": 0, "lang": "as", "name": "Assamese" },
+               { "items": 0, "lang": "hy", "name": "Armenian" },
+               { "items": 0, "lang": "sq", "name": "Albanian" },
+               { "enabled": true, "items": 0, "lang": "ar", "name": "Arabic: वेबसाइट" },
+               { "enabled": true, "items": 0, "lang": "bn", "name": "Bengali (Bangla): এই টি একটি বাংলা বাক্য।" },
+               { "enabled": true, "items": 0, "lang": "de", "name": "German" },
+               { "enabled": true, "items": 0, "lang": "en", "name": "English" },
+               { "enabled": true, "items": 0, "lang": "es", "name": "Spanish" },
+               { "enabled": true, "items": 0, "lang": "fr", "name": "French" },
+               { "enabled": true, "items": 0, "lang": "hi", "name": "Hindi: वेबसाइट" },
+               { "enabled": true, "items": 0, "lang": "id", "name": "Indonesian" },
+               { "enabled": true, "items": 0, "lang": "ru", "name": "Russian" },
+               { "enabled": true, "items": 0, "lang": "th", "name": "Thai: ภาษาไทย" },
+               { "enabled": true, "items": 0, "lang": "zh", "name": "Chinese (mandarin): 你好，世界" }
+            ]
          };
-         tables['languages'] = tableA.DataTable(options);
 
-         //add data to DataTable
-         let data = [];
-
-         for (let lang in polyglots.languages) {
-            data.push({
-               "enabled": polyglots.languages[lang].enabled,
-               "items": polyglots.languages[lang].items,
-               "lang": lang,
-               "name": polyglots.languages[lang].name
-            });
+         //Non-jQuery initialisation but using jQuery for DataTables
+         if (tableElement) {
+            tables['languages'] = $(tableElement).DataTable(options);
+         } else {
+            console.error('Table id not found!');
          }
-         tables['languages'].clear().rows.add(data).draw();
-
-         //preview data
-         $('#jsonTA').val(JSON.stringify(data));
 
       });
    </script>

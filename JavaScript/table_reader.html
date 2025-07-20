@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript: table reader</title>
+    <link crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" />
+    <style>
+        #rateTA td:nth-child(2),
+        #rateTA td:nth-child(3),
+        #rateTA td:nth-child(4),
+        #rateTA td:nth-child(5) {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>TL Plan 20/10 (ผลตอบแทนสูงที่สุด) ไทยประกันชีวิต</h2>
+    <p>ชำระเบี้ยเพียง 10 ปี (สามารถนำไปลดหย่อนภาษีได้)</p>
+    <p>ติดต่อตัวแทนผมไม่ได้ขาย แต่ถ้าตัวแทนอยากได้เว็บก็โทรมา</p>
+    <form class="text-end">
+        <div class="row g-3 justify-content-end">
+            <div class="col-auto">
+                <label for="age" class="visually-hidden">อายุ</label>
+                <input type="number" step="1" class="form-control" id="age" placeholder="อายุ">
+            </div>
+            <div class="col-auto">
+                <label for="sex" class="visually-hidden">เพศ</label>
+                <select class="form-select" id="sex">
+                    <option selected>เพศ</option>
+                    <option value="male">ชาย</option>
+                    <option value="female">หญิง</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button id="submitBtn" type="submit" class="btn btn-primary mb-3">Submit</button>
+                <button type="reset" class="btn btn-secondary mb-3">Reset</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped w-auto" id="rateTA">
+        <thead>
+            <tr>
+                <th style="width: 40px;">อายุ</th>
+                <th colspan="2">อัตราเบี้ยประกัน</th>
+                <th>ทุนประกันชีวิต</th>
+                <th>เงินครบสัญญาปีที่ 20</th>
+                <th>เงินคืนระหว่างปี</th>
+            </tr>
+            <tr>
+                <th>เพศ</th>
+                <th style="width: 40px;">ชาย</th>
+                <th style="width: 40px;">หญิง</th>
+                <th style="width: 180px;">คุ้มครองเสียชีวิตทุกกรณี</th>
+                <th style="width: 200px;">(รับ 150% ของทุนประกัน)</th>
+                <th>ไม่มี</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0</td>
+                <td>10,630</td>
+                <td>10,630</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>10,560</td>
+                <td>10,590</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>10,530</td>
+                <td>10,570</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>10,510</td>
+                <td>10,560</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>10,500</td>
+                <td>10,550</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>10,490</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>10,480</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>10,480</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>10,470</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>10,460</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>10,450</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>10,440</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>10,430</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>10,420</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>10,410</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>10,400</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>10,390</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>10,380</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>10,370</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>10,360</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>10,350</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>10,340</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td>10,330</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td>10,320</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>24</td>
+                <td>10,310</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>25</td>
+                <td>10,300</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>26</td>
+                <td>10,290</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>27</td>
+                <td>10,280</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td>10,270</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>29</td>
+                <td>10,260</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td>10,250</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>31</td>
+                <td>10,240</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>32</td>
+                <td>10,230</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>33</td>
+                <td>10,220</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>34</td>
+                <td>10,210</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>35</td>
+                <td>10,200</td>
+                <td>10,540</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>36</td>
+                <td>10,740</td>
+                <td>10,570</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>38</td>
+                <td>10,740</td>
+                <td>10,570</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>39</td>
+                <td>10,750</td>
+                <td>10,570</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td>10,750</td>
+                <td>10,570</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>41</td>
+                <td>10,760</td>
+                <td>10,570</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>43</td>
+                <td>10,780</td>
+                <td>10,580</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>44</td>
+                <td>10,790</td>
+                <td>10,580</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td>10,800</td>
+                <td>10,580</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>46</td>
+                <td>10,810</td>
+                <td>10,580</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>47</td>
+                <td>10,820</td>
+                <td>10,590</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>48</td>
+                <td>10,830</td>
+                <td>10,590</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>49</td>
+                <td>10,840</td>
+                <td>10,590</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td>10,850</td>
+                <td>10,590</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>51</td>
+                <td>10,860</td>
+                <td>10,600</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>52</td>
+                <td>10,870</td>
+                <td>10,600</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>53</td>
+                <td>10,880</td>
+                <td>10,600</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>54</td>
+                <td>10,890</td>
+                <td>10,610</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>57</td>
+                <td>10,920</td>
+                <td>10,620</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>58</td>
+                <td>10,930</td>
+                <td>10,620</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>59</td>
+                <td>10,940</td>
+                <td>10,630</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>65</td>
+                <td>11,000</td>
+                <td>10,660</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>55</td>
+                <td>10,900</td>
+                <td>10,610</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>66</td>
+                <td>11,010</td>
+                <td>10,660</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>67</td>
+                <td>11,020</td>
+                <td>10,670</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>68</td>
+                <td>11,030</td>
+                <td>10,670</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>60</td>
+                <td>10,950</td>
+                <td>10,630</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>62</td>
+                <td>10,970</td>
+                <td>10,640</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>63</td>
+                <td>10,980</td>
+                <td>10,650</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>56</td>
+                <td>10,910</td>
+                <td>10,610</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>69</td>
+                <td>11,040</td>
+                <td>10,680</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+            <tr>
+                <td>70</td>
+                <td>11,060</td>
+                <td>10,690</td>
+                <td>100,000</td>
+                <td>150,000</td>
+                <td>ไม่มี</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="footer-row">
+                <th colspan="6">*หมายเหตุ: ทุนประกันเพิ่มขึ้นเมื่อมูลค่าเงินสดเพิ่มขึ้น</th>
+            </tr>
+            <tr class="footer-row">
+                <th colspan="6">*หมายเหตุ: ผลตอบแทนมากกว่าเงินฝากประจำ</th>
+            </tr>
+        </tfoot>
+    </table>
+    <script>
+        const submitBtn = document.getElementById('submitBtn');
+        let cellHeaderOld;
+        let cellOld;
+        let colIndex = 0;
+        let interval = 1000; // 1 seconds
+        let table = document.getElementById('rateTA');
+
+        function tableReader() {
+            if (colIndex >= table.querySelectorAll('thead th').length) {
+                alert('End of table');
+                return; // Stop if we've reached the end of columns
+            }
+
+            let cellHeader = table.querySelectorAll('thead th')[colIndex];
+            let tbodyRows = table.querySelectorAll('tbody tr');
+            let tbodyCells = Array.from(tbodyRows).map(row => row.querySelectorAll('td')[colIndex]);
+
+            // Highlight the header cell
+            if (cellHeaderOld) {
+                cellHeaderOld.classList.remove('table-primary');
+            }
+            cellHeader.classList.add('table-primary');
+            cellHeaderOld = cellHeader;
+
+            // Test condition in tbody
+            tbodyCells.forEach((cell, index) => {
+                setTimeout(() => {
+                    if (cellOld) {
+                        cellOld.classList.remove('table-primary');
+                    }
+                    cell.classList.add('table-primary');
+                    cellOld = cell;
+                }, interval * (index + 1));
+            });
+
+            // Move to the next column after highlighting all cells in the current column
+            setTimeout(function () {
+                colIndex++;
+
+                tableReader();
+
+            }, interval * (tbodyCells.length + 1));
+
+        }
+
+        submitBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            let table = document.getElementById('rateTA');
+
+            tableReader(table);
+        });
+    </script>
+</body>
+
+</html>

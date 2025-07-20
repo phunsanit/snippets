@@ -1,0 +1,13 @@
+[
+    {
+      "label": "Fruits",
+      "options": [
+        { "text": "Apple", "value": "apple" },
+        { "text": "Banana", "value": "banana" }
+      ]
+    },
+    {
+      "text": "Orange",
+      "value": "orange"
+    }
+  ]

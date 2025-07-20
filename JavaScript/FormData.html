@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript: FormData and array notation</title>
+</head>
+
+<body>
+
+    <form id="formElem">
+        <input type="text" name="name" value="John">
+        <input type="text" name="surname" value="Smith">
+        <input type="submit">
+    </form>
+
+    <script>
+        formElem.onsubmit = async (e) => {
+            e.preventDefault();
+
+            // Create a FormData object from the form element
+            let data = new FormData(formElem);
+            console.log(data);
+
+            // Convert FormData to JSON
+            let jsonData = {};
+            data.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+            let json = JSON.stringify(jsonData);
+            console.log(json);
+
+            let response = await fetch('/article/formdata/post/user', {
+                method: 'POST',
+                body: data
+            });
+            console.log(response);
+
+            let result = await response.json();
+
+            alert(result.message);
+        };
+    </script>
+
+</body>
+
+</html>
