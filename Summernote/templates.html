@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>Summernote: textarea</title>
+
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css"
+        integrity="sha512-fw7f+TcMjTb7bpbLJZlP8g2Y4XcCyFZW8uy8HsRZsH/SwbMw0plKHFHr99DN3l04VsYNwvzicUX/6qurvIxbxw=="
+        referrerpolicy="no-referrer" rel="stylesheet" />
+
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.9.1/summernote-bs4.min.css"
+        integrity="sha512-rDHV59PgRefDUbMm2lSjvf0ZhXZy3wgROFyao0JxZPGho3oOuWejq/ELx0FOZJpgaE5QovVtRN65Y3rrb7JhdQ=="
+        referrerpolicy="no-referrer" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container mt-5">
+        <form id="fomrA" method="post">
+            <div class="mb-3">
+                <label class="form-label" for="templateSelect">Choose an option</label>
+                <select class="form-select" id="templateSelect">
+                    <option value="" disabled selected>Select a template</option>
+
+                    <option value="option1">English</option>
+                    <option value="option2">Thai</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <textarea id="summernote" name="editordata"></textarea>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script crossorigin="anonymous" referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="></script>
+
+    <script crossorigin="anonymous" referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.min.js"
+        integrity="sha512-zKeerWHHuP3ar7kX2WKBSENzb+GJytFSBL6HrR2nPSR1kOX1qjm+oHooQtbDpDBSITgyl7QXZApvDfDWvKjkUw=="></script>
+
+    <script crossorigin="anonymous"
+        integrity="sha512-07bR+AJ2enmNU5RDrZkqMfVq06mQHgFxcmWN/hNSNY4E5SgYNOmTVqo/HCzrSxBhWU8mx3WB3ZJOixA9cRnCdA=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.9.1/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+            });
+
+            $('#fomrA').on('submit', function (e) {
+                e.preventDefault();
+                alert($('#summernote').summernote('code'));
+            });
+
+            $('#templateSelect').on('change', function () {
+                var selectedValue = $(this).val();
+                if (selectedValue === 'option1') {
+                    $('#summernote').summernote('code', `<p>Hi [Name],</p>
+
+<p>I hope you're having a good week.</p>
+
+<p>I'm writing to you today to inquire about [specific question or topic]. I'm particularly interested in [mention one or two key details you'd like to know].</p>
+
+<p>Any information you could provide would be greatly appreciated.</p>
+
+<p>Thanks for your time.</p>
+
+<p>Best regards,</p>
+
+<p>[Your Name]</p>`);
+                } else if (selectedValue === 'option2') {
+                    $('#summernote').summernote('code', `<p>เรียน ทีมงาน/คุณ[ชื่อผู้รับ (ถ้ามี)],</p>
+<p>ดิฉัน/ผม [ชื่อผู้ส่ง] จาก [ชื่อบริษัท/องค์กร] ขออนุญาตสอบถามข้อมูลเกี่ยวกับ [หัวข้อที่ต้องการสอบถาม] ค่ะ/ครับ</p>
+<p>ดิฉัน/ผมมีความสนใจใน [หัวข้อที่สนใจ] และต้องการทราบข้อมูลเพิ่มเติมเกี่ยวกับ [รายละเอียดที่ต้องการ]</p>
+<p>หากมีข้อมูลเพิ่มเติมที่ท่านต้องการ ดิฉัน/ผมยินดีให้ข้อมูลเพิ่มเติมค่ะ/ครับ</p>
+<p>ขอขอบพระคุณสำหรับความช่วยเหลือค่ะ/ครับ</p>
+<p>ขอแสดงความนับถือ,<br>
+[ชื่อผู้ส่ง]<br>
+[ตำแหน่ง (ถ้ามี)]<br>
+[เบอร์โทรศัพท์ (ถ้ามี)]<br>
+[อีเมล]</p>`);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
