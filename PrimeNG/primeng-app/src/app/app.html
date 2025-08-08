@@ -1,0 +1,16 @@
+<div class="card">
+  <p-table [value]="languages$ | async" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Code</th>
+        <th>Name</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-language>
+      <tr>
+        <td>{{ language.code }}</td>
+        <td>{{ language.name }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
