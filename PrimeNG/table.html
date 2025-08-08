@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeNG Table Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .p-datatable {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .p-datatable-header {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .p-datatable th, .p-datatable td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .p-datatable thead th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .p-datatable tbody tr:nth-child(even) {
+            background-color: #fbfcfd;
+        }
+        .p-datatable tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+        .p-tag {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: bold;
+        }
+        .p-tag-success {
+            background-color: #28a745;
+        }
+        .p-tag-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .p-tag-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>PrimeNG Table Demonstration</h2>
+    <p>This is a simplified, plain HTML/CSS representation of a PrimeNG table, as direct use of PrimeNG components requires an Angular environment.</p>
+
+    <div class="p-datatable">
+        <div class="p-datatable-header">Products</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>f230fh0g3</td>
+                    <td>Bamboo Watch</td>
+                    <td>Accessories</td>
+                    <td>24</td>
+                    <td><span class="p-tag p-tag-success">In Stock</span></td>
+                </tr>
+                <tr>
+                    <td>nvklal433</td>
+                    <td>Black Watch</td>
+                    <td>Accessories</td>
+                    <td>61</td>
+                    <td><span class="p-tag p-tag-success">In Stock</span></td>
+                </tr>
+                <tr>
+                    <td>zz21cz3c1</td>
+                    <td>Blue Band</td>
+                    <td>Fitness</td>
+                    <td>2</td>
+                    <td><span class="p-tag p-tag-warning">Low Stock</span></td>
+                </tr>
+                <tr>
+                    <td>244wgerg2</td>
+                    <td>Blue T-Shirt</td>
+                    <td>Clothing</td>
+                    <td>25</td>
+                    <td><span class="p-tag p-tag-success">In Stock</span></td>
+                </tr>
+                <tr>
+                    <td>h456wer53</td>
+                    <td>Bracelet</td>
+                    <td>Accessories</td>
+                    <td>73</td>
+                    <td><span class="p-tag p-tag-success">In Stock</span></td>
+                </tr>
+                <tr>
+                    <td>av2231fwg</td>
+                    <td>Brown Purse</td>
+                    <td>Accessories</td>
+                    <td>0</td>
+                    <td><span class="p-tag p-tag-danger">Out of Stock</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
