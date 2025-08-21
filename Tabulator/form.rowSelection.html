@@ -84,14 +84,6 @@
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
             });
 
-            table.on("rowAdded", () => {
-                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
-            });
-
-            table.on("rowSelectionChanged", () => {
-                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
-            });
-
             // form event for input changes
             form.addEventListener('input', () => {
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);

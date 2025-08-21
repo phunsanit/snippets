@@ -5,117 +5,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabulator: data.form.clone</title>
-    <!-- Tabulator CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
-        integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <form method="post" action="submit.php">
+    <form id="formA" method="post">
+        <label>Date From: <input name="date_from" type="date"></label>
+        <label>Date To: <input name="date_to" type="date"></label>
         <div id="tabulator-table"></div>
+        <hr>
+        Selected rows
+        <div id="tabulator-table-clone"></div>
         <button type="submit">Submit</button>
     </form>
+    <button type="button" id="show-local-storage">View Local Storage</button>
 
-    <!-- Tabulator JS -->
-    <script integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"
-        src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+
+    <script src="../assets/javascript.form.helper.js"></script>
+
+    <script src="assets/Tabulator.helper.form.rowSelection.js"></script>
+
     <script>
-        // Tabulator setup with AJAX, pagination, and clone button
-        var table = new Tabulator("#tabulator-table", {
-            ajaxURL: "../assets/ISO-4217.json",
-            ajaxConfig: "GET",
-            columns: [
-                {
-                    cellClick: function (e, cell) {
-                        var row = cell.getRow();
-                        var data = Object.assign({}, row.getData());
-                        data.code = "";
-                        table.addRow(data, false, row); // add under current row
-                    },
-                    formatter: function () {
-                        return '<button type="button">Clone</button>';
-                    },
-                    hozAlign: "center",
-                    title: "Clone",
-                    width: 80
-                },
-                {
-                    field: "code",
-                    formatter: function (cell) {
-                        var value = cell.getValue();
-                        if (value === "" || value === undefined) {
-                            return '<input name = "code[]" type = "text" value = "">';
-                        }
-                        return value;
-                    },
-                    title: "Code",
-                    width: 80
-                },
-                {
-                    field: "currency",
-                    formatter: function (cell) {
-                        var row = cell.getRow().getData();
-                        if (row.code === "" || row.code === undefined) {
-                            return '<input name = "currency[]" type = "text" value = "' + (row.currency || "") + '">';
-                        }
-                        return cell.getValue();
-                    },
-                    title: "Currency"
-                },
-                {
-                    field: "digits",
-                    formatter: function (cell) {
-                        var row = cell.getRow().getData();
-                        if (row.code === "" || row.code === undefined) {
-                            return '<input name = "digits[]" type = "number" value = "' + (row.digits || "") + '">';
-                        }
-                        return cell.getValue();
-                    },
-                    title: "Digits",
-                    width: 80
-                },
-                {
-                    field: "numeric",
-                    formatter: function (cell) {
-                        var row = cell.getRow().getData();
-                        if (row.code === "" || row.code === undefined) {
-                            return '<input name = "numeric[]" type = "number" value = "' + (row.numeric || "") + '">';
-                        }
-                        return cell.getValue();
-                    },
-                    title: "Numeric",
-                    width: 80
-                },
-                {
-                    field: "locations",
-                    formatter: function (cell) {
-                        var row = cell.getRow().getData();
-                        if (row.code === "" || row.code === undefined) {
-                            var val = Array.isArray(row.locations) ? row.locations.join(", ") : (row.locations || "");
-                            return '<input name = "locations[]" type = "text" value = "' + val + '">';
-                        }
-                        return Array.isArray(cell.getValue()) ? cell.getValue().join(", ") : cell.getValue();
-                    },
-                    title: "Locations"
-                }
-            ],
-            layout: "fitColumns",
-            pagination: true,
-            paginationSize: 10
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('#formA');
 
-        // alert all form data on submit
-        document.querySelector('form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            var form = e.target;
-            var formData = new FormData(form);
-            var entries = [];
-            for (let pair of formData.entries()) {
-                entries.push(pair[0] + ': ' + pair[1]);
+            // Tabulator row selection name
+            const tableRowSelectName = 'items';
+
+            // tabulator table instance
+            const table = new Tabulator("#tabulator-table", {
+                ajaxURL: "../assets/ISO-4217.json",
+                ajaxConfig: "GET",
+                selectable: true,
+                columns: [
+                    {
+                        cellClick: (e, cell) => cell.getRow().toggleSelect(),
+                        formatter: "rowSelection",
+                        headerClick: (e, column) => {
+                            const tableInstance = column.getTable();
+                            const allRows = tableInstance.getRows();
+                            const allSelected = allRows.every(row => row.isSelected());
+                            if (allSelected) {
+                                allRows.forEach(row => row.deselect());
+                            } else {
+                                allRows.forEach(row => row.select());
+                            }
+                        },
+                        headerSort: false,
+                        hozAlign: "center",
+                        titleFormatter: "rowSelection",
+                        width: 80
+                    },
+                    { field: "code", title: "Code", width: 80 },
+                    { field: "currency", title: "Currency" },
+                    { field: "digits", title: "Digits", width: 80 },
+                    { field: "numeric", title: "Numeric", width: 80 },
+                    { field: "locations", title: "Locations" }
+                ],
+                layout: "fitColumns",
+                pagination: true,
+                paginationMode: "local",
+                paginationSize: 10,
+            });
+
+            // clone table instance for selected rows
+            const cloneTable = new Tabulator("#tabulator-table-clone", {
+                columns: [
+                    { field: "code", title: "Code", width: 80 },
+                    { field: "currency", title: "Currency" }
+                ],
+                layout: "fitColumns",
+                pagination: true,
+                paginationMode: "local",
+                paginationSize: 10,
+            });
+
+            function updateCloneTable() {
+                const selectedData = table.getSelectedData();
+                cloneTable.replaceData(selectedData);
             }
-            alert(entries.join('\n'));
+
+            // tabulator event listeners for saving form data
+            table.on("cellEdited", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("pageLoaded", () => {
+                // When the page loads, we get the up-to-date selected data
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("rowAdded", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("rowSelectionChanged", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+                updateCloneTable();
+            });
+
+            table.on("pageLoaded", updateCloneTable);
+            table.on("dataLoaded", updateCloneTable);
+
+            // form event for input changes
+            form.addEventListener('input', () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            // form event form submission
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            // for debugging
+            document.getElementById('show-local-storage').addEventListener('click', () => {
+                const savedData = localStorage.getItem('forms');
+                if (savedData) {
+                    alert('form_data\n' + savedData);
+                } else {
+                    alert('No form_data found in localStorage');
+                }
+            });
         });
     </script>
 </body>
