@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulator: form.rowSelection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <form id="formA" method="post">
+        <label>Date From: <input name="date_from" type="date"></label>
+        <label>Date To: <input name="date_to" type="date"></label>
+        <div id="tabulator-table"></div>
+        <button type="submit">Submit</button>
+    </form>
+    <button type="button" id="show-local-storage">View Local Storage</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+
+    <script src="../assets/javascript.form.helper.js"></script>
+
+    <script src="assets/Tabulator.helper.form.rowSelection.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('#formA');
+
+            // Tabulator row selection name
+            const tableRowSelectName = 'items';
+
+            // tabulator table instance
+            const table = new Tabulator("#tabulator-table", {
+                ajaxURL: "../assets/ISO-4217.json",
+                ajaxConfig: "GET",
+                selectable: true,
+                columns: [
+                    {
+                        cellClick: (e, cell) => cell.getRow().toggleSelect(),
+                        formatter: "rowSelection",
+                        headerClick: (e, column) => {
+                            const tableInstance = column.getTable();
+                            const allRows = tableInstance.getRows();
+                            const allSelected = allRows.every(row => row.isSelected());
+                            if (allSelected) {
+                                allRows.forEach(row => row.deselect());
+                            } else {
+                                allRows.forEach(row => row.select());
+                            }
+                        },
+                        headerSort: false,
+                        hozAlign: "center",
+                        titleFormatter: "rowSelection",
+                        width: 80
+                    },
+                    { field: "code", title: "Code", width: 80 },
+                    { field: "currency", title: "Currency" },
+                    { field: "digits", title: "Digits", width: 80 },
+                    { field: "numeric", title: "Numeric", width: 80 },
+                    { field: "locations", title: "Locations" }
+                ],
+                layout: "fitColumns",
+                pagination: true,
+                paginationMode: "local",
+                paginationSize: 10,
+            });
+
+            // tabulator event listeners for saving form data
+            table.on("cellEdited", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("pageLoaded", () => {
+                // When the page loads, we get the up-to-date selected data
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("rowAdded", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("rowSelectionChanged", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("rowAdded", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            table.on("rowSelectionChanged", () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            // event form submission
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            // for debugging
+            document.getElementById('show-local-storage').addEventListener('click', () => {
+                const savedData = localStorage.getItem('forms');
+                if (savedData) {
+                    alert('form_data\n' + savedData);
+                } else {
+                    alert('No form_data found in localStorage');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
