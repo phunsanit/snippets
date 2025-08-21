@@ -45,13 +45,9 @@ function TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName) {
 
 // ฟังก์ชันแสดงจำนวนข้อมูลใน Tabulator
 function TabulatorUpdateCountDisplay(table) {
-    let totalCount = 0;
-    let filteredCount = 0;
-    if (table && typeof table.getRows === 'function') {
-        // getData('all') จะคืนข้อมูลทั้งหมดในทุกกรณี
-        totalCount = (typeof table.getData === 'function') ? table.getData('all').length : 0;
-        filteredCount = table.getRows('active').length;
-    }
+    const totalCount = table.getDataCount();            // all rows in dataset
+    const filteredCount = table.getDataCount("active"); // filtered rows (ignores pagination)
+
     document.getElementById('total-count').textContent = totalCount;
     document.getElementById('filtered-count').textContent = filteredCount;
 }

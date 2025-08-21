@@ -31,7 +31,7 @@
         <label>Date From: <input name="date_from" type="date"></label>
         <label>Date To: <input name="date_to" type="date"></label>
         <div id="tabulator-table"></div>
-        <div id="record-count-display">
+        <div id="record-count-display" style="float: right; margin-top: 8px;">
             Showing <span id="filtered-count">0</span> of <span id="total-count">0</span> records
         </div>
         <button type="submit">Submit</button>
@@ -45,13 +45,18 @@
     <script src="assets/Tabulator.helper.form.rowSelection.js"></script>
 
     <script>
+        // Define the helper function outside of the DOMContentLoaded listener
+        function TabulatorUpdateCountDisplay(table) {
+            const totalCount = table.getDataCount();
+            const filteredCount = table.getRows("active").length;
+            document.getElementById('total-count').textContent = totalCount;
+            document.getElementById('filtered-count').textContent = filteredCount;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.querySelector('#formA');
-
-            // Tabulator row selection name
             const tableRowSelectName = 'items';
 
-            // tabulator table instance
             const table = new Tabulator("#tabulator-table", {
                 ajaxURL: "../assets/ISO-4217.json",
                 ajaxConfig: "GET",
@@ -84,11 +89,9 @@
                 layout: "fitColumns",
                 pagination: true,
                 paginationMode: "local",
-                paginationSize: 10,
+                paginationSize: 10
             });
-            table.on('dataLoaded', (table) => TabulatorUpdateCountDisplay(table));
-            table.on('dataFiltered', (table) => TabulatorUpdateCountDisplay(table));
-            table.on('pageLoaded', (table) => TabulatorUpdateCountDisplay(table));
+
             document.getElementById('search-button').addEventListener('click', doSearch);
             document.getElementById('clear-search-button').addEventListener('click', function () {
                 document.getElementById('search-input-all').value = '';
@@ -97,17 +100,30 @@
                 document.getElementById('search-input-location').value = '';
                 document.getElementById('search-input-digits').value = '';
                 table.clearFilter();
-                TabulatorUpdateCountDisplay(table); // Ensure count is reset after clearing filter
+                TabulatorUpdateCountDisplay(table);
             });
 
+            // tabulator event listeners for updating count display
+            // You can simplify these since dataFiltered and dataLoaded already call the function
+            // No need to have redundant calls.
+
+            table.on("dataLoaded", () => {
+                TabulatorUpdateCountDisplay(table);
+            });
+            table.on("dataFiltered", () => {
+                TabulatorUpdateCountDisplay(table);
+            });
+            table.on("renderComplete", () => {
+                TabulatorUpdateCountDisplay(table);
+            });
             // tabulator event listeners for saving form data
             table.on("cellEdited", () => {
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
             });
 
             table.on("pageLoaded", () => {
-                // When the page loads, we get the up-to-date selected data
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+                TabulatorUpdateCountDisplay(table);
             });
 
             table.on("rowAdded", () => {
@@ -116,19 +132,16 @@
 
             table.on("rowSelectionChanged", () => {
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+                storeSelectedFilteredData();
+                TabulatorUpdateCountDisplay(table);
             });
 
-            // store selected filtered data only
             function storeSelectedFilteredData() {
-                const filteredRows = table.getRows(true); // true = only filtered rows
+                const filteredRows = table.getRows(true);
                 const selectedRows = filteredRows.filter(row => row.isSelected());
                 const selectedData = selectedRows.map(row => row.getData());
                 localStorage.setItem('filtered_selected', JSON.stringify(selectedData));
             }
-            // เมื่อเลือกแถวทั้งหมดหลัง filter
-            table.on('rowSelectionChanged', function () {
-                storeSelectedFilteredData();
-            });
 
             // form event for input changes
             form.addEventListener('input', () => {
@@ -141,7 +154,6 @@
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
             });
 
-            // Search logic
             function doSearch() {
                 const filters = [];
                 const code = document.getElementById('search-input-code').value.trim();
@@ -151,15 +163,12 @@
                 const all = document.getElementById('search-input-all').value.trim();
 
                 if (code) filters.push({ field: 'code', type: 'like', value: code });
-
                 if (currency) filters.push({ field: 'currency', type: 'like', value: currency });
-
                 if (location) filters.push({ field: 'locations', type: 'like', value: location });
-
                 if (digits) filters.push({ field: 'digits', type: 'like', value: digits });
 
                 if (all) {
-                    table.setFilter(function (data, filterParams) {
+                    table.setFilter(function (data) {
                         const val = all.toLowerCase();
                         return (
                             (data.code && data.code.toLowerCase().includes(val)) ||
@@ -175,20 +184,6 @@
                 TabulatorUpdateCountDisplay(table);
             }
 
-            //filters search
-            document.getElementById('search-button').addEventListener('click', doSearch);
-            //filters reset
-            document.getElementById('clear-search-button').addEventListener('click', function () {
-                document.getElementById('search-input-all').value = '';
-                document.getElementById('search-input-code').value = '';
-                document.getElementById('search-input-currency').value = '';
-                document.getElementById('search-input-location').value = '';
-                document.getElementById('search-input-digits').value = '';
-                table.clearFilter();
-                TabulatorUpdateCountDisplay(table); // Ensure count is reset after clearing filter
-            });
-
-            // for debugging
             document.getElementById('show-local-storage').addEventListener('click', () => {
                 const savedData = localStorage.getItem('forms');
                 if (savedData) {
@@ -197,7 +192,6 @@
                     alert('No form_data found in localStorage');
                 }
             });
-
         });
     </script>
 </body>
