@@ -17,9 +17,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
     <script>
-        const appState = {
-            tabulatorSelectedItems: []
-        };
+        // Tabulator row selection name
+        const tableRowSelectName = 'items';
 
         const table = new Tabulator("#tabulator-table", {
             ajaxURL: "../assets/ISO-4217.json",
@@ -30,18 +29,14 @@
                     cellClick: (e, cell) => cell.getRow().toggleSelect(),
                     formatter: "rowSelection",
                     headerClick: (e, column) => {
-                        // Optional: Handle clicks on header cell (not checkbox)
                         const tableInstance = column.getTable();
                         const allRows = tableInstance.getRows();
                         const allSelected = allRows.every(row => row.isSelected());
-
                         if (allSelected) {
                             allRows.forEach(row => row.deselect());
                         } else {
                             allRows.forEach(row => row.select());
                         }
-
-                        formsCacheDataToLocalStorage();
                     },
                     headerSort: false,
                     hozAlign: "center",
@@ -69,6 +64,7 @@
             const form = document.querySelector('#formA');
             const formData = new FormData(form);
             const collectedData = {};
+            const dynamicKeys = [];
 
             for (const [name, value] of formData.entries()) {
                 const isArrayInput = name.endsWith('[]');
@@ -78,14 +74,30 @@
                         collectedData[key] = [];
                     }
                     collectedData[key].push(value);
+                    if (!dynamicKeys.includes(key)) {
+                        dynamicKeys.push(key);
+                    }
                 } else {
                     collectedData[key] = value;
                 }
             }
 
-            const keyForTabulatorItems = 'items';
-            collectedData[keyForTabulatorItems] = [...new Set(appState.tabulatorSelectedItems)];
+            // Get selected items from Tabulator
+            const selectedTabulatorItems = table.getSelectedData().map(row => row.code);
 
+            // Add Tabulator items to the collected data and mark as dynamic
+            if (!collectedData[tableRowSelectName]) {
+                collectedData[tableRowSelectName] = [];
+            }
+            collectedData[tableRowSelectName] = mergeArraysUnique(collectedData[tableRowSelectName], selectedTabulatorItems);
+            if (!dynamicKeys.includes(tableRowSelectName)) {
+                dynamicKeys.push(tableRowSelectName);
+            }
+
+            // Add the new dynamic key to the collected data
+            collectedData['_inputDynamic'] = dynamicKeys;
+
+            // Merge with existing localStorage data
             for (const [key, value] of Object.entries(collectedData)) {
                 if (Array.isArray(value)) {
                     currentLocalStorage[key] = mergeArraysUnique(currentLocalStorage[key], value);
@@ -94,60 +106,43 @@
                 }
             }
 
+            // Clear dynamic arrays that are no longer selected
+            const previouslyDynamicKeys = currentLocalStorage['_inputDynamic'] || [];
+            for (const key of previouslyDynamicKeys) {
+                if (!collectedData[key] || collectedData[key].length === 0) {
+                    delete currentLocalStorage[key];
+                }
+            }
+            currentLocalStorage['_inputDynamic'] = dynamicKeys;
+
             localStorage.setItem('forms', JSON.stringify(currentLocalStorage));
             console.log('Form data cached:', currentLocalStorage);
         }
 
         function setupEventHandlers() {
-            // Handle row selection changes (including header checkbox)
-            table.on("rowSelectionChanged", (data, rows) => {
-                // Update appState.tabulatorSelectedItems with the codes of selected rows
-                appState.tabulatorSelectedItems = rows
-                    .map(row => row.getData().code)
-                    .filter(code => code); // Ensure no undefined codes
-
-                // Update local storage
+            // This is the most reliable event to track all selection/deselection changes
+            table.on("rowSelectionChanged", () => {
                 formsCacheDataToLocalStorage();
             });
 
-            // Optional: Keep rowSelected for individual row clicks (if needed)
-            table.on("rowSelected", row => {
-                const rowData = row.getData();
-                if (rowData.code && !appState.tabulatorSelectedItems.includes(rowData.code)) {
-                    appState.tabulatorSelectedItems.push(rowData.code);
-                    formsCacheDataToLocalStorage();
-                }
-            });
-
-            // Optional: Keep rowDeselected for individual row clicks (if needed)
-            table.on("rowDeselected", row => {
-                const rowData = row.getData();
-                if (rowData.code) {
-                    appState.tabulatorSelectedItems = appState.tabulatorSelectedItems.filter(item => item !== rowData.code);
-                    formsCacheDataToLocalStorage();
-                }
-            });
-
-            // Listen for cell edits
             table.on("cellEdited", () => {
                 formsCacheDataToLocalStorage();
             });
 
-            // Listen for row additions
             table.on("rowAdded", () => {
                 formsCacheDataToLocalStorage();
             });
 
-            // Form submission
             document.querySelector('#formA').addEventListener('submit', event => {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault();
                 formsCacheDataToLocalStorage();
             });
 
-            // Page change
-            table.on("pageLoaded", formsCacheDataToLocalStorage);
+            table.on("pageLoaded", () => {
+                // When the page loads, we get the up-to-date selected data
+                formsCacheDataToLocalStorage();
+            });
 
-            // Show localStorage content
             document.getElementById('show-local-storage').addEventListener('click', () => {
                 const savedData = localStorage.getItem('forms');
                 if (savedData) {
