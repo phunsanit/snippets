@@ -44,7 +44,7 @@ function TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName) {
 }
 
 // ฟังก์ชันแสดงจำนวนข้อมูลใน Tabulator
-function TabulatorUpdateCountDisplay(table) {
+function TabulatorPaginationRecords(table) {
     const totalCount = table.getDataCount();            // all rows in dataset
     const filteredCount = table.getDataCount("active"); // filtered rows (ignores pagination)
 

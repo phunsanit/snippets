@@ -32,7 +32,7 @@
         <label>Date To: <input name="date_to" type="date"></label>
         <div id="tabulator-table"></div>
         <div id="record-count-display" style="float: right; margin-top: 8px;">
-            Showing <span id="filtered-count">0</span> of <span id="total-count">0</span> records
+            Showing <span id="filtered-count">0</span> of <span id="total-count">0</span> entries
         </div>
         <button type="submit">Submit</button>
     </form>
@@ -46,7 +46,7 @@
 
     <script>
         // Define the helper function outside of the DOMContentLoaded listener
-        function TabulatorUpdateCountDisplay(table) {
+        function TabulatorPaginationRecords(table) {
             const totalCount = table.getDataCount();
             const filteredCount = table.getRows("active").length;
             document.getElementById('total-count').textContent = totalCount;
@@ -100,7 +100,7 @@
                 document.getElementById('search-input-location').value = '';
                 document.getElementById('search-input-digits').value = '';
                 table.clearFilter();
-                TabulatorUpdateCountDisplay(table);
+                TabulatorPaginationRecords(table);
             });
 
             // tabulator event listeners for updating count display
@@ -108,13 +108,13 @@
             // No need to have redundant calls.
 
             table.on("dataLoaded", () => {
-                TabulatorUpdateCountDisplay(table);
+                TabulatorPaginationRecords(table);
             });
             table.on("dataFiltered", () => {
-                TabulatorUpdateCountDisplay(table);
+                TabulatorPaginationRecords(table);
             });
             table.on("renderComplete", () => {
-                TabulatorUpdateCountDisplay(table);
+                TabulatorPaginationRecords(table);
             });
             // tabulator event listeners for saving form data
             table.on("cellEdited", () => {
@@ -123,7 +123,7 @@
 
             table.on("pageLoaded", () => {
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
-                TabulatorUpdateCountDisplay(table);
+                TabulatorPaginationRecords(table);
             });
 
             table.on("rowAdded", () => {
@@ -133,7 +133,7 @@
             table.on("rowSelectionChanged", () => {
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
                 storeSelectedFilteredData();
-                TabulatorUpdateCountDisplay(table);
+                TabulatorPaginationRecords(table);
             });
 
             function storeSelectedFilteredData() {
@@ -181,7 +181,7 @@
                 } else {
                     table.setFilter(filters);
                 }
-                TabulatorUpdateCountDisplay(table);
+                TabulatorPaginationRecords(table);
             }
 
             document.getElementById('show-local-storage').addEventListener('click', () => {
