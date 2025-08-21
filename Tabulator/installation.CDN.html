@@ -28,11 +28,27 @@
         // Tabulator setup
         var table = new Tabulator("#tabulator-table", {
             columns: [
-                { title: "ID", field: "id", width: 60 },
-                { title: "Name", field: "name" },
-                { title: "Surname", field: "surname" },
-                { title: "Age", field: "age" },
-                { title: "Gender", field: "gender" }
+                {
+                    field: "id",
+                    title: "ID",
+                    width: 60
+                },
+                {
+                    field: "name",
+                    title: "Name"
+                },
+                {
+                    field: "surname",
+                    title: "Surname"
+                },
+                {
+                    field: "age",
+                    title: "Age"
+                },
+                {
+                    field: "gender",
+                    title: "Gender"
+                }
             ],
             data: tableData,
             layout: "fitColumns"
