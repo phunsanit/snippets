@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabulator: Installation CDN</title>
+    <title>Tabulator: data.JSON</title>
     <!-- Tabulator CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
         integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
@@ -21,14 +21,33 @@
     <script>
         // Tabulator setup with AJAX
         var table = new Tabulator("#tabulator-table", {
-            ajaxURL: "http://localhost/snippets/assets/ISO-4217.json",
+            ajaxURL: "../assets/ISO-4217.json",
             ajaxConfig: "GET",
             columns: [
-                { title: "Code", field: "code", width: 80 },
-                { title: "Currency", field: "currency" },
-                { title: "Digits", field: "digits", width: 80 },
-                { title: "Numeric", field: "numeric", width: 80 },
-                { title: "Locations", field: "locations", formatter: function(cell) { return cell.getValue().join(", "); } }
+                {
+                    field: "code",
+                    title: "Code",
+                    width: 80
+                },
+                {
+                    field: "currency",
+                    title: "Currency"
+                },
+                {
+                    field: "digits",
+                    title: "Digits",
+                    width: 80
+                },
+                {
+                    field: "numeric",
+                    title: "Numeric",
+                    width: 80
+                },
+                {
+                    field: "locations",
+                    formatter: function (cell) { return cell.getValue().join(", "); },
+                    title: "Locations"
+                }
             ],
         });
     </script>

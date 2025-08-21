@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulator: data.table</title>
+    <!-- Tabulator CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
+        integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet" />
+</head>
+
+<body>
+    <table id="source-table" style="display: none;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Pitt</td>
+                <td>Phunsanit</td>
+                <td>43</td>
+                <td>Male</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>พิชญ์</td>
+                <td>พันธุ์สนิท</td>
+                <td>43</td>
+                <td>ชาย</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="tabulator-table"></div>
+
+    <!-- Tabulator JS -->
+    <script integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+    <script>
+        function getTableDataFromHTML(tableId) {
+            var table = document.getElementById(tableId);
+            var rows = table.querySelectorAll('tbody tr');
+            var data = [];
+            rows.forEach(function (row) {
+                var cells = row.querySelectorAll('td');
+                data.push({
+                    id: cells[0].textContent,
+                    name: cells[1].textContent,
+                    surname: cells[2].textContent,
+                    age: cells[3].textContent,
+                    gender: cells[4].textContent
+                });
+            });
+            return data;
+        }
+
+        var tableData = getTableDataFromHTML("source-table");
+
+        new Tabulator("#tabulator-table", {
+            columns: [
+                {
+                    field: "id",
+                    title: "ID"
+                },
+                {
+                    field: "name",
+                    title: "Name"
+                },
+                {
+                    field: "surname",
+                    title: "Surname"
+                },
+                {
+                    field: "age",
+                    title: "Age"
+                },
+                {
+                    field: "gender",
+                    title: "Gender"
+                }
+            ],
+            data: tableData,
+            layout: "fitColumns"
+        });
+    </script>
+</body>
+
+</html>

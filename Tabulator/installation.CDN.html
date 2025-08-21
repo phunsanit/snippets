@@ -27,15 +27,15 @@
 
         // Tabulator setup
         var table = new Tabulator("#tabulator-table", {
-            data: tableData,
-            layout: "fitColumns",
             columns: [
                 { title: "ID", field: "id", width: 60 },
                 { title: "Name", field: "name" },
                 { title: "Surname", field: "surname" },
                 { title: "Age", field: "age" },
                 { title: "Gender", field: "gender" }
-            ]
+            ],
+            data: tableData,
+            layout: "fitColumns"
         });
     </script>
 </body>
