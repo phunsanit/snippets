@@ -92,7 +92,12 @@
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
             });
 
-            // event form submission
+            // form event for input changes
+            form.addEventListener('input', () => {
+                TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
+            });
+
+            // form event form submission
             form.addEventListener('submit', event => {
                 event.preventDefault();
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
