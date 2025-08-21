@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulator: Installation CDN</title>
+    <!-- Tabulator CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
+        integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="tabulator-table"></div>
+
+    <!-- Tabulator JS -->
+    <script integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+    <script>
+        // Tabulator setup with AJAX
+        var table = new Tabulator("#tabulator-table", {
+            ajaxURL: "http://localhost/snippets/assets/ISO-4217.json",
+            ajaxConfig: "GET",
+            columns: [
+                { title: "Code", field: "code", width: 80 },
+                { title: "Currency", field: "currency" },
+                { title: "Digits", field: "digits", width: 80 },
+                { title: "Numeric", field: "numeric", width: 80 },
+                { title: "Locations", field: "locations", formatter: function(cell) { return cell.getValue().join(", "); } }
+            ],
+        });
+    </script>
+</body>
+
+</html>

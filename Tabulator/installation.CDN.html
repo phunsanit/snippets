@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulator: Installation CDN</title>
+    <!-- Tabulator CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
+        integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="tabulator-table"></div>
+
+    <!-- Tabulator JS -->
+    <script integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+    <script>
+        // table data
+        var tableData = [
+            { id: 1, name: "Pitt", surname: "Phunsanit", age: 43, gender: "Male" },
+            { id: 2, name: "พิชญ์", surname: "พันธุ์สนิท", age: 43, gender: "ชาย" }
+        ];
+
+        // Tabulator setup
+        var table = new Tabulator("#tabulator-table", {
+            data: tableData,
+            layout: "fitColumns",
+            columns: [
+                { title: "ID", field: "id", width: 60 },
+                { title: "Name", field: "name" },
+                { title: "Surname", field: "surname" },
+                { title: "Age", field: "age" },
+                { title: "Gender", field: "gender" }
+            ]
+        });
+    </script>
+</body>
+
+</html>
