@@ -86,9 +86,9 @@
                 paginationMode: "local",
                 paginationSize: 10,
             });
-            table.on('dataLoaded', (table) => updateCountDisplay(table));
-            table.on('dataFiltered', (table) => updateCountDisplay(table));
-            table.on('pageLoaded', (table) => updateCountDisplay(table) );
+            table.on('dataLoaded', (table) => TabulatorUpdateCountDisplay(table));
+            table.on('dataFiltered', (table) => TabulatorUpdateCountDisplay(table));
+            table.on('pageLoaded', (table) => TabulatorUpdateCountDisplay(table));
             document.getElementById('search-button').addEventListener('click', doSearch);
             document.getElementById('clear-search-button').addEventListener('click', function () {
                 document.getElementById('search-input-all').value = '';
@@ -97,7 +97,7 @@
                 document.getElementById('search-input-location').value = '';
                 document.getElementById('search-input-digits').value = '';
                 table.clearFilter();
-                updateCountDisplay(); // Ensure count is reset after clearing filter
+                TabulatorUpdateCountDisplay(table); // Ensure count is reset after clearing filter
             });
 
             // tabulator event listeners for saving form data
@@ -185,7 +185,7 @@
                 document.getElementById('search-input-location').value = '';
                 document.getElementById('search-input-digits').value = '';
                 table.clearFilter();
-                updateCountDisplay(); // Ensure count is reset after clearing filter
+                TabulatorUpdateCountDisplay(table); // Ensure count is reset after clearing filter
             });
 
             // for debugging

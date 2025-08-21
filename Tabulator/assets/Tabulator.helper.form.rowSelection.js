@@ -44,7 +44,7 @@ function TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName) {
 }
 
 // ฟังก์ชันแสดงจำนวนข้อมูลใน Tabulator
-function updateCountDisplay(table) {
+function TabulatorUpdateCountDisplay(table) {
     let totalCount = 0;
     let filteredCount = 0;
     if (table && typeof table.getRows === 'function') {
@@ -55,6 +55,3 @@ function updateCountDisplay(table) {
     document.getElementById('total-count').textContent = totalCount;
     document.getElementById('filtered-count').textContent = filteredCount;
 }
-
-// alias สำหรับเรียกใช้งานจากชื่อ TabulatorUpdateCountDisplay
-const TabulatorUpdateCountDisplay = updateCountDisplay;
