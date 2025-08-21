@@ -31,6 +31,9 @@
         <label>Date From: <input name="date_from" type="date"></label>
         <label>Date To: <input name="date_to" type="date"></label>
         <div id="tabulator-table"></div>
+        <div id="record-count-display">
+            Showing <span id="filtered-count">0</span> of <span id="total-count">0</span> records
+        </div>
         <button type="submit">Submit</button>
     </form>
     <button type="button" id="show-local-storage">View Local Storage</button>
@@ -83,6 +86,19 @@
                 paginationMode: "local",
                 paginationSize: 10,
             });
+            table.on('dataLoaded', (table) => updateCountDisplay(table));
+            table.on('dataFiltered', (table) => updateCountDisplay(table));
+            table.on('pageLoaded', (table) => updateCountDisplay(table) );
+            document.getElementById('search-button').addEventListener('click', doSearch);
+            document.getElementById('clear-search-button').addEventListener('click', function () {
+                document.getElementById('search-input-all').value = '';
+                document.getElementById('search-input-code').value = '';
+                document.getElementById('search-input-currency').value = '';
+                document.getElementById('search-input-location').value = '';
+                document.getElementById('search-input-digits').value = '';
+                table.clearFilter();
+                updateCountDisplay(); // Ensure count is reset after clearing filter
+            });
 
             // tabulator event listeners for saving form data
             table.on("cellEdited", () => {
@@ -102,6 +118,18 @@
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
             });
 
+            // store selected filtered data only
+            function storeSelectedFilteredData() {
+                const filteredRows = table.getRows(true); // true = only filtered rows
+                const selectedRows = filteredRows.filter(row => row.isSelected());
+                const selectedData = selectedRows.map(row => row.getData());
+                localStorage.setItem('filtered_selected', JSON.stringify(selectedData));
+            }
+            // เมื่อเลือกแถวทั้งหมดหลัง filter
+            table.on('rowSelectionChanged', function () {
+                storeSelectedFilteredData();
+            });
+
             // form event for input changes
             form.addEventListener('input', () => {
                 TabulatorCacheDataToLocalStorage(form, table, tableRowSelectName);
@@ -116,7 +144,6 @@
             // Search logic
             function doSearch() {
                 const filters = [];
-
                 const code = document.getElementById('search-input-code').value.trim();
                 const currency = document.getElementById('search-input-currency').value.trim();
                 const location = document.getElementById('search-input-location').value.trim();
@@ -145,7 +172,9 @@
                 } else {
                     table.setFilter(filters);
                 }
+                TabulatorUpdateCountDisplay(table);
             }
+
             //filters search
             document.getElementById('search-button').addEventListener('click', doSearch);
             //filters reset
@@ -156,6 +185,7 @@
                 document.getElementById('search-input-location').value = '';
                 document.getElementById('search-input-digits').value = '';
                 table.clearFilter();
+                updateCountDisplay(); // Ensure count is reset after clearing filter
             });
 
             // for debugging
@@ -167,6 +197,7 @@
                     alert('No form_data found in localStorage');
                 }
             });
+
         });
     </script>
 </body>
