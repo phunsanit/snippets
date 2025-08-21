@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabulator: data.form.rowSelection</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <form id="formA" method="post">
         <label>Date From: <input name="date_from" type="date"></label>
@@ -66,6 +68,7 @@
             const collectedData = {};
             const dynamicKeys = [];
 
+            // Collect static and other dynamic form data
             for (const [name, value] of formData.entries()) {
                 const isArrayInput = name.endsWith('[]');
                 const key = isArrayInput ? name.slice(0, -2) : name;
@@ -82,34 +85,35 @@
                 }
             }
 
-            // Get selected items from Tabulator
+            // Get the definitive list of selected items from Tabulator
             const selectedTabulatorItems = table.getSelectedData().map(row => row.code);
 
-            // Add Tabulator items to the collected data and mark as dynamic
-            if (!collectedData[tableRowSelectName]) {
-                collectedData[tableRowSelectName] = [];
-            }
-            collectedData[tableRowSelectName] = mergeArraysUnique(collectedData[tableRowSelectName], selectedTabulatorItems);
+            // Set the Tabulator items directly. Do not merge.
+            collectedData[tableRowSelectName] = selectedTabulatorItems;
             if (!dynamicKeys.includes(tableRowSelectName)) {
                 dynamicKeys.push(tableRowSelectName);
             }
 
-            // Add the new dynamic key to the collected data
+            // Update the dynamic key list
             collectedData['_inputDynamic'] = dynamicKeys;
 
-            // Merge with existing localStorage data
+            // Merge the collected data into localStorage
             for (const [key, value] of Object.entries(collectedData)) {
-                if (Array.isArray(value)) {
+                // For dynamic arrays, check if the key is 'items'.
+                if (Array.isArray(value) && key === tableRowSelectName) {
+                    currentLocalStorage[key] = value; // Replace the old array with the new one
+                } else if (Array.isArray(value)) {
+                    // Merge other dynamic arrays
                     currentLocalStorage[key] = mergeArraysUnique(currentLocalStorage[key], value);
                 } else {
                     currentLocalStorage[key] = value;
                 }
             }
 
-            // Clear dynamic arrays that are no longer selected
+            // Clean up dynamic arrays that are no longer in the form
             const previouslyDynamicKeys = currentLocalStorage['_inputDynamic'] || [];
             for (const key of previouslyDynamicKeys) {
-                if (!collectedData[key] || collectedData[key].length === 0) {
+                if (!collectedData[key] || (Array.isArray(collectedData[key]) && collectedData[key].length === 0)) {
                     delete currentLocalStorage[key];
                 }
             }
@@ -158,4 +162,5 @@
         });
     </script>
 </body>
+
 </html>
