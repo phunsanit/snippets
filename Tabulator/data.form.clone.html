@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulator: data.form.clone</title>
+    <!-- Tabulator CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
+        integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet" />
+</head>
+
+<body>
+    <form method="post" action="submit.php">
+        <div id="tabulator-table"></div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Tabulator JS -->
+    <script integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+    <script>
+        // Tabulator setup with AJAX, pagination, and clone button
+        var table = new Tabulator("#tabulator-table", {
+            ajaxURL: "../assets/ISO-4217.json",
+            ajaxConfig: "GET",
+            columns: [
+                {
+                    cellClick: function (e, cell) {
+                        var row = cell.getRow();
+                        var data = Object.assign({}, row.getData());
+                        data.code = "";
+                        table.addRow(data, false, row); // add under current row
+                    },
+                    formatter: function () {
+                        return '<button type="button">Clone</button>';
+                    },
+                    hozAlign: "center",
+                    title: "Clone",
+                    width: 80
+                },
+                {
+                    field: "code",
+                    formatter: function (cell) {
+                        var value = cell.getValue();
+                        if (value === "" || value === undefined) {
+                            return '<input name = "code[]" type = "text" value = "">';
+                        }
+                        return value;
+                    },
+                    title: "Code",
+                    width: 80
+                },
+                {
+                    field: "currency",
+                    formatter: function (cell) {
+                        var row = cell.getRow().getData();
+                        if (row.code === "" || row.code === undefined) {
+                            return '<input name = "currency[]" type = "text" value = "' + (row.currency || "") + '">';
+                        }
+                        return cell.getValue();
+                    },
+                    title: "Currency"
+                },
+                {
+                    field: "digits",
+                    formatter: function (cell) {
+                        var row = cell.getRow().getData();
+                        if (row.code === "" || row.code === undefined) {
+                            return '<input name = "digits[]" type = "number" value = "' + (row.digits || "") + '">';
+                        }
+                        return cell.getValue();
+                    },
+                    title: "Digits",
+                    width: 80
+                },
+                {
+                    field: "numeric",
+                    formatter: function (cell) {
+                        var row = cell.getRow().getData();
+                        if (row.code === "" || row.code === undefined) {
+                            return '<input name = "numeric[]" type = "number" value = "' + (row.numeric || "") + '">';
+                        }
+                        return cell.getValue();
+                    },
+                    title: "Numeric",
+                    width: 80
+                },
+                {
+                    field: "locations",
+                    formatter: function (cell) {
+                        var row = cell.getRow().getData();
+                        if (row.code === "" || row.code === undefined) {
+                            var val = Array.isArray(row.locations) ? row.locations.join(", ") : (row.locations || "");
+                            return '<input name = "locations[]" type = "text" value = "' + val + '">';
+                        }
+                        return Array.isArray(cell.getValue()) ? cell.getValue().join(", ") : cell.getValue();
+                    },
+                    title: "Locations"
+                }
+            ],
+            layout: "fitColumns",
+            pagination: true,
+            paginationSize: 10
+        });
+
+        // alert all form data on submit
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var form = e.target;
+            var formData = new FormData(form);
+            var entries = [];
+            for (let pair of formData.entries()) {
+                entries.push(pair[0] + ': ' + pair[1]);
+            }
+            alert(entries.join('\n'));
+        });
+    </script>
+</body>
+
+</html>
