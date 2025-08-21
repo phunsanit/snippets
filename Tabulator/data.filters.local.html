@@ -45,14 +45,6 @@
     <script src="assets/Tabulator.helper.form.rowSelection.js"></script>
 
     <script>
-        // Define the helper function outside of the DOMContentLoaded listener
-        function TabulatorPaginationRecords(table) {
-            const totalCount = table.getDataCount();
-            const filteredCount = table.getRows("active").length;
-            document.getElementById('total-count').textContent = totalCount;
-            document.getElementById('filtered-count').textContent = filteredCount;
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.querySelector('#formA');
             const tableRowSelectName = 'items';
