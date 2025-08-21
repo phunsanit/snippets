@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabulator: data.search</title>
+    <title>Tabulator: data.filters.local</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css" rel="stylesheet" />
 </head>
 
@@ -22,6 +22,7 @@
         <input id="search-input-location" placeholder="Search Locations..." type="text">
         <label for="search-input-digits">Search Digits:</label>
         <input id="search-input-digits" placeholder="Search Digits..." type="text">
+        <hr>
         <button id="search-button" type="button">Search</button>
         <button id="clear-search-button" type="button">Clear Search</button>
     </fieldset>
@@ -115,6 +116,7 @@
             // Search logic
             function doSearch() {
                 const filters = [];
+
                 const code = document.getElementById('search-input-code').value.trim();
                 const currency = document.getElementById('search-input-currency').value.trim();
                 const location = document.getElementById('search-input-location').value.trim();
@@ -122,11 +124,15 @@
                 const all = document.getElementById('search-input-all').value.trim();
 
                 if (code) filters.push({ field: 'code', type: 'like', value: code });
+
                 if (currency) filters.push({ field: 'currency', type: 'like', value: currency });
+
                 if (location) filters.push({ field: 'locations', type: 'like', value: location });
+
                 if (digits) filters.push({ field: 'digits', type: 'like', value: digits });
+
                 if (all) {
-                    table.setFilter(function(data, filterParams){
+                    table.setFilter(function (data, filterParams) {
                         const val = all.toLowerCase();
                         return (
                             (data.code && data.code.toLowerCase().includes(val)) ||
@@ -140,7 +146,9 @@
                     table.setFilter(filters);
                 }
             }
+            //filters search
             document.getElementById('search-button').addEventListener('click', doSearch);
+            //filters reset
             document.getElementById('clear-search-button').addEventListener('click', function () {
                 document.getElementById('search-input-all').value = '';
                 document.getElementById('search-input-code').value = '';
