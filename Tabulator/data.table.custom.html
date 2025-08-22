@@ -42,10 +42,12 @@
 
     <div id="tabulator-table"></div>
 
-    <!-- Tabulator JS -->
     <script integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"
         src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+
+    <script src="assets/Tabulator.common.js"></script>
+
     <script>
         function getTableDataFromHTML(tableId) {
             var table = document.getElementById(tableId);
@@ -67,7 +69,7 @@
 
         var tableData = getTableDataFromHTML("source-table");
 
-        new Tabulator("#tabulator-table", {
+        TabulatorCreate("#tabulator-table", {
             columns: [
                 {
                     field: "id",
@@ -98,12 +100,7 @@
                     title: "Score"
                 }
             ],
-            data: tableData,
-            layout: "fitColumns",
-            pagination: true,
-            paginationCounter: "rows",
-            paginationMode: "local",
-            paginationSize: 10,
+            data: tableData
         });
     </script>
 </body>
