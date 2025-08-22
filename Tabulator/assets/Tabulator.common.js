@@ -1,3 +1,24 @@
+/**
+ * Create a Tabulator table with common configuration
+ * @param {string} selector - DOM selector for the table container
+ * @param {Object} options - Tabulator options (columns, data, etc.)
+ * @returns {Tabulator} - Tabulator instance
+ */
+function TabulatorCreate(selector, options = {}) {
+    const defaultConfig = {
+        layout: "fitColumns",
+        movableColumns: true,
+        pagination: true,
+        paginationSize: 10,
+        responsiveLayout: true,
+        // Add more default options as needed
+    };
+    return new Tabulator(selector, Object.assign({}, defaultConfig, options));
+}
+
+// Expose to global scope for inline HTML usage
+window.TabulatorCreate = TabulatorCreate;
+
 //https://tabulator.info/docs/6.3/filter
 
 //Define variables for input elements

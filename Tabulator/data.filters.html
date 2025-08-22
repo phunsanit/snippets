@@ -43,11 +43,12 @@
         integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
         referrerpolicy="no-referrer"
         src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
-    <!-- filter helper -->
-    <script src="assets/Tabulator.helper.filter.js"></script>
+
+    <!-- Tabulator Common JS -->
+    <script src="assets/Tabulator.common.js"></script>
 
     <script>
-        var table = new Tabulator("#tabulator-table", {
+        var table = TabulatorCreate("#tabulator-table", {
             ajaxURL: "../assets/ISO-4217.json",
             ajaxConfig: "GET",
             selectable: true,
@@ -57,12 +58,7 @@
                 { field: "digits", title: "Digits", width: 80 },
                 { field: "currency", title: "Currency" },
                 { field: "locations", title: "Locations listed for this currency" }
-            ],
-            layout: "fitColumns",
-            pagination: true,
-            paginationCounter: "rows",
-            paginationMode: "local",
-            paginationSize: 10,
+            ]
         });
     </script>
 </body>
