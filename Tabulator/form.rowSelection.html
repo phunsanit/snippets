@@ -19,6 +19,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
 
+    <script src="assets/Tabulator.common.js"></script>
+
     <script src="../assets/javascript.form.helper.js"></script>
 
     <script src="assets/Tabulator.helper.form.rowSelection.js"></script>
@@ -31,7 +33,7 @@
             const tableRowSelectName = 'items';
 
             // tabulator table instance
-            const table = new Tabulator("#tabulator-table", {
+            const table = TabulatorCreate("#tabulator-table", {
                 ajaxURL: "../assets/ISO-4217.json",
                 ajaxConfig: "GET",
                 selectable: true,
@@ -59,12 +61,7 @@
                     { field: "digits", title: "Digits", width: 80 },
                     { field: "numeric", title: "Numeric", width: 80 },
                     { field: "locations", title: "Locations" }
-                ],
-                layout: "fitColumns",
-                pagination: true,
-                paginationCounter:"rows",
-                paginationMode: "local",
-                paginationSize: 10,
+                ]
             });
 
             // tabulator event listeners for saving form data
