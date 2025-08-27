@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulator: data.table</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
+        integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet" />
+</head>
+
+<body>
+    <table id="tabulator-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Pitt</td>
+                <td>Phunsanit</td>
+                <td>43</td>
+                <td>Male</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>พิชญ์</td>
+                <td>พันธุ์สนิท</td>
+                <td>43</td>
+                <td>ชาย</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script crossorigin="anonymous"
+        integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+
+    <script src="assets/Tabulator.common.js"></script>
+
+    <script>
+        var table = TabulatorCreate("#tabulator-table");
+    </script>
+</body>
+
+</html>

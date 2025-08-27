@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulator: data.filters</title>
+    <!-- Tabulator CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/css/tabulator.min.css"
+        integrity="sha512-RYFH4FFdhD/FdA+OVEbFVqd5ifR+Dnx2M7eWcmkcMexlIoxNgm89ieeVyHYb8xChuYBtbrasMTlo02cLnidjtQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" rel="stylesheet" />
+</head>
+
+<body>
+    <div>
+        <select id="filter-field">
+            <option value="code">Code</option>
+            <option value="numeric">Numeric</option>
+            <option value="digits">Digits</option>
+            <option value="currency">Currency</option>
+            <option value="locations">Locations listed for this currency</option>
+        </select>
+
+        <select id="filter-type">
+            <option value="=">=</option>
+            <option value="<">&lt;</option>
+            <option value="<=">&lt;=</option>
+            <option value=">">&gt;</option>
+            <option value=">=">&gt;=</option>
+            <option value="!=">!=</option>
+            <option value="like">like</option>
+        </select>
+
+        <input id="filter-value" type="text" placeholder="value to filter">
+
+        <button id="filter-clear">Clear Filter</button>
+    </div>
+
+    <div id="tabulator-table"></div>
+
+    <script crossorigin="anonymous"
+        integrity="sha512-8+qwMD/110YLl5T2bPupMbPMXlARhei2mSxerb/0UWZuvcg4NjG7FdxzuuvDs2rBr/KCNqhyBDe8W3ykKB1dzA=="
+        referrerpolicy="no-referrer"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.3.1/js/tabulator.min.js"></script>
+
+    <script src="assets/Tabulator.common.js"></script>
+
+    <script>
+        var table = TabulatorCreate("#tabulator-table", {
+            ajaxURL: "../assets/ISO-4217.json",
+            ajaxConfig: "GET",
+            selectable: true,
+            columns: [
+                { field: "code", title: "Code", width: 80 },
+                { field: "numeric", title: "Numeric", width: 80 },
+                { field: "digits", title: "Digits", width: 80 },
+                { field: "currency", title: "Currency" },
+                { field: "locations", title: "Locations listed for this currency" }
+            ]
+        });
+    </script>
+</body>
+
+</html>
