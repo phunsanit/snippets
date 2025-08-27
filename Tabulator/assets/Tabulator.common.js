@@ -9,7 +9,10 @@ function TabulatorCreate(selector, options = {}) {
         layout: "fitColumns",
         movableColumns: true,
         pagination: true,
-        paginationSize: 10,
+        paginationCounter: "rows",
+        paginationMode: "local",
+        paginationSize: 20,
+        paginationSizeSelector: [10, 20, 25, 50, 100],
         responsiveLayout: true,
         // Add more default options as needed
     };
