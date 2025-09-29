@@ -34,9 +34,10 @@ SET @sql = N'
         )
         AND ISNULL(c1.TABLE_SCHEMA, c2.TABLE_SCHEMA) = ''CBSFINANCE''
         AND ISNULL(c1.TABLE_NAME, c2.TABLE_NAME) IN (
-            ''CT_DESCRIPTION'',
-            ''CT_DOC_FORMAT'',
-            ''CR_RECEIPT''
+            ''PP_PERMISSIONS'',
+            ''PP_ROLES'',
+            ''PP_USERS'',
+            ''PP_USER_ROLES''
         );
 ';
 
