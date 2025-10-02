@@ -32,9 +32,9 @@ SET @sql = N'
             OR c1.DATA_TYPE <> c2.DATA_TYPE
             OR c1.IS_NULLABLE <> c2.IS_NULLABLE
         )
-        -- Filter the results
-        -- AND ISNULL(c1.TABLE_NAME, c2.TABLE_NAME) = ''PITT_''
-;';
+      ---AND ISNULL(c1.TABLE_SCHEMA, c2.TABLE_SCHEMA) = ''ACCOUNT'';
+      ---  AND ISNULL(c1.TABLE_NAME, c2.TABLE_NAME) IN (''PITT_'');
+';
 
 -- Execute the dynamic SQL
 EXEC sp_executesql @sql;

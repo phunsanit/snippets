@@ -1,4 +1,3 @@
--- Declare variables for the database names
 DECLARE @db1 NVARCHAR(128) = 'DB_DEV';
 DECLARE @db2 NVARCHAR(128) = 'DB_QA';
 
