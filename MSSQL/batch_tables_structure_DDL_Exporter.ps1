@@ -1,4 +1,4 @@
-# batch_DDL_Exporter.ps1
+# batch_tables_structure_DDL_Exporter.ps1
 # batch table DLL (Data Definition Language) exporter using SQL Server Management Objects (SMO)
 # Author: Pitt Phunsanit
 
@@ -28,7 +28,7 @@ $IncludeDropStatements = $true # Set to $false if you don't want DROP TABLE IF E
 $IncludeDropComments = $true # Set to $false if you don't want decorative comments around DROP statements
 $CommentOutDropStatements = $true # Set to $true to wrap DROP statements in /* */ block comments
 
-# 5. List of Tables to Export (Parsed from your request)
+# 5. List of Tables to Export
 $TableList = @(
     "PP.APPROVE_LOG",
     "PP.ORDER"
@@ -175,7 +175,7 @@ $TableList | ForEach-Object {
             # Create USE DATABASE statement
             $UseStatement = @"
 -- ================================================================================================
--- batch_DDL_Exporter.ps1
+-- batch_tables_structure_DDL_Exporter.ps1
 -- DDL EXPORT TIMESTAMP: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
 -- ================================================================================================
 -- SOURCE DATABASE: $DatabaseNameSource
