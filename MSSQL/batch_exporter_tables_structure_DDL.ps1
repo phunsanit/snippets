@@ -1,8 +1,8 @@
-# batch_tables_structure_DDL_Exporter.ps1
-# batch table DLL (Data Definition Language) exporter using SQL Server Management Objects (SMO)
+# batch_exporter_tables_structure_DDL.ps1
+# batch table DLL (Data Definition Language)
 # Author: Pitt Phunsanit
-
 # --- CONFIGURATION SECTION ---
+
 # 1. Define your SQL Server Instance and Database
 $SqlServerName = "LOCALHOST" # Example: "SQLDEV\INSTANCE1" or "LOCALHOST"
 $DatabaseNameSource = "DB_DEV" # Example: "DB_DEV"
@@ -17,18 +17,18 @@ $DatabaseNameTarget = "DB_QA" # Example: "DB_QA"
 
 # --- B) SQL SERVER AUTHENTICATION (Uncomment and fill in details) ---
 $UseWindowsAuth = $false
-$SqlUserName = "sa" # Example: "sa"
-$SqlPassword = "password" # Example: "your_password"
+$SqlUserName = "pitt" # Example: "sa"
+$SqlPassword = "phunsanit" # Example: "your_password"
 
 # 3. Define the Output Directory
-$OutputDirectory = "C:\portables\SSMS_DDL_Exporter\Output_$(Get-Date -Format 'yyyyMMdd_HHmmss')" # Change to your desired output path
+$OutputDirectory = "C:\portables\SSMS\exporter\$(Get-Date -Format 'yyyyMMdd_HHmmss')_DDL" # Change to your desired output path
 
 # 4. Script Options
 $IncludeDropStatements = $true # Set to $false if you don't want DROP TABLE IF EXISTS statements
 $IncludeDropComments = $true # Set to $false if you don't want decorative comments around DROP statements
 $CommentOutDropStatements = $true # Set to $true to wrap DROP statements in /* */ block comments
 
-# 5. List of Tables to Export
+# 5. List of Tables to Export (Parsed from your request)
 $TableList = @(
     "PP.APPROVE_LOG",
     "PP.ORDER"
@@ -138,6 +138,7 @@ if ($Db -eq $null) {
 
 # Configure Scripting Options
 $Scripter = New-Object Microsoft.SqlServer.Management.Smo.Scripter $Srv
+
 $Scripter.Options.ScriptSchema = $true
 $Scripter.Options.ScriptData = $false
 $Scripter.Options.NoCommandTerminator = $false
@@ -146,6 +147,7 @@ $Scripter.Options.Indexes = $true # Include indexes
 $Scripter.Options.Triggers = $true # Include triggers
 $Scripter.Options.ScriptDrops = $false # We'll handle drops manually
 $Scripter.Options.ExtendedProperties = $true # Include descriptions (extended properties)
+
 try { $Scripter.Options.ScriptCheckConstraints = $true } catch { } # Include check constraints if supported
 try { $Scripter.Options.IncludeIfNotExists = $true } catch { } # Use IF NOT EXISTS for CREATE statements if supported
 
@@ -175,7 +177,7 @@ $TableList | ForEach-Object {
             # Create USE DATABASE statement
             $UseStatement = @"
 -- ================================================================================================
--- batch_tables_structure_DDL_Exporter.ps1
+-- batch_Exporter_DDL.ps1
 -- DDL EXPORT TIMESTAMP: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
 -- ================================================================================================
 -- SOURCE DATABASE: $DatabaseNameSource
