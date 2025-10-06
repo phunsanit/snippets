@@ -31,17 +31,17 @@ $CommentOutDropStatements = $true # Set to $true to wrap DROP statements in /* *
 # 5. List of Tables to Export (Parsed from your request)
 $TableList = @(
     "PP.APPROVE_LOG",
-    "PP.ORDER"
+    "PP.ORDER",
     "PP.PAY_ORDER_EMAIL_LOG",
     "PP.PAY_ORDER_PREMIUM_VAT",
-    "PP.PAY_ORDER_VAT",s
+    "PP.PAY_ORDER_VAT",
     "PP.PAY_ORDER",
     "PP.PAYMENT_CHEQUE",
     "PP.PAYMENT_CYCLE",
     "PP.PAYMENT_VOUCHER",
     "PP.PERMISSION",
     "PP.SEARCH",
-    "PP.USERS",
+    "PP.USERS"
 )
 
 # Requires PowerShell 5.1 or newer.
