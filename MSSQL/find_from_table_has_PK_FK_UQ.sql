@@ -1,0 +1,28 @@
+SELECT
+    T.TABLE_SCHEMA,
+    T.TABLE_NAME,
+    -- ตรวจสอบว่ามี Primary Key หรือไม่
+    MAX(CASE WHEN C.CONSTRAINT_TYPE = 'PRIMARY KEY' THEN 'YES' ELSE 'NO' END) AS Has_PK,
+    -- ตรวจสอบว่ามี Foreign Key หรือไม่
+    MAX(CASE WHEN C.CONSTRAINT_TYPE = 'FOREIGN KEY' THEN 'YES' ELSE 'NO' END) AS Has_FK,
+    -- ตรวจสอบว่ามี Unique Constraint หรือไม่
+    MAX(CASE WHEN C.CONSTRAINT_TYPE = 'UNIQUE' THEN 'YES' ELSE 'NO' END) AS Has_UQ,
+    -- สรุปสถานะรวม
+    CASE
+        WHEN COUNT(C.CONSTRAINT_TYPE) = 0 THEN 'NO CONSTRAINTS'
+    END AS Constraint_Status
+FROM
+    INFORMATION_SCHEMA.TABLES AS T
+LEFT JOIN
+    INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS C
+    ON T.TABLE_SCHEMA = C.TABLE_SCHEMA
+    AND T.TABLE_NAME = C.TABLE_NAME
+    AND C.CONSTRAINT_TYPE IN ('PRIMARY KEY', 'FOREIGN KEY', 'UNIQUE') -- กรองเฉพาะ 3 ประเภทที่สนใจ
+WHERE
+    T.TABLE_TYPE = 'BASE TABLE' -- กรองเอาเฉพาะตารางจริง ไม่ใช่ Views
+GROUP BY
+    T.TABLE_SCHEMA,
+    T.TABLE_NAME
+ORDER BY
+    T.TABLE_SCHEMA,
+    T.TABLE_NAME;
