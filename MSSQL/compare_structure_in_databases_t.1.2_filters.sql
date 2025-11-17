@@ -1,6 +1,6 @@
 -- Declare variables for the database names
-DECLARE @db1 NVARCHAR(128) = 'DB_DEV';
-DECLARE @db2 NVARCHAR(128) = 'DB_QA';
+DECLARE @db1 NVARCHAR(128) = 'INSAPP';
+DECLARE @db2 NVARCHAR(128) = 'INSAPP_SIT';
 
 -- Use dynamic SQL to build the query
 DECLARE @sql NVARCHAR(MAX);
@@ -32,8 +32,8 @@ SET @sql = N'
             OR c1.DATA_TYPE <> c2.DATA_TYPE
             OR c1.IS_NULLABLE <> c2.IS_NULLABLE
         )
-      ---AND ISNULL(c1.TABLE_SCHEMA, c2.TABLE_SCHEMA) = ''ACCOUNT'';
-      ---  AND ISNULL(c1.TABLE_NAME, c2.TABLE_NAME) IN (''PITT_'');
+      --AND ISNULL(c1.TABLE_SCHEMA, c2.TABLE_SCHEMA) = ''ACCOUNT'';
+      AND ISNULL(c1.TABLE_NAME, c2.TABLE_NAME) LIKE  ''RI_%'';
 ';
 
 -- Execute the dynamic SQL
