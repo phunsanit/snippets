@@ -50,7 +50,7 @@ OptimizationLogic AS (
             -- 1. เปลี่ยน DATETIME (8 bytes) เป็น DATETIME2(3) (7 bytes)
             --    ประหยัดพื้นที่ได้จริง 1 Byte และแม่นยำกว่าเดิม
             -------------------------------------------------------
-            WHEN DATA_TYPE = 'datetime' THEN 'datetime2'
+                WHEN DATA_TYPE = 'datetime' THEN 'datetime2'
 
             ELSE DATA_TYPE
         END AS SuggestedDataType,
@@ -68,10 +68,10 @@ OptimizationLogic AS (
                 END
 
             -------------------------------------------------------
-            -- 2. กรณีเจอ DATETIME เดิม ให้แนะนำ Precision 3 (7 bytes)
-            --    (ประหยัดกว่าเดิม 1 byte และครอบคลุม Millisecond เดิม)
-            -------------------------------------------------------
-            WHEN DATA_TYPE = 'datetime' THEN 3
+                -- 2. กรณีเจอ DATETIME เดิม ให้แนะนำ Precision 2 (6 bytes)
+                --    (ประหยัดกว่าเดิม 2 bytes และครอบคลุมวินาที)
+                -------------------------------------------------------
+                WHEN DATA_TYPE = 'datetime' THEN 2
 
             -------------------------------------------------------
             -- 3. ปรับ DATETIME2 / TIME / OFFSET ให้คุ้ม Storage Bucket
