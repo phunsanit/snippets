@@ -1,3 +1,6 @@
+/*
+DATETIME2 เดิม ให้แนะนำ Precision 2 (6 bytes)
+*/
 SELECT
     DB_NAME() AS DatabaseName,
     s.name AS SchemaName,
