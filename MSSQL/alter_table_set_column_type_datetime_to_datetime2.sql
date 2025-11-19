@@ -3,7 +3,7 @@ SELECT
     s.name AS SchemaName,
     t.name AS TableName,
     'ALTER TABLE ' + QUOTENAME(DB_NAME()) + '.' + QUOTENAME(s.name) + '.' + QUOTENAME(t.name) +
-    ' ALTER COLUMN ' + QUOTENAME(c.name) + ' datetime2;' AS alter_sql
+    ' ALTER COLUMN ' + QUOTENAME(c.name) + ' datetime2(2);' AS alter_sql
 FROM
     sys.columns AS c
 JOIN
