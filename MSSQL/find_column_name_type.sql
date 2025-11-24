@@ -13,4 +13,4 @@ SELECT
 FROM
 	information_schema.columns
 WHERE
-	column_name = 'ID';
+	column_name LIKE '%ID%';
