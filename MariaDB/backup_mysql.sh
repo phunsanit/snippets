@@ -7,7 +7,7 @@
 DateTime=$(date +"%Y-%m-%d_%H-%M-%S")
 
 # Directory to store backup files
-BACKUP_DIR="/var/backups/mysql/$DateTime"
+BACKUP_DIR="/backups/mysql/$DateTime"
 
 # --- Check and Create Backup Directory ---
 if [ ! -d "$BACKUP_DIR" ]; then
@@ -72,6 +72,6 @@ echo "--- User and Permissions Backup Complete ---"
 
 echo "--- Deleting backup directories older than 90 days ---"
 # (คำสั่งนี้อันตราย ให้เช็ค path ดีๆ ก่อนรัน แต่ syntax ถูกต้องครับ)
-find /var/backups/mysql/ -maxdepth 1 -type d -name "????????*" -mtime +90 -exec rm -rf {} \;
+find /backups/mysql/ -maxdepth 1 -type d -name "????????*" -mtime +90 -exec rm -rf {} \;
 
 echo "--- All backup processes finished successfully ---"
