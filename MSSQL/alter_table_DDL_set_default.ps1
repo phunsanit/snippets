@@ -11,9 +11,9 @@
 # --- CONFIGURATION SECTION ---
 
 # 1. Define your SQL Server Instance and Database
-$SqlServerName = "172.30.32.233" # Example: "SQLDEV\INSTANCE1" or "LOCALHOST"
-$DatabaseNameSource = "INSAPP_QA" # Example: "DB_DEV"
-$DatabaseNameTarget = "INSAPP" # Example: "DB_QA"
+$SqlServerName = "LOCALHOST" # Example: "SQLDEV\INSTANCE1" or "LOCALHOST"
+$DatabaseNameSource = "DB_DEV" # Example: "DB_DEV"
+$DatabaseNameTarget = "DB_QA" # Example: "DB_QA"
 
 # 2. Define the Authentication Method (Choose one of the two blocks below)
 
@@ -24,15 +24,15 @@ $DatabaseNameTarget = "INSAPP" # Example: "DB_QA"
 
 # --- B) SQL SERVER AUTHENTICATION (Uncomment and fill in details) ---
 $UseWindowsAuth = $false
-$SqlUserName = "insapp_admin" # Example: "sa"
-$SqlPassword = "insapp!2022" # Example: "your_password"
+$SqlUserName = "sa" # Example: "sa"
+$SqlPassword = "your_password" # Example: "your_password"
 
 # 3. Define the Output Directory (files will be created per database/schema)
 $OutputDirectory = "C:\portables\SSMS\alter\$(Get-Date -Format 'yyyyMMdd_HHmmss')"
 
 # 4. Script Options
-$DatabaseNamePattern = "INSAPP*" # Filter for database names - PowerShell -like operator uses * wildcard
-$TableNamePattern = "%ap_%" # Filter for tables containing 'ap_' (with % before and after)
+$DatabaseNamePattern = "DB_DEV*" # Filter for database names - PowerShell -like operator uses * wildcard
+$TableNamePattern = "%wp_%" # Filter for tables containing 'wp_' (with % before and after)
 $IncludeGoStatements = $false # Set to $false if your target program doesn't support GO statements
 
 # --- SCRIPT LOGIC (DO NOT EDIT BELOW THIS LINE) ---

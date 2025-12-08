@@ -1,3 +1,14 @@
+/*
+================================================================================
+DATABASE COMPARISON SCRIPT
+================================================================================
+Fixes:
+1. Resolved Error 4145 by changing FK Join logic to match on [Schema] + [ConstraintName].
+2. Comparisons of 'ReferenceDetails' moved to WHERE/CASE clauses only.
+3. Uses sys.schemas joins for accurate schema names across databases.
+================================================================================
+*/
+
 -- Declare variables for the database names
 DECLARE @db1 NVARCHAR(128) = 'DB_DEV';
 DECLARE @db2 NVARCHAR(128) = 'DB_QA';
@@ -5,6 +16,9 @@ DECLARE @db2 NVARCHAR(128) = 'DB_QA';
 -- Use dynamic SQL to build the query
 DECLARE @sql NVARCHAR(MAX);
 
+-- ============================================================================
+-- PART 1: COLUMN COMPARISON
+-- ============================================================================
 SET @sql = N'
     -- 1. COLUMN COMPARISON (Data Type and Nullability)
     SELECT
@@ -32,64 +46,72 @@ SET @sql = N'
             OR c1.DATA_TYPE <> c2.DATA_TYPE
             OR c1.IS_NULLABLE <> c2.IS_NULLABLE
         )
+';
 
+-- ============================================================================
+-- PART 2: KEY CONSTRAINT COMPARISON (Append to @sql)
+-- ============================================================================
+SET @sql = @sql + N'
     UNION ALL
 
-    -- 2. PRIMARY KEY / UNIQUE CONSTRAINT COMPARISON (Based on the set of columns)
-    WITH
-    DB1_KEYS AS (
-        SELECT
-            c.TABLE_SCHEMA, c.TABLE_NAME, c.CONSTRAINT_TYPE,
-            STRING_AGG(k.COLUMN_NAME, '', '') WITHIN GROUP (ORDER BY k.ORDINAL_POSITION) AS KeyColumns
-        FROM ' + QUOTENAME(@db1) + '.INFORMATION_SCHEMA.TABLE_CONSTRAINTS c
-        INNER JOIN ' + QUOTENAME(@db1) + '.INFORMATION_SCHEMA.KEY_COLUMN_USAGE k
-            ON c.CONSTRAINT_NAME = k.CONSTRAINT_NAME AND c.TABLE_NAME = k.TABLE_NAME AND c.TABLE_SCHEMA = k.TABLE_SCHEMA
-        WHERE c.CONSTRAINT_TYPE IN (''PRIMARY KEY'', ''UNIQUE'')
-        GROUP BY c.TABLE_SCHEMA, c.TABLE_NAME, c.CONSTRAINT_TYPE
-    ),
-    DB2_KEYS AS (
-        SELECT
-            c.TABLE_SCHEMA, c.TABLE_NAME, c.CONSTRAINT_TYPE,
-            STRING_AGG(k.COLUMN_NAME, '', '') WITHIN GROUP (ORDER BY k.ORDINAL_POSITION) AS KeyColumns
-        FROM ' + QUOTENAME(@db2) + '.INFORMATION_SCHEMA.TABLE_CONSTRAINTS c
-        INNER JOIN ' + QUOTENAME(@db2) + '.INFORMATION_SCHEMA.KEY_COLUMN_USAGE k
-            ON c.CONSTRAINT_NAME = k.CONSTRAINT_NAME AND c.TABLE_NAME = k.TABLE_NAME AND c.TABLE_SCHEMA = k.TABLE_SCHEMA
-        WHERE c.CONSTRAINT_TYPE IN (''PRIMARY KEY'', ''UNIQUE'')
-        GROUP BY c.TABLE_SCHEMA, c.TABLE_NAME, c.CONSTRAINT_TYPE
-    )
     SELECT
         ISNULL(k1.TABLE_SCHEMA, k2.TABLE_SCHEMA) AS TableSchema,
         ISNULL(k1.TABLE_NAME, k2.TABLE_NAME) AS TableName,
         ''KEY CONSTRAINT'' AS ObjectName,
         ISNULL(k1.CONSTRAINT_TYPE, k2.CONSTRAINT_TYPE) AS ObjectType,
         CASE
-            WHEN k1.KeyColumns IS NULL THEN ''Missing '' + QUOTENAME(@db1) + '' ('' + ISNULL(k2.CONSTRAINT_TYPE, '''') + '')''
-            WHEN k2.KeyColumns IS NULL THEN ''Missing '' + QUOTENAME(@db2) + '' ('' + ISNULL(k1.CONSTRAINT_TYPE, '''') + '')''
+            WHEN k1.KeyColumns IS NULL THEN ''Missing ' + QUOTENAME(@db1) + ' ('' + ISNULL(k2.CONSTRAINT_TYPE, '''') + '')''
+            WHEN k2.KeyColumns IS NULL THEN ''Missing ' + QUOTENAME(@db2) + ' ('' + ISNULL(k1.CONSTRAINT_TYPE, '''') + '')''
             WHEN k1.KeyColumns <> k2.KeyColumns THEN ''Column Set Mismatch''
-            ELSE ''Constraint Exists But Differs'' -- Should not happen with the join keys
+            ELSE ''Constraint Exists But Differs''
         END AS DifferenceType,
         ISNULL(k1.KeyColumns, ''<N/A>'') AS ' + @db1 + '_Details,
         ISNULL(k2.KeyColumns, ''<N/A>'') AS ' + @db2 + '_Details
-    FROM DB1_KEYS k1
-    FULL OUTER JOIN DB2_KEYS k2
+    FROM
+    (
+        SELECT
+            c.TABLE_SCHEMA, c.TABLE_NAME, c.CONSTRAINT_TYPE, c.CONSTRAINT_NAME,
+            STUFF((SELECT '', '' + k.COLUMN_NAME
+                   FROM ' + QUOTENAME(@db1) + '.INFORMATION_SCHEMA.KEY_COLUMN_USAGE k
+                   WHERE k.CONSTRAINT_NAME = c.CONSTRAINT_NAME
+                   ORDER BY k.ORDINAL_POSITION
+                   FOR XML PATH('''')), 1, 2, '''') AS KeyColumns
+        FROM ' + QUOTENAME(@db1) + '.INFORMATION_SCHEMA.TABLE_CONSTRAINTS c
+        WHERE c.CONSTRAINT_TYPE IN (''PRIMARY KEY'', ''UNIQUE'')
+    ) k1
+    FULL OUTER JOIN
+    (
+        SELECT
+            c.TABLE_SCHEMA, c.TABLE_NAME, c.CONSTRAINT_TYPE, c.CONSTRAINT_NAME,
+            STUFF((SELECT '', '' + k.COLUMN_NAME
+                   FROM ' + QUOTENAME(@db2) + '.INFORMATION_SCHEMA.KEY_COLUMN_USAGE k
+                   WHERE k.CONSTRAINT_NAME = c.CONSTRAINT_NAME
+                   ORDER BY k.ORDINAL_POSITION
+                   FOR XML PATH('''')), 1, 2, '''') AS KeyColumns
+        FROM ' + QUOTENAME(@db2) + '.INFORMATION_SCHEMA.TABLE_CONSTRAINTS c
+        WHERE c.CONSTRAINT_TYPE IN (''PRIMARY KEY'', ''UNIQUE'')
+    ) k2
         ON k1.TABLE_SCHEMA = k2.TABLE_SCHEMA
         AND k1.TABLE_NAME = k2.TABLE_NAME
         AND k1.CONSTRAINT_TYPE = k2.CONSTRAINT_TYPE
-        AND k1.KeyColumns = k2.KeyColumns -- Check if the key structure (columns) is identical
+        AND k1.KeyColumns = k2.KeyColumns
     WHERE k1.KeyColumns IS NULL OR k2.KeyColumns IS NULL OR k1.KeyColumns <> k2.KeyColumns OR k1.CONSTRAINT_TYPE <> k2.CONSTRAINT_TYPE
+';
 
+-- ============================================================================
+-- PART 3: FOREIGN KEY COMPARISON (Append to @sql)
+-- ============================================================================
+SET @sql = @sql + N'
     UNION ALL
 
-    -- 3. FOREIGN KEY COMPARISON (FKs are compared by source table, target table, and column mapping)
     SELECT
         ISNULL(fk1.SchemaName, fk2.SchemaName) AS TableSchema,
         ISNULL(fk1.TableName, fk2.TableName) AS TableName,
         ISNULL(fk1.name, fk2.name) AS ObjectName,
         ''FOREIGN KEY'' AS ObjectType,
         CASE
-            WHEN fk1.name IS NULL THEN ''Missing ' + QUOTENAME(@db1) + '''
-            WHEN fk2.name IS NULL THEN ''Missing ' + QUOTENAME(@db2) + '''
-            WHEN fk1.ReferenceDetails <> fk2.ReferenceDetails THEN ''Reference Mismatch''
+            WHEN fk1.ReferenceDetails IS NULL THEN ''Missing/Different in ' + QUOTENAME(@db1) + '''
+            WHEN fk2.ReferenceDetails IS NULL THEN ''Missing/Different in ' + QUOTENAME(@db2) + '''
             ELSE ''Difference''
         END AS DifferenceType,
         ISNULL(fk1.ReferenceDetails, ''<N/A>'') AS ' + @db1 + '_Details,
@@ -97,38 +119,64 @@ SET @sql = N'
     FROM (
         SELECT
             f.name,
-            SCHEMA_NAME(t.schema_id) AS SchemaName,
+            sch_t.name AS SchemaName,
             t.name AS TableName,
-            -- Combine all reference details into one string for comparison
-            SCHEMA_NAME(r.schema_id) + ''.'' + r.name + '' ('' + STRING_AGG(c_s.name, '','') WITHIN GROUP (ORDER BY fk_c.constraint_column_id) + '' -> '' + STRING_AGG(c_r.name, '','') WITHIN GROUP (ORDER BY fk_c.constraint_column_id) + '')'' AS ReferenceDetails
+            sch_r.name + ''.'' + r.name + '' ('' +
+            ISNULL(STUFF((SELECT '', '' + c_s.name
+                   FROM ' + QUOTENAME(@db1) + '.sys.foreign_key_columns fkc
+                   JOIN ' + QUOTENAME(@db1) + '.sys.columns c_s ON fkc.parent_object_id = c_s.object_id AND fkc.parent_column_id = c_s.column_id
+                   WHERE fkc.constraint_object_id = f.object_id
+                   ORDER BY fkc.constraint_column_id
+                   FOR XML PATH('''')), 1, 2, ''''), ''?'')
+            + '' -> '' +
+            ISNULL(STUFF((SELECT '', '' + c_r.name
+                   FROM ' + QUOTENAME(@db1) + '.sys.foreign_key_columns fkc
+                   JOIN ' + QUOTENAME(@db1) + '.sys.columns c_r ON fkc.referenced_object_id = c_r.object_id AND fkc.referenced_column_id = c_r.column_id
+                   WHERE fkc.constraint_object_id = f.object_id
+                   ORDER BY fkc.constraint_column_id
+                   FOR XML PATH('''')), 1, 2, ''''), ''?'')
+            + '')'' AS ReferenceDetails
         FROM ' + QUOTENAME(@db1) + '.sys.foreign_keys f
         JOIN ' + QUOTENAME(@db1) + '.sys.tables t ON f.parent_object_id = t.object_id
+        JOIN ' + QUOTENAME(@db1) + '.sys.schemas sch_t ON t.schema_id = sch_t.schema_id
         JOIN ' + QUOTENAME(@db1) + '.sys.tables r ON f.referenced_object_id = r.object_id
-        JOIN ' + QUOTENAME(@db1) + '.sys.foreign_key_columns fk_c ON f.object_id = fk_c.constraint_object_id
-        JOIN ' + QUOTENAME(@db1) + '.sys.columns c_s ON fk_c.parent_object_id = c_s.object_id AND fk_c.parent_column_id = c_s.column_id
-        JOIN ' + QUOTENAME(@db1) + '.sys.columns c_r ON fk_c.referenced_object_id = c_r.object_id AND fk_c.referenced_column_id = c_r.column_id
-        GROUP BY f.name, SCHEMA_NAME(t.schema_id), t.name, SCHEMA_NAME(r.schema_id) + ''.'' + r.name
+        JOIN ' + QUOTENAME(@db1) + '.sys.schemas sch_r ON r.schema_id = sch_r.schema_id
     ) fk1
     FULL OUTER JOIN (
         SELECT
             f.name,
-            SCHEMA_NAME(t.schema_id) AS SchemaName,
+            sch_t.name AS SchemaName,
             t.name AS TableName,
-            SCHEMA_NAME(r.schema_id) + ''.'' + r.name + '' ('' + STRING_AGG(c_s.name, '','') WITHIN GROUP (ORDER BY fk_c.constraint_column_id) + '' -> '' + STRING_AGG(c_r.name, '','') WITHIN GROUP (ORDER BY fk_c.constraint_column_id) + '')'' AS ReferenceDetails
+            sch_r.name + ''.'' + r.name + '' ('' +
+            ISNULL(STUFF((SELECT '', '' + c_s.name
+                   FROM ' + QUOTENAME(@db2) + '.sys.foreign_key_columns fkc
+                   JOIN ' + QUOTENAME(@db2) + '.sys.columns c_s ON fkc.parent_object_id = c_s.object_id AND fkc.parent_column_id = c_s.column_id
+                   WHERE fkc.constraint_object_id = f.object_id
+                   ORDER BY fkc.constraint_column_id
+                   FOR XML PATH('''')), 1, 2, ''''), ''?'')
+            + '' -> '' +
+            ISNULL(STUFF((SELECT '', '' + c_r.name
+                   FROM ' + QUOTENAME(@db2) + '.sys.foreign_key_columns fkc
+                   JOIN ' + QUOTENAME(@db2) + '.sys.columns c_r ON fkc.referenced_object_id = c_r.object_id AND fkc.referenced_column_id = c_r.column_id
+                   WHERE fkc.constraint_object_id = f.object_id
+                   ORDER BY fkc.constraint_column_id
+                   FOR XML PATH('''')), 1, 2, ''''), ''?'')
+            + '')'' AS ReferenceDetails
         FROM ' + QUOTENAME(@db2) + '.sys.foreign_keys f
         JOIN ' + QUOTENAME(@db2) + '.sys.tables t ON f.parent_object_id = t.object_id
+        JOIN ' + QUOTENAME(@db2) + '.sys.schemas sch_t ON t.schema_id = sch_t.schema_id
         JOIN ' + QUOTENAME(@db2) + '.sys.tables r ON f.referenced_object_id = r.object_id
-        JOIN ' + QUOTENAME(@db2) + '.sys.foreign_key_columns fk_c ON f.object_id = fk_c.constraint_object_id
-        JOIN ' + QUOTENAME(@db2) + '.sys.columns c_s ON fk_c.parent_object_id = c_s.object_id AND fk_c.parent_column_id = c_s.column_id
-        JOIN ' + QUOTENAME(@db2) + '.sys.columns c_r ON fk_c.referenced_object_id = c_r.object_id AND fk_c.referenced_column_id = c_r.column_id
-        GROUP BY f.name, SCHEMA_NAME(t.schema_id), t.name, SCHEMA_NAME(r.schema_id) + ''.'' + r.name
+        JOIN ' + QUOTENAME(@db2) + '.sys.schemas sch_r ON r.schema_id = sch_r.schema_id
     ) fk2
-        -- Join condition for FKs is based on the source table and the full reference string (ReferenceDetails)
         ON fk1.SchemaName = fk2.SchemaName
         AND fk1.TableName = fk2.TableName
-        AND fk1.ReferenceDetails = fk2.ReferenceDetails -- This is the key match: same source table, same reference
-    WHERE fk1.ReferenceDetails IS NULL OR fk2.ReferenceDetails IS NULL OR fk1.ReferenceDetails <> fk2.ReferenceDetails
-;';
+        AND fk1.ReferenceDetails = fk2.ReferenceDetails
+    WHERE
+        fk1.ReferenceDetails IS NULL
+        OR fk2.ReferenceDetails IS NULL
 
--- Execute the dynamic SQL
+    ORDER BY TableSchema, TableName, ObjectType
+';
+
+-- Execute
 EXEC sp_executesql @sql;

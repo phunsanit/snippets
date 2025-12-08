@@ -23,30 +23,31 @@ References (Microsoft Learn):
 SET NOCOUNT ON;
 
 DECLARE @AnalysisTable TABLE (
-    DatabaseName NVARCHAR(128), -- เพิ่มเพื่อใช้เรียงลำดับ
+    DatabaseName NVARCHAR(128),
     SchemaName NVARCHAR(128),
     TableName NVARCHAR(128),
     ColumnName NVARCHAR(128),
     DataType NVARCHAR(50),
     DefinedLength INT,
     ActualMaxLength INT,
-    RowCountVal INT
+    RowCountVal INT,
+    IsNullable NVARCHAR(3)
 );
 
-DECLARE @Db NVARCHAR(128), @Schema NVARCHAR(128), @Table NVARCHAR(128), @Col NVARCHAR(128), @Type NVARCHAR(50), @Len INT;
+DECLARE @Db NVARCHAR(128), @Schema NVARCHAR(128), @Table NVARCHAR(128), @Col NVARCHAR(128), @Type NVARCHAR(50), @Len INT, @IsNull NVARCHAR(3);
 DECLARE @SQL NVARCHAR(MAX);
 DECLARE @ActualMax INT, @RowCnt INT;
 
 -- 1. ดึง Column เป้าหมาย (เพิ่ม table_catalog สำหรับ DB Name)
 DECLARE cur_all_cols CURSOR FOR
-SELECT table_catalog, table_schema, table_name, column_name, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH
+SELECT table_catalog, table_schema, table_name, column_name, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
 FROM information_schema.columns
 WHERE DATA_TYPE IN ('char', 'nchar', 'binary', 'varchar', 'nvarchar', 'varbinary')
   AND CHARACTER_MAXIMUM_LENGTH > 0
   AND table_schema NOT IN ('sys', 'information_schema');
 
 OPEN cur_all_cols;
-FETCH NEXT FROM cur_all_cols INTO @Db, @Schema, @Table, @Col, @Type, @Len;
+FETCH NEXT FROM cur_all_cols INTO @Db, @Schema, @Table, @Col, @Type, @Len, @IsNull;
 
 -- 2. วนลูป Scan หา Max Length ของจริง
 WHILE @@FETCH_STATUS = 0
@@ -61,9 +62,9 @@ BEGIN
     EXEC sp_executesql @SQL, N'@MaxVal INT OUTPUT, @Cnt INT OUTPUT', @MaxVal = @ActualMax OUTPUT, @Cnt = @RowCnt OUTPUT;
 
     -- Insert ลงตารางพร้อมชื่อ Database
-    INSERT INTO @AnalysisTable VALUES (@Db, @Schema, @Table, @Col, @Type, @Len, ISNULL(@ActualMax, 0), @RowCnt);
+    INSERT INTO @AnalysisTable VALUES (@Db, @Schema, @Table, @Col, @Type, @Len, ISNULL(@ActualMax, 0), @RowCnt, @IsNull);
 
-    FETCH NEXT FROM cur_all_cols INTO @Db, @Schema, @Table, @Col, @Type, @Len;
+    FETCH NEXT FROM cur_all_cols INTO @Db, @Schema, @Table, @Col, @Type, @Len, @IsNull;
 END
 
 CLOSE cur_all_cols;
@@ -71,7 +72,7 @@ DEALLOCATE cur_all_cols;
 
 -- 3. แสดงผลและสร้าง Script
 SELECT
-    DatabaseName, -- แสดงชื่อ DB เป็นคอลัมน์แรก
+    DatabaseName,
     SchemaName,
     TableName,
     ColumnName,
@@ -79,7 +80,7 @@ SELECT
     -- Current State
     UPPER(DataType) + '(' + CAST(DefinedLength AS VARCHAR) + ')' AS CurrentType,
     ActualMaxLength,
-
+    IsNullable AS CurrentNullStatus,
     -- Target State
     CASE
         WHEN DataType IN ('char', 'varchar') THEN 'VARCHAR'
@@ -104,7 +105,11 @@ SELECT
         WHEN DataType IN ('nchar', 'nvarchar') THEN 'NVARCHAR'
         WHEN DataType IN ('binary', 'varbinary') THEN 'VARBINARY'
     END +
-    '(' + CAST(CASE WHEN ActualMaxLength < 1 THEN 1 ELSE ActualMaxLength END AS VARCHAR) + ');'
+    '(' + CAST(CASE WHEN ActualMaxLength < 1 THEN 1 ELSE ActualMaxLength END AS VARCHAR) + ')' +
+    CASE
+        WHEN IsNullable = 'NO' THEN ' NOT NULL'
+        ELSE ' NULL'
+    END + ';'
     AS AlterScript
 
 FROM @AnalysisTable
@@ -112,8 +117,4 @@ WHERE
     RowCountVal > 0
     AND ActualMaxLength < DefinedLength
 ORDER BY
-    Priority,
-    DatabaseName,  -- เรียงตาม Database
-    SchemaName,    -- เรียงตาม Schema
-    TableName,     -- เรียงตาม Table
-    ColumnName;    -- เรียงตาม Column
+    Priority, DatabaseName, SchemaName, TableName, ColumnName;

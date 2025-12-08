@@ -8,8 +8,8 @@
 
 # Define your server and database
 # !!! IMPORTANT: Update these variables for your environment !!!
-$SqlServerNameE="MAGI-01-MELCHIO"
-$DatabaseNameTargetE="INSAPP"
+$SqlServerNameE="localhost"
+$DatabaseNameTargetE="DB_DEV"
 
 # Path to the folder containing your SQL scripts
 # It attempts to find the path of the first .sql file, otherwise defaults to the current directory.

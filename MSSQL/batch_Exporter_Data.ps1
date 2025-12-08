@@ -4,9 +4,9 @@
 # --- CONFIGURATION SECTION ---
 
 # 1. Define your SQL Server Instance and Database
-$SqlServerName = "172.30.32.233" # Example: "SQLDEV\INSTANCE1" or "LOCALHOST"
-$DatabaseNameSource = "INSAPP_QA" # Example: "DB_DEV"
-$DatabaseNameTarget = "INSAPP" # Example: "DB_QA"
+$SqlServerName = "LOCALHOST" # Example: "SQLDEV\INSTANCE1" or "LOCALHOST"
+$DatabaseNameSource = "DB_QA" # Example: "DB_DEV"
+$DatabaseNameTarget = "DB_QA" # Example: "DB_QA"
 
 # 2. Define the Authentication Method (Choose one of the two blocks below)
 
@@ -17,8 +17,8 @@ $DatabaseNameTarget = "INSAPP" # Example: "DB_QA"
 
 # --- B) SQL SERVER AUTHENTICATION (Uncomment and fill in details) ---
 $UseWindowsAuth = $false
-$SqlUserName = "insapp_admin" # Example: "sa"
-$SqlPassword = "insapp!2022" # Example: "your_password"
+$SqlUserName = "sa" # Example: "sa"
+$SqlPassword = "your_password" # Example: "your_password"
 
 # 3. Define the Output Directory
 $OutputDirectory = "C:\portables\SSMS\exporter\$(Get-Date -Format 'yyyyMMdd_HHmmss')_data" # Change to your desired output path
