@@ -37,4 +37,4 @@ SELECT
     FoundPrefixes
 FROM PrefixStats
 WHERE PrefixCount != 2
-ORDER BY TableName;
+ORDER BY SchemaName, TableName;
