@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
     Smart Windows Drivers Backup Utility (USB Ready)
-    Author: pitt.plusmagi.com pitt.plusmagi.com
+    Author: pitt phunsanit (pitt.plusmagi.com)
 #>
 
 # 1. Check for Administrator Rights
@@ -17,10 +17,10 @@ $cBackupPath = "C:\portables\Drivers_Backup"
 
 Clear-Host
 $title = @"
-====================================================
+=================================================
        POWERSHELL DRIVERS BACKUP UTILITY
-       Author: pitt.plusmagi.com (pitt.plusmagi.com)
-====================================================
+       Author: pitt phunsanit (pitt.plusmagi.com)
+=================================================
 "@
 Write-Host $title -ForegroundColor Cyan
 
@@ -36,7 +36,7 @@ $targetPath = if ($choice -eq "2") { $cBackupPath } else { $usbBackupPath }
 if (-not (Test-Path $targetPath)) { New-Item -ItemType Directory -Path $targetPath -Force | Out-Null }
 $timestamp = Get-Date -Format "yyyy-MM-ddTHHmm"
 $noteFile = Join-Path -Path $targetPath -ChildPath "note_$($timestamp).txt"
-"Driver Backup Log - $(Get-Date)`r`nAuthor: pitt.plusmagi.com (pitt.plusmagi.com)`r`n" + ("="*60) | Out-File $noteFile -Encoding UTF8
+"Driver Backup Log - $(Get-Date)`r`nAuthor: pitt phunsanit (pitt.plusmagi.com)`r`n" + ("="*60) | Out-File $noteFile -Encoding UTF8
 
 # 5. Backup Process
 Write-Host "`nTarget: $targetPath" -ForegroundColor Yellow

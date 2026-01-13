@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
     Interactive Windows Drivers Restore Utility (USB Ready)
-    Author: pitt.plusmagi.com (pitt.plusmagi.com)
+    Author: pitt phunsanit (pitt.plusmagi.com)
 #>
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -15,10 +15,10 @@ $cBackupPath = "C:\portables\Drivers_Backup"
 
 Clear-Host
 $title = @"
-====================================================
+=================================================
       POWERSHELL DRIVERS RESTORE UTILITY
-       Author: pitt.plusmagi.com (pitt.plusmagi.com)
-====================================================
+       Author: pitt phunsanit (pitt.plusmagi.com)
+=================================================
 "@
 Write-Host $title -ForegroundColor Cyan
 
