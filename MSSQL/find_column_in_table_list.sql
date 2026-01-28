@@ -27,7 +27,7 @@ LEFT JOIN
 		AND ep.class_desc = 'OBJECT_OR_COLUMN'
 WHERE
 	-- 1. Filter by Schema
-	--c.table_schema  = 'pitt'
+	-- c.table_schema  = 'pitt'
 	AND
 	-- 2. Filter by the specific list of Tables
 	c.table_name IN (
