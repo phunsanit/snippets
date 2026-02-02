@@ -1,0 +1,30 @@
+{
+  "author": "Pitt Phunsanit",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "datatables.net-dt": "^2.3.7",
+    "jquery": "^4.0.0"
+  },
+  "description": "DataTables: jQuery 4 + Vite + TypeScript",
+  "devDependencies": {
+    "@types/jquery": "^3.5.33",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  },
+  "keywords": [
+    "Bootstrap",
+    "DataTables",
+    "jQuery",
+    "TypeScript",
+    "Vite"
+  ],
+  "license": "ISC",
+  "main": "DataTables.js",
+  "name": "datatables",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "commonjs",
+  "version": "1.0.0"
+}

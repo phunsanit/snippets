@@ -1,0 +1,51 @@
+[
+	{
+		"POST_CODE": "10160",
+		"SUB_DISTRICT_NAME": "Bang Wa",
+		"PROVINCE_NAME": "Bangkok",
+		"DISTRICT_NAME": "Phasi Charoen",
+		"enable": "1"
+	},
+	{
+		"POST_CODE": "10160",
+		"SUB_DISTRICT_NAME": "Bang Duan",
+		"PROVINCE_NAME": "Bangkok",
+		"DISTRICT_NAME": "Phasi Charoen",
+		"enable": "1"
+	},
+	{
+		"POST_CODE": "10160",
+		"SUB_DISTRICT_NAME": "Bang Chak",
+		"PROVINCE_NAME": "Bangkok",
+		"DISTRICT_NAME": "Phasi Charoen",
+		"enable": "1"
+	},
+	{
+		"POST_CODE": "10160",
+		"SUB_DISTRICT_NAME": "Bang Waek",
+		"PROVINCE_NAME": "Bangkok",
+		"DISTRICT_NAME": "Phasi Charoen",
+		"enable": "1"
+	},
+	{
+		"POST_CODE": "10160",
+		"SUB_DISTRICT_NAME": "Khlong Khwang",
+		"PROVINCE_NAME": "Bangkok",
+		"DISTRICT_NAME": "Phasi Charoen",
+		"enable": "1"
+	},
+	{
+		"POST_CODE": "10160",
+		"SUB_DISTRICT_NAME": "Pak Khlong Phasi Charoen",
+		"PROVINCE_NAME": "Bangkok",
+		"DISTRICT_NAME": "Phasi Charoen",
+		"enable": "1"
+	},
+	{
+		"POST_CODE": "10160",
+		"SUB_DISTRICT_NAME": "Khuha Sawan",
+		"PROVINCE_NAME": "Bangkok",
+		"DISTRICT_NAME": "Phasi Charoen",
+		"enable": "1"
+	}
+]
