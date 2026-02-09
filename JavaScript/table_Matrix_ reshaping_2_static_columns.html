@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Database Matrix Reshaper - Simplified Flow</title>
+    <style>
+        body { font-family: 'Chakra Petch', sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .panel { background: #2c3e50; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        input { padding: 8px; border-radius: 4px; border: 1px solid #ddd; }
+        button { padding: 12px 25px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+
+        table { border-collapse: collapse; width: 100%; margin-top: 15px; font-size: 12px; }
+        th { background: #ecf0f1; padding: 10px; border: 1px solid #bdc3c7; color: #2c3e50; }
+        td { border: 1px solid #dee2e6; padding: 8px; text-align: center; background: white; }
+        .static-col { background: #f8f9fa !important; font-weight: bold; color: #2980b9; }
+        .active-src { background-color: #ffc107 !important; }
+        .done-tar { background-color: #2ecc71 !important; color: white; }
+        .status { margin: 15px 0; font-weight: bold; color: #3498db; }
+        .scroll-box { overflow-x: auto; max-height: 350px; border: 1px solid #ddd; margin-top: 10px; }
+        .check-text { color: #2ecc71; font-size: 13px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Database Matrix Reshaper (Auto-Source Mode)</h2>
+
+    <div class="panel">
+        <div class="input-group">
+            <label>1. Static Columns</label>
+            <input type="text" id="staticCols" value="id, program_id" oninput="initSystem()">
+        </div>
+        <div class="input-group">
+            <label>2. Source Matrix (R x P_Cols)</label>
+            <div style="display:flex; gap:5px;">
+                <input type="number" id="sRow" value="3" style="width: 60px;" oninput="initSystem()"> x
+                <input type="number" id="sCol" value="24" style="width: 60px;" oninput="initSystem()">
+            </div>
+        </div>
+        <div class="input-group">
+            <label>3. Target Reshape (Rows x New_Cols)</label>
+            <div style="display:flex; gap:5px;">
+                <input type="number" id="tRow" value="72" style="width: 60px;" oninput="validateDimensions()"> x
+                <input type="number" id="tCol" value="1" style="width: 60px;" oninput="validateDimensions()">
+            </div>
+            <div id="dimCheck" class="check-text">✓ มิติถูกต้อง</div>
+        </div>
+        <button id="execBtn" onclick="runReshape()">Execute Reshape</button>
+    </div>
+
+    <h4>Source Table (Raw Data):</h4>
+    <div class="scroll-box">
+        <table id="sourceTable"></table>
+    </div>
+
+    <div id="status" class="status">สถานะ: ระบบพร้อมประมวลผล</div>
+
+    <h4>Target Table (Database Format):</h4>
+    <div class="scroll-box">
+        <table id="targetTable"></table>
+    </div>
+</div>
+
+<script>
+    let sourceData = [];
+    const sleep = (ms) => new Promise(res => setTimeout(res, ms));
+
+    // ฟังก์ชันเริ่มต้นระบบอัตโนมัติ (แทนที่ปุ่ม Source Table)
+    function initSystem() {
+        const rows = parseInt(document.getElementById('sRow').value) || 0;
+        const cols = parseInt(document.getElementById('sCol').value) || 0;
+        const staticNames = document.getElementById('staticCols').value.split(',').map(s => s.trim()).filter(s => s);
+        const table = document.getElementById('sourceTable');
+
+        sourceData = [];
+        let html = "<thead><tr>";
+        staticNames.forEach(name => html += `<th class="static-col">${name}</th>`);
+        for(let i=1; i<=cols; i++) html += `<th>Permission_${i}</th>`;
+        html += "</tr></thead><tbody>";
+
+        for(let i=0; i<rows; i++) {
+            let rowObj = { static: {}, perms: [] };
+            html += "<tr>";
+            staticNames.forEach(name => {
+                const val = `${name}_${i+1}`;
+                html += `<td class="static-col">${val}</td>`;
+                rowObj.static[name] = val;
+            });
+            for(let j=1; j<=cols; j++) {
+                const pVal = `P_${i+1}_${j}`;
+                const pId = `s-${i}-${j-1}`;
+                html += `<td id="${pId}">${pVal}</td>`;
+                rowObj.perms.push({ val: pVal, id: pId });
+            }
+            html += "</tr>";
+            sourceData.push(rowObj);
+        }
+        table.innerHTML = html + "</tbody>";
+        validateDimensions();
+    }
+
+    // ฟังก์ชันตรวจสอบความถูกต้องของมิติ Target
+    function validateDimensions() {
+        const sTotal = (parseInt(document.getElementById('sRow').value) || 0) * (parseInt(document.getElementById('sCol').value) || 0);
+        const tR = parseInt(document.getElementById('tRow').value) || 0;
+        const tC = parseInt(document.getElementById('tCol').value) || 0;
+        const check = document.getElementById('dimCheck');
+        const btn = document.getElementById('execBtn');
+
+        if (tR * tC === sTotal && sTotal > 0) {
+            check.textContent = "✓ มิติถูกต้อง";
+            check.style.color = "#2ecc71";
+            btn.disabled = false;
+        } else {
+            check.textContent = `✗ ไม่ลงตัว (ต้องการ ${sTotal} ช่อง)`;
+            check.style.color = "#e74c3c";
+            btn.disabled = true;
+        }
+    }
+
+    // ฟังก์ชันหลักในการ Reshape
+    async function runReshape() {
+        const tRows = parseInt(document.getElementById('tRow').value);
+        const tCols = parseInt(document.getElementById('tCol').value);
+        const staticNames = document.getElementById('staticCols').value.split(',').map(s => s.trim()).filter(s => s);
+        const targetTable = document.getElementById('targetTable');
+        const status = document.getElementById('status');
+
+        // รีเซ็ตการแสดงผล
+        initSystem();
+        let flatItems = [];
+        sourceData.forEach(row => {
+            row.perms.forEach(p => flatItems.push({ pVal: p.val, sId: p.id, static: row.static }));
+        });
+
+        let html = "<thead><tr>";
+        staticNames.forEach(name => html += `<th>${name}</th>`);
+        for(let i=1; i<=tCols; i++) html += `<th>New_Perm_${i}</th>`;
+        html += "</tr></thead><tbody>";
+
+        for(let r=0; r<tRows; r++) {
+            html += `<tr id="tr-${r}">`;
+            staticNames.forEach(() => html += `<td class="static-col">...</td>`);
+            for(let c=0; c<tCols; c++) html += `<td id="t-${r}-${c}"></td>`;
+            html += "</tr>";
+        }
+        targetTable.innerHTML = html + "</tbody>";
+
+        let k = 0;
+        for(let r=0; r<tRows; r++) {
+            if (k >= flatItems.length) break;
+
+            // ดึงค่า Static จากจุดกำเนิดข้อมูลชิ้นแรกในแถวเป้าหมาย
+            const firstInRow = flatItems[k];
+            const rowCells = document.getElementById(`tr-${r}`).cells;
+            staticNames.forEach((name, idx) => {
+                rowCells[idx].textContent = firstInRow.static[name];
+            });
+
+            for(let c=0; c<tCols; c++) {
+                if (k >= flatItems.length) break;
+
+                const item = flatItems[k];
+                status.textContent = `กำลังย้าย: ${item.pVal} (ลำดับที่ ${k+1})`;
+
+                const sCell = document.getElementById(item.sId);
+                const tCell = document.getElementById(`t-${r}-${c}`);
+
+                sCell.classList.add('active-src');
+                await sleep(30); // แสดงผลรวดเร็ว
+
+                tCell.textContent = item.pVal;
+                tCell.classList.add('done-tar');
+                sCell.classList.remove('active-src');
+                sCell.style.opacity = "0.3";
+                k++;
+            }
+        }
+        status.textContent = "✅ Execute Reshape สำเร็จ: ข้อมูลสัมพันธ์กับ ID ต้นทางถูกต้อง";
+    }
+
+    // รันระบบครั้งแรกทันที
+    window.onload = initSystem;
+</script>
+
+</body>
+</html>
