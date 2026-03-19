@@ -1,4 +1,4 @@
-DECLARE @search NVARCHAR(max) = '%Pitt%';
+DECLARE @search NVARCHAR(max) = '%TEMP_BILL_PAYMENT_BILLPAY%';
 
 SELECT
 	DB_NAME() AS DatabaseName
